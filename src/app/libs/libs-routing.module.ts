@@ -1,8 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { InternationalizationComponent } from './internationalization/internationalization.component';
 import { QrCodeComponent } from './qr-code/qr-code.component';
 import { SelectComponent } from './select/select.component';
+import { ShowdownComponent } from './showdown/showdown.component';
+import { InternationalizationComponent } from './internationalization/internationalization.component';
+import { FastshaComponent } from './fastshah/fastsha.component';
+import { IdleComponent } from './idle/idle.component';
 
 const routes: Routes = [
   {
@@ -18,6 +21,17 @@ const routes: Routes = [
   {
     path: 'select',
     component: SelectComponent,
+    pathMatch: 'full',
+  },
+  { path: 'fashshah', component: FastshaComponent, pathMatch: 'full' },
+  {
+    path: 'showdown',
+    component: ShowdownComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'idle',
+    component: IdleComponent,
     pathMatch: 'full',
   },
 ];
