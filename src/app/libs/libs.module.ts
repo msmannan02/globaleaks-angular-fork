@@ -6,8 +6,8 @@ import { LibsRoutingModule } from './libs-routing.module';
 import { QrCodeComponent } from './qr-code/qr-code.component';
 import { QRCodeModule } from 'angularx-qrcode';
 import { FastshaComponent } from './fastshah/fastsha.component';
-import { ShowdownComponent } from './showdown/showdown.component';
-import { ShowdownModule } from 'ngx-showdown';
+// import { ShowdownComponent } from './showdown/showdown.component';
+// import { ShowdownModule } from 'ngx-showdown';
 import { FormsModule } from '@angular/forms';
 import { IdleComponent } from './idle/idle.component';
 import { NgIdleModule } from '@ng-idle/core';
@@ -20,7 +20,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     InternationalizationComponent,
     FastshaComponent,
     QrCodeComponent,
-    ShowdownComponent,
+    // ShowdownComponent,
     IdleComponent,
     SelectComponent,
   ],

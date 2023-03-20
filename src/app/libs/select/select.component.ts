@@ -6,12 +6,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-select',
   templateUrl: './select.component.html',
-  styleUrls: [
-    './select.component.css',
-    // '../../../../node_modules/bootstrap/dist/css/bootstrap.css',
-    '../../../../node_modules/@ng-select/ng-select/themes/default.theme.css',
-    // '../../../../node_modules/@ng-select/ng-select/themes/material.theme.css',
-  ],
+  styleUrls: ['./select.component.css'],
 })
 export class SelectComponent implements OnInit {
   selectedCity: any;

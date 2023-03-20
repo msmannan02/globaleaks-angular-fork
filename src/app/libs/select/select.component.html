@@ -1,14 +1,6 @@
-<!--Using ng-option and for loop-->
-<!-- <ng-select [(ngModel)]="selectedCar">
-  <ng-option *ngFor="let car of cars" [value]="car.id">{{car.name}}</ng-option>
-</ng-select> -->
-
-<!--Using items input-->
-<!-- <ng-select [items]="cars" bindLabel="name" bindValue="id" [(ngModel)]="selectedCar">
-</ng-select> -->
 <div class="container mt-4">
 
-  <ng-select [items]="defaultBindingsList" [(ngModel)]="selectedCity" class="form-control">
+  <ng-select [items]="defaultBindingsList" [(ngModel)]="selectedCity">
 
   </ng-select>
 
@@ -17,13 +9,13 @@
   <br>
   <hr>
 
-  <ng-select [items]="people" bindLabel="name" [loading]="peopleLoading" placeholder="Select People"
-    class="form-control">
+  <ng-select [items]="people" bindLabel="name" [loading]="peopleLoading" class="ng-select-bootstrap"
+    placeholder="Select People">
   </ng-select>
 
 
   <br />
-  <!-- <ng-select [items]="people | async" [multiple]="true" [loading]="peopleLoading" [closeOnSelect]="false"
-    [searchable]="true" bindLabel="name" placeholder="Select people" [(ngModel)]="selectedPeople" class="form-control">
-  </ng-select> -->
+  <ng-select [items]="people" [multiple]="true" [loading]="peopleLoading" [closeOnSelect]="false" [searchable]="true"
+    bindLabel="name" placeholder="Select people" [(ngModel)]="selectedPeople" class="form-control">
+  </ng-select>
 </div>
