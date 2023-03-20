@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, filter } from 'rxjs/operators';
 interface Post {
 	id: number;
 	title: string;
@@ -41,8 +41,12 @@ export class SelectComponent implements OnInit {
 		return this.http
 			.get<Post[]>('https://jsonplaceholder.typicode.com/posts')
 			.pipe(
+				filter((posts: any) => {
+					return posts.filter((post: any) => post.id == 3);
+				}),
 				map((posts) => {
-					return posts.map((post) => {
+					return posts.map((post: any) => {
+
 						return { value: post.id, name: post.title };
 					});
 				})
