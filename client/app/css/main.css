@@ -1017,6 +1017,10 @@ p:last-child {
   font-weight: bold;
 }
 
+.col-auto{
+  min-width: 20vw !important;
+}
+
 #LanguagePickerBox .form-control {
   width: auto;
 }
@@ -1146,6 +1150,10 @@ text.axis-worktime {
 }
 
 .tip-action-open {
+  cursor: pointer;
+}
+
+.pointer {
   cursor: pointer;
 }
 
