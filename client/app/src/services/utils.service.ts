@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UtilsService {
+  constructor() {}
 
-  constructor() { }
-
-  str2Uint8Array(str:string){
+  str2Uint8Array(str: string) {
     let result = new Uint8Array(str.length);
     for (let i = 0; i < str.length; i++) {
       result[i] = str.charCodeAt(i);
@@ -16,7 +15,8 @@ export class UtilsService {
   }
 
   openSupportModal() {
+    console.log('open  modal');
+
     // return this.openConfirmableModalDialog("views/modals/request_support.html", {});
   }
-
 }

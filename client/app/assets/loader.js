@@ -1,6 +1,6 @@
 var elem;
 
-var isBrowserCompatible = function() {
+var isBrowserCompatible = function () {
   var crawlers = [
     "Googlebot",
     "Bingbot",
@@ -13,7 +13,7 @@ var isBrowserCompatible = function() {
     "ia_archiver"
   ];
 
-  for (var i=0; i < crawlers.length; crawlers++) {
+  for (var i = 0; i < crawlers.length; crawlers++) {
     if (navigator.userAgent.indexOf(crawlers[i]) !== -1) {
       return true;
     }
@@ -38,7 +38,7 @@ var isBrowserCompatible = function() {
 
   return true;
 };
-
+document.getElementById("BrowserNotSupported").style.display = "none";
 if (!isBrowserCompatible()) {
   document.getElementById("BrowserNotSupported").style.display = "block";
 } else {
