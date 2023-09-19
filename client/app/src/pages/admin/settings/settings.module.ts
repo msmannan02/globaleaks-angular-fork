@@ -6,7 +6,7 @@ import { SettingsComponent } from './settings.component';
 import { RouterModule } from '@angular/router';
 import { NgbNavModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedModule } from 'app/src/shared.module';
-import { Tab1Component } from './tab1/tab1.component';
+// import { Tab1Component } from './tab1/tab1.component';
 import { Tab2Component } from './tab2/tab2.component';
 import { Tab3Component } from './tab3/tab3.component';
 import { Tab4Component } from './tab4/tab4.component';
@@ -17,7 +17,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 @NgModule({
   declarations: [
     SettingsComponent,
-    Tab1Component,
+    // Tab1Component,
     Tab2Component,
     Tab3Component,
     Tab4Component,

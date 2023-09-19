@@ -6,15 +6,15 @@
 </div>
 <div class="modal-body">
     <div>{{ 'Recipients' | translate }}</div>
-    <ng-select [items]="userData | filter: 'role': 'receiver'"
+    <ng-select
+        [items]="userData | filter: 'role': 'receiver' | selectedFilter:arg.trigger_receiver | filter: 'name' : selected.value"
         [(ngModel)]="selected.value" [virtualScroll]="true" [placeholder]="'Search' | translate" bindValue="name"
         (change)="addReceiver($event)">
         <ng-template ng-label-tmp let-item="item">
             {{ item.name }}
         </ng-template>
         <ng-template ng-option-tmp let-item="item" let-index="index">
-            <span [innerHTML]="item.name"></span>
-            <!-- <span [innerHTML]="item.name | highlight: selected.search"></span> -->
+            <span [innerHTML]="item.name | highlight: selected.value"></span>
         </ng-template>
     </ng-select>
     <div *ngIf="arg.trigger_receiver">

@@ -13,7 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { NgbDatepickerModule, NgbDropdownModule, NgbModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { WhistleBlowerIdentityRecieverComponent } from './whistleblower-identity-reciever/whistleblower-identity-reciever.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
-import { Tab1Component } from './tab1/tab1.component';
+// import { Tab1Component } from './tab1/tab1.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +21,7 @@ import { Tab1Component } from './tab1/tab1.component';
     SidebarComponent,
     TipsComponent,
     TipComponent,
-    Tab1Component,
+    // Tab1Component,
     SettingsComponent,
     WhistleBlowerIdentityRecieverComponent
   ],

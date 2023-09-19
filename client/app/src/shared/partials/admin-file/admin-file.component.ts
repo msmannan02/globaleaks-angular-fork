@@ -19,6 +19,7 @@ export class AdminFileComponent implements AfterViewInit, OnDestroy {
   autoUploadSubscription: Subscription;
   flowConfig: any = {};
   @ViewChild('uploader') uploaderElementRef!: ElementRef<HTMLInputElement>;
+  fileErrorMessages:any=[]
 
   constructor(public node: NodeResolver, public utilsService: UtilsService, public authenticationService: AuthenticationService) {
   }

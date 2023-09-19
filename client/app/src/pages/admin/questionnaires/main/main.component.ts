@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnChanges, OnInit } from '@angular/core';
 import { questionnaireResolverModel } from 'app/src/models/resolvers/questionnaireModel';
 import { QuestionnairesResolver } from 'app/src/shared/resolvers/questionnaires.resolver';
 import { HttpService } from 'app/src/shared/services/http.service';
@@ -10,7 +10,7 @@ import { UtilsService } from 'app/src/shared/services/utils.service';
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.css']
 })
-export class MainComponent implements OnInit {
+export class MainComponent implements OnInit ,OnChanges{
 
   questionnairesData: any = []
   new_questionnaire: { name: string } = { name: '' };
@@ -22,7 +22,10 @@ export class MainComponent implements OnInit {
     this.questionnairesData = this.questionnaires.dataModel
     this.cdr.detectChanges();
   }
-
+  ngOnChanges() {
+    this.questionnairesData = this.questionnaires.dataModel
+    this.cdr.detectChanges();
+  }
   add_questionnaire() {
     const questionnaire: questionnaireResolverModel = this.utilsService.new_questionnaire();
     questionnaire.name = this.new_questionnaire.name

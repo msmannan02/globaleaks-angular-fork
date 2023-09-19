@@ -84,6 +84,13 @@ import { QuestionnaireDuplicationComponent } from './shared/modals/questionnaire
 import { AddOptionHintComponent } from './shared/modals/add-option-hint/add-option-hint.component';
 import { TriggerReceiverComponent } from './shared/modals/trigger-receiver/trigger-receiver.component';
 import { AssignScorePointsComponent } from './shared/modals/assign-score-points/assign-score-points.component';
+import { Tab1Component } from './pages/admin/settings/tab1/tab1.component';
+import { SelectedFilterPipe } from './shared/pipes/selected-filter.pipe';
+import { HighlightPipe } from './shared/pipes/highlight.pipe';
+import { SingleErrorUploadDirective } from './shared/directive/single-error-upload.directive';
+import { UploadErrorMsgComponent } from './shared/partials/upload-error-msg/upload-error-msg.component';
+import { ErrorsUploadDirective } from './shared/directive/errors-upload.directive';
+import { UploadErrorMsgsComponent } from './shared/partials/upload-error-msgs/upload-error-msgs.component';
 
 @NgModule({
     imports: [
@@ -180,7 +187,14 @@ import { AssignScorePointsComponent } from './shared/modals/assign-score-points/
         QuestionnaireDuplicationComponent,
         AddOptionHintComponent,
         TriggerReceiverComponent,
-        AssignScorePointsComponent
+        AssignScorePointsComponent,
+        Tab1Component,
+        SelectedFilterPipe,
+        HighlightPipe,
+        SingleErrorUploadDirective,
+        UploadErrorMsgComponent,
+        UploadErrorMsgsComponent,
+        ErrorsUploadDirective
     ],
     exports: [
         FooterComponent,
@@ -227,6 +241,13 @@ import { AssignScorePointsComponent } from './shared/modals/assign-score-points/
         QuestionnaireDuplicationComponent,
         AddOptionHintComponent,
         TriggerReceiverComponent,
-        AssignScorePointsComponent
+        AssignScorePointsComponent,
+        Tab1Component,
+        SelectedFilterPipe,
+        HighlightPipe,
+        SingleErrorUploadDirective,
+        UploadErrorMsgComponent,
+        UploadErrorMsgsComponent,
+        ErrorsUploadDirective
     ]})
 export class SharedModule { }

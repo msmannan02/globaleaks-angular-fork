@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppDataService } from 'app/src/app-data.service';
@@ -18,7 +18,7 @@ import { UtilsService } from 'app/src/shared/services/utils.service';
   templateUrl: './context-editor.component.html',
   styleUrls: ['./context-editor.component.css']
 })
-export class ContextEditorComponent implements OnInit {
+export class ContextEditorComponent implements OnInit,OnChanges {
   @Input() contextsData: any[]
   @Input() context: any;
   @Input() index: any;
@@ -30,7 +30,7 @@ export class ContextEditorComponent implements OnInit {
   questionnairesData: any = []
   usersData: any = []
   nodeData: any = []
-  selected = { value: null };
+  selected:{value:any} = { value: null };
   admin_receivers_by_id: any
   constructor(private cdr: ChangeDetectorRef,private http: HttpClient, public modalService: NgbModal, public appDataService: AppDataService, public preference: PreferenceResolver, public httpService: HttpService, public authenticationService: AuthenticationService, public node: NodeResolver, public users: UsersResolver, public questionnaires: QuestionnairesResolver, public utilsService: UtilsService) {
   }
@@ -121,8 +121,11 @@ export class ContextEditorComponent implements OnInit {
   moveReceiver(rec: any): void {
     if (rec && this.context.receivers.indexOf(rec.id) === -1) {
       this.context.receivers.push(rec.id);
-      this.showSelect = false;
     }
+    this.showSelect = false;
+  }
+  ngOnChanges() {
+    this.usersData = this.users.dataModel
   }
   // moveReceiver(rec: any): void {
   //   if (rec) {
@@ -137,14 +140,19 @@ export class ContextEditorComponent implements OnInit {
   //   }
   // }
 
-  receiverNotSelectedFilter(item: any) {
-    // this.usersData.push(item)
-    // console.log(this.usersData, "this.usersData remove");
-    // this.cdr.detectChanges();
+  // receiverNotSelectedFilter(item: any) {
+  //   // this.usersData.push(item)
+  //   // console.log(this.usersData, "this.usersData remove");
+  //   // this.cdr.detectChanges();
 
-    // return this.context.receivers.indexOf(item.id) === -1;
-  }
-
+  //   // return this.context.receivers.indexOf(item.id) === -1;
+  // }
+  // receiverNotSelectedFilter(item: any): boolean {
+  //   return (
+  //     item.role === 'receiver' && // Filter by role 'receiver'
+  //     this.context.receivers.indexOf(item.id) === -1 // Not selected if id is not in the receivers array
+  //   );
+  // }
   deleteContext(context: any): void {
     this.openConfirmableModalDialog(context, "")
   }

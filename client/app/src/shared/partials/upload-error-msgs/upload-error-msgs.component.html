@@ -1,0 +1,6 @@
+<ng-container *ngIf="file_error_msgs.length > 0">
+    <div *ngFor="let fileErrorMsg of file_error_msgs; let i = index" class="mt-2 alert alert-danger alert-dismissible">
+        <button type="button" class="close" (click)="file_error_msgs.splice(i, 1)" aria-label="close">&times;</button>
+        <div>{{ fileErrorMsg }}</div>
+    </div>
+</ng-container>
