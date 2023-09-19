@@ -13,7 +13,13 @@ from globaleaks.utils.log import log
 from globaleaks.utils.pgp import PGPContext
 from globaleaks.handlers.base import BaseHandler
 
+
+
 __all__ = ['Delivery']
+
+
+
+
 
 
 @transact
@@ -31,6 +37,7 @@ def file_delivery(session):
                                       models.InternalTip.id == models.InternalFile.internaltip_id) \
                               .order_by(models.InternalFile.creation_date) \
                               .limit(20):
+                         
         ifile.new = False
         src = ifile.filename
         filecode = src.split('.')[0]
@@ -53,6 +60,7 @@ def file_delivery(session):
             # this way we avoid to send unuseful messages
             receiverfile.new = not ifile.submission
 
+           
             session.add(receiverfile)
             if BaseHandler.encryption_type == 'tip':
                 crypto_key = itip.crypto_tip_pub_key

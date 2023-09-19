@@ -89,6 +89,9 @@ api_spec = [
     (r'/api/rtips', receiver.TipsCollection),
     (r'/api/rtips/' + uuid_regexp, rtip.RTipInstance),
     (r'/api/rtips/' + uuid_regexp + r'/comments', rtip.RTipCommentCollection),
+    (r'/api/rtips/' + uuid_regexp + r'/masking/'+ uuid_regexp, rtip.RTipMaskingCollection),
+    (r'/api/rtips/' + uuid_regexp + r'/delete/maskingfile/'+ uuid_regexp, rtip.RTipFileMaskingCollection),
+    (r'/api/rtips/' + uuid_regexp + r'/masking', rtip.RTipMaskingCollection),
     (r'/api/rtips/' + uuid_regexp + r'/messages', rtip.ReceiverMsgCollection),
     (r'/api/rtips/' + uuid_regexp + r'/iars', rtip.IdentityAccessRequestsCollection),
     (r'/api/rtips/' + uuid_regexp + r'/export', export.ExportHandler),
@@ -515,7 +518,7 @@ class APIResourceWrapper(Resource):
                                                      b"document-domain=(),"
                                                      b"fullscreen=(),"
                                                      b"geolocation=(),"
-                                                     b"microphone=()")
+                                                     b"microphone=(self)")
 
             # Prevent old browsers not supporting CSP frame-ancestors directive to includes the platform within an iframe
             request.setHeader(b'X-Frame-Options', b'deny')

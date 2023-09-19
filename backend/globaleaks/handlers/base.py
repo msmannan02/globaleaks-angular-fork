@@ -95,7 +95,7 @@ class BaseHandler(object):
     upload_handler = False
     uploaded_file = None
     allowed_mimetypes = []
-    encryption_type = ''
+    encryption_type = 'ABC'
 
     def __init__(self, state, request):
         self.name = type(self).__name__

@@ -11,16 +11,16 @@
 
 
 
-.. image:: https://travis-ci.org/meejah/txtorcon.png?branch=master
-    :target: https://www.travis-ci.org/meejah/txtorcon
-    :alt: travis
+.. image:: https://github.com/meejah/txtorcon/actions/workflows/python3.yaml/badge.svg
+    :target: https://github.com/meejah/txtorcon/actions
+    :alt: github-actions
 
-.. image:: https://coveralls.io/repos/meejah/txtorcon/badge.png
-    :target: https://coveralls.io/r/meejah/txtorcon
+.. image:: https://coveralls.io/repos/meejah/txtorcon/badge.png?branch=main
+    :target: https://coveralls.io/github/meejah/txtorcon?branch=main
     :alt: coveralls
 
-.. image:: http://codecov.io/github/meejah/txtorcon/coverage.svg?branch=master
-    :target: http://codecov.io/github/meejah/txtorcon?branch=master
+.. image:: https://codecov.io/github/meejah/txtorcon/coverage.svg?branch=main
+    :target: https://codecov.io/github/meejah/txtorcon?branch=main
     :alt: codecov
 
 .. image:: https://readthedocs.org/projects/txtorcon/badge/?version=stable
@@ -31,23 +31,18 @@
     :target: https://txtorcon.readthedocs.io/en/latest
     :alt: ReadTheDocs
 
-.. image:: https://landscape.io/github/meejah/txtorcon/master/landscape.svg?style=flat
-    :target: https://landscape.io/github/meejah/txtorcon/master
-    :alt: Code Health
-
 
 txtorcon
 ========
 
-- **docs**: https://txtorcon.readthedocs.org or http://timaq4ygg2iegci7.onion
+- **docs**: https://txtorcon.readthedocs.org or http://fjblvrw2jrxnhtg67qpbzi45r7ofojaoo3orzykesly2j3c2m3htapid.onion/
 - **code**: https://github.com/meejah/txtorcon
-- ``torsocks git clone git://timaq4ygg2iegci7.onion/txtorcon.git``
+- ``torsocks git clone git://fjblvrw2jrxnhtg67qpbzi45r7ofojaoo3orzykesly2j3c2m3htapid.onion/txtorcon.git``
 - MIT-licensed;
-- Python 2.7, PyPy 5.0.0+, Python 3.5+;
+- Python 3.8+, PyPy 7.3.7+;
 - depends on
   `Twisted`_,
-  `Automat <https://github.com/glyph/automat>`_,
-  (and the `ipaddress <https://pypi.python.org/pypi/ipaddress>`_ backport for non Python 3)
+  `Automat <https://github.com/glyph/automat>`_
 
 
 Ten Thousand Feet
@@ -71,7 +66,6 @@ Some Possibly Motivational Example Code
 ---------------------------------------
 
 `download <examples/readme.py>`_
-(also `python2 style <examples/readme2.py>`_)
 
 .. code:: python
 

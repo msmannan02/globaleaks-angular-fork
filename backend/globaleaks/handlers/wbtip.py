@@ -292,7 +292,6 @@ class WBTipRFileDownload(BaseHandler):
 
     yield self.write_file_as_download(name, filelocation, '')
 
-
 class WBTipIdentityHandler(BaseHandler):
     """
     This is the interface that securely allows the whistleblower to provide his identity
