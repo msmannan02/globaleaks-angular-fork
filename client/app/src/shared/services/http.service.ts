@@ -266,9 +266,11 @@ export class HttpService {
   retipRequestNewMessage(param: any, id: any): Observable<any> {
     return this.httpClient.post(`api/rtips/${id}/messages`, param)
   }
-
+  requestStatusesResource(): Observable<any> {
+    return this.httpClient.get(`api/admin/statuses`)
+  }
   addSubmissionStatus(param: any): Observable<any> {
-    return this.httpClient.post(`api/admin/submission_statuses`, param)
+    return this.httpClient.post(`api/admin/statuses`, param)
   }
 
   fetchTenant(): Observable<any> {
@@ -335,8 +337,8 @@ export class HttpService {
     return this.httpClient.delete("api/admin/contexts/" + id);
   }
 
-  requestDeleteStatus(id: string): Observable<any> {
-    return this.httpClient.delete("api/admin/submission_statuses/" + id);
+  requestDeleteStatus(url: string): Observable<any> {
+    return this.httpClient.delete(url);
   }
 
   requestUpdateStatus(url: string, param: any): Observable<any> {

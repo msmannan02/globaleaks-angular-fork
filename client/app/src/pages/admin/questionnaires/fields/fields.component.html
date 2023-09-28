@@ -470,11 +470,11 @@
                         </div>
                         <div class="row" *ngIf="field.editable && field.type === 'fieldgroup'">
                             <div class="col-md-12" *ngIf="showAddQuestion">
-                                <src-add-field [step]="field" [type]="'field'"></src-add-field>
+                                <src-add-field [step]="field" [type]="'field'" (dataToParent)="listenToAddField($event)"></src-add-field>
                             </div>
                             <div class="col-md-12" *ngIf="showAddQuestionFromTemplate">
                                 <src-add-field-from-template [fieldtemplatesData]="fieldtemplatesData" [step]="field"
-                                    [type]="'field'"></src-add-field-from-template>
+                                    [type]="'field'" (dataToParent)="listenToAddFieldFormTemplate($event)"></src-add-field-from-template>
                             </div>
                         </div>
                         <div class="configuredFields">

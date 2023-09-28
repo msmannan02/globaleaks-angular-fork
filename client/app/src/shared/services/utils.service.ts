@@ -497,8 +497,8 @@ export class UtilsService {
     return this.httpService.requestDeleteAdminContext(user_id)
   }
 
-  deleteStatus(user_id: any) {
-    return this.httpService.requestDeleteStatus(user_id)
+  deleteStatus(url: any) {
+    return this.httpService.requestDeleteStatus(url)
   }
 
   deleteSubStatus(url: string) {

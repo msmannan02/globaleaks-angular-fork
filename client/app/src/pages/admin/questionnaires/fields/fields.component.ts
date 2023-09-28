@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppConfigService } from 'app/src/services/app-config.service';
@@ -11,6 +11,7 @@ import { NodeResolver } from 'app/src/shared/resolvers/node.resolver';
 import { FieldUtilitiesService } from 'app/src/shared/services/field-utilities.service';
 import { HttpService } from 'app/src/shared/services/http.service';
 import { UtilsService } from 'app/src/shared/services/utils.service';
+import { QuestionnariesService } from '../questionnaries.service';
 
 @Component({
   selector: 'src-fields',
@@ -22,6 +23,8 @@ export class FieldsComponent implements OnInit {
   @Input() editField: NgForm
   @Input() field: any
   @Input() type: any
+  @Output() dataToParent = new EventEmitter<string>();
+
   editing: boolean = false;
   openMinDate: boolean = false;
   openMaxDate: boolean = false;
@@ -39,7 +42,7 @@ export class FieldsComponent implements OnInit {
   };
   parsedFields: any
 
-  constructor(public appConfigService: AppConfigService, public modalService: NgbModal, public node: NodeResolver, private httpService: HttpService, private utilsService: UtilsService, public fieldtemplates: FieldtemplatesResolver, private fieldUtilities: FieldUtilitiesService,) { }
+  constructor(private questionnariesService: QuestionnariesService, public appConfigService: AppConfigService, public modalService: NgbModal, public node: NodeResolver, private httpService: HttpService, private utilsService: UtilsService, public fieldtemplates: FieldtemplatesResolver, private fieldUtilities: FieldUtilitiesService,) { }
   ngOnInit(): void {
     this.fieldtemplatesData = this.fieldtemplates.dataModel
     this.fieldIsMarkableSubjectToStats = this.isMarkableSubjectToStats(this.field);
@@ -50,6 +53,7 @@ export class FieldsComponent implements OnInit {
   save_field(field: any) {
     this.utilsService.assignUniqueOrderIndex(field.options);
     return this.httpService.requestUpdateAdminQuestionnaireField(field.id, field).subscribe(res => {
+    return  this.questionnariesService.sendData();
     })
   }
   toggleEditing() {
@@ -67,12 +71,15 @@ export class FieldsComponent implements OnInit {
     modalRef.componentInstance.arg = arg;
     modalRef.componentInstance.scope = scope;
     modalRef.componentInstance.confirmFunction = () => {
-      return this.httpService.requestDeleteAdminQuestionareField(arg.id).subscribe(res => {
-        this.appConfigService.reinit()
+      return this.httpService.requestDeleteAdminQuestionareField(arg.id).subscribe(() => {
+        this.dataToParent.emit();
+        return this.questionnariesService.sendData();
+        // this.appConfigService.reinit()
         // this.utilsService.reloadCurrentRoute()
       });
     };
     return modalRef.result;
+    
   }
   moveUpAndSave(field: any): void {
     this.utilsService.moveUp(field);
@@ -256,5 +263,12 @@ export class FieldsComponent implements OnInit {
     this.showAddQuestion = !this.showAddQuestion;
     this.showAddQuestionFromTemplate = false;
   }
-
+  listenToAddField(data: any) {
+    this.showAddQuestion = false
+    // this.questionnariesService.sendData('')
+  }
+  listenToAddFieldFormTemplate(data: any) {
+    this.showAddQuestionFromTemplate = false
+    // this.questionnariesService.sendData('')
+  }
 }
