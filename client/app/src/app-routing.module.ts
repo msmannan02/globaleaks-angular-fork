@@ -63,7 +63,6 @@ const routes: Routes = [
   {
     path: 'action',
     resolve: {
-      PreferenceResolver
     },
     loadChildren: () => ActionRoutingModule,
   },

@@ -318,4 +318,6 @@ export class TipsComponent implements OnInit {
     private translateService: TranslateService,
     private tokenResourceService:TokenResource
   ) { }
+
+  protected readonly JSON = JSON;
 }

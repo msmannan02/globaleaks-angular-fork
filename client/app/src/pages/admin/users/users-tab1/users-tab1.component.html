@@ -57,13 +57,11 @@
         </div>
     </div>
 </div>
-<div class="userList">
-    <ng-container *ngIf="usersData.length > 0">
-        <ng-container *ngFor="let user of usersData | orderBy:'name'; let index = index">
-            <form [id]="'user-' + index" name="editUser" #editUser="ngForm" novalidate>
-                <src-user-editor [user]="user" [editUser]="editUser" [index]="index"
-                    (dataToParent)="handleDataFromChild($event)"></src-user-editor>
-            </form>
-        </ng-container>
-    </ng-container>
-</div>
+<ng-container *ngIf="usersData.length > 0">
+    <div class="userList" *ngFor="let user of usersData | orderBy:'name'; let index = index">
+        <form [id]="'user-' + index" name="editUser" #editUser="ngForm" novalidate>
+            <src-user-editor [user]="user" [editUser]="editUser" [index]="index"
+                             (dataToParent)="handleDataFromChild($event)"></src-user-editor>
+        </form>
+    </div>
+</ng-container>

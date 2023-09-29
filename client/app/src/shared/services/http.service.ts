@@ -43,7 +43,6 @@ export class HttpService {
   }
 
   requestOperations(data: any, header?: any): Observable<any> {
-    alert(JSON.stringify(header))
     return this.httpClient.put("api/user/operations", data, header)
   }
 

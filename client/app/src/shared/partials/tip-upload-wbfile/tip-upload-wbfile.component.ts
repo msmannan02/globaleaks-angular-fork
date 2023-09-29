@@ -46,7 +46,4 @@ export class TipUploadWbfileComponent implements AfterViewInit{
       }
     });
   }
-
-  protected readonly alert = alert;
-  protected readonly JSON = JSON;
 }

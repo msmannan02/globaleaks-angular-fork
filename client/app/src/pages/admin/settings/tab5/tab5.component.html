@@ -2,7 +2,7 @@
     <div class="col-md-12">
         <div class="form-group">
             <label>
-                <input [(ngModel)]="node.dataModel.disable_submissions" type="checkbox" />
+                <input name="disable_submissions" [(ngModel)]="node.dataModel.disable_submissions" type="checkbox" />
                 <span>{{'Disable submissions' | translate}}</span>
             </label>
         </div>
@@ -35,7 +35,7 @@
 
         <div class="form-group">
             <label>
-                <input [(ngModel)]="node.dataModel.viewer" type="checkbox" />
+                <input name="viewer" [(ngModel)]="node.dataModel.viewer" type="checkbox" />
                 <span>{{ 'Enable file viewer' | translate }}</span>
             </label>
         </div>
@@ -127,7 +127,7 @@
 
         <div class="form-group" *ngIf="!node.dataModel.disable_privacy_badge">
             <label>
-                <input [(ngModel)]="node.dataModel.enable_custom_privacy_badge" type="checkbox" />
+                <input name="enable_custom_privacy_badge" [(ngModel)]="node.dataModel.enable_custom_privacy_badge" type="checkbox" />
                 <span>{{ 'Enable custom privacy panel' | translate }}</span>
             </label>
         </div>
@@ -142,7 +142,7 @@
         </div>
 
         <div class="form-group">
-            <input [(ngModel)]="node.dataModel.enable_custodian" type="checkbox">
+            <input name="enable_custodian" [(ngModel)]="node.dataModel.enable_custodian" type="checkbox">
             <label>{{ 'Enable custodian user role' | translate }}</label>
         </div>
 

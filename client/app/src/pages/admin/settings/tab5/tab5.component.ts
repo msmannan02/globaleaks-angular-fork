@@ -9,6 +9,7 @@ import { QuestionnairesResolver } from 'app/src/shared/resolvers/questionnaires.
 import { UsersResolver } from 'app/src/shared/resolvers/users.resolver';
 import { WbtipResolver } from 'app/src/shared/resolvers/wbtip.resolver';
 import { UtilsService } from 'app/src/shared/services/utils.service';
+import {AppConfigService} from "../../../../services/app-config.service";
 // import {Constants} from "../../constants/constants";
 
 @Component({
@@ -20,7 +21,7 @@ export class Tab5Component {
   @Input() contentForm: NgForm;
   userData :any={}
   questionnaireData :any={}
-  constructor(private modalService: NgbModal,public utilsService: UtilsService, public node: NodeResolver ,public preference:PreferenceResolver,public users:UsersResolver ,public questionnaires:QuestionnairesResolver) { 
+  constructor(private modalService: NgbModal,private appConfigService: AppConfigService,public utilsService: UtilsService, public node: NodeResolver ,public preference:PreferenceResolver,public users:UsersResolver ,public questionnaires:QuestionnairesResolver) {
     // console.log(this.node,"node");
     // console.log(this.utilsService,"utilsService");
     // console.log(this.preference,"preference");
@@ -68,6 +69,7 @@ export class Tab5Component {
 
   updateNode() {
     this.utilsService.update(this.node.dataModel).subscribe(res=>{
+      this.appConfigService.reinit()
       this.utilsService.reloadCurrentRoute();
     })
   }
