@@ -35,6 +35,7 @@ import {SignupModule} from "./pages/signup/signup.module";
 import { WizardModule } from './pages/wizard/wizard.module';
 import { RecipientModule } from './pages/recipient/recipient.module';
 import { AdminModule } from './pages/admin/admin.module';
+import {CustodianModule} from "./pages/custodian/custodian.module";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './data/i18n/', '.json');
@@ -70,6 +71,7 @@ export function createTranslateLoader(http: HttpClient) {
     NgSelectModule,
     FormsModule,
     WhistleblowerModule,
+    CustodianModule,
   ],
   providers: [
     ReceiptvalidatorDirective,

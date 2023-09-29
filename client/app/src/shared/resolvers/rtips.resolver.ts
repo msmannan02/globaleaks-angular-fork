@@ -4,16 +4,15 @@ import {
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import {HttpService} from "../services/http.service";
-import {rtipsResolverModel} from "../../models/resolvers/rtipsResolverModel";
 import { AuthenticationService } from 'app/src/services/authentication.service';
-import {catchError, map} from "rxjs/operators";
-import {preferenceResolverModel} from "../../models/resolvers/preferenceResolverModel";
+import {map} from "rxjs/operators";
+import {rtipResolverModel} from "../../models/resolvers/rtipsResolverModel";
 
 @Injectable({
   providedIn: 'root'
 })
 export class RtipsResolver implements Resolve<boolean> {
-  dataModel: rtipsResolverModel = new rtipsResolverModel();
+  dataModel: rtipResolverModel[] = []
 
   constructor(
     private httpService: HttpService,
@@ -23,9 +22,8 @@ export class RtipsResolver implements Resolve<boolean> {
   resolve(): Observable<boolean> {
     if (this.authenticationService.session.role === 'receiver') {
       return this.httpService.recieverTipResource().pipe(
-        map((response: rtipsResolverModel) => {
-          this.dataModel = response;
-          alert(JSON.stringify(response))
+        map((response: rtipResolverModel[]) => {
+          this.dataModel = response
           return true;
         })
       );

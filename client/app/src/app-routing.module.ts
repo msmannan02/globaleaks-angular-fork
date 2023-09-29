@@ -27,6 +27,8 @@ import { RedirectsResolver } from './shared/resolvers/redirects.resolver';
 import { FieldtemplatesResolver } from './shared/resolvers/fieldtemplates.resolver';
 import {TitleResolver} from "./shared/resolvers/title-resolver.resolver";
 import { StatuseResolver } from './shared/resolvers/statuses.resolver';
+import {CustodianRoutingModule} from "./pages/custodian/custodian-routing.module";
+import {IarsResolver} from "./shared/resolvers/iars.resolver";
 
 
 const routes: Routes = [
@@ -70,11 +72,22 @@ const routes: Routes = [
     path: 'recipient',
     canActivate: [SessionGuard],
     resolve: {
-       PreferenceResolver,NodeResolver,RtipsResolver
+      PreferenceResolver,NodeResolver,RtipsResolver
     },
     loadChildren: () => RecipientRoutingModule,
     data:{
       sidebar: 'recipient-sidebar'
+    }
+  },
+  {
+    path: 'custodian',
+    canActivate: [SessionGuard],
+    resolve: {
+      PreferenceResolver,NodeResolver, RtipsResolver, IarsResolver
+    },
+    loadChildren: () => CustodianRoutingModule,
+    data:{
+      sidebar: 'custodian-sidebar'
     }
   },
   {

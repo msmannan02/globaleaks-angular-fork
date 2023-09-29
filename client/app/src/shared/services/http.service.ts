@@ -38,6 +38,9 @@ export class HttpService {
     return this.httpClient.put(url, data)
   }
 
+  authorizeIdentity(url: any, data: any): Observable<any> {
+    return this.httpClient.put(url, data)
+  }
   deleteDBFile(id: string): Observable<any> {
     return this.httpClient.delete("api/wbfile/" + id)
   }
@@ -251,19 +254,23 @@ export class HttpService {
   }
 
   recieverTipResource(): Observable<any> {
-    return this.httpClient.get("api/rtips")
+    return this.httpClient.get("api/recipient/rtips")
+  }
+
+  iarResource(): Observable<any> {
+    return this.httpClient.get("api/custodian/iars")
   }
 
   recieverTip(id: any): Observable<any> {
-    return this.httpClient.get("api/rtips/" + id)
+    return this.httpClient.get("api/recipient/rtips/" + id)
   }
 
   rtipsRequestNewComment(param: any, id: any): Observable<any> {
-    return this.httpClient.post(`api/rtips/${id}/comments`, param)
+    return this.httpClient.post(`api/recipient/rtips/${id}/comments`, param)
   }
 
   retipRequestNewMessage(param: any, id: any): Observable<any> {
-    return this.httpClient.post(`api/rtips/${id}/messages`, param)
+    return this.httpClient.post(`api/recipient/rtips/${id}/messages`, param)
   }
   requestStatusesResource(): Observable<any> {
     return this.httpClient.get(`api/admin/statuses`)
@@ -281,7 +288,7 @@ export class HttpService {
   }
 
   accessIdentity(id: any): Observable<any> {
-    return this.httpClient.post(`api/rtips/${id}/iars`, {"request_motivation": ""});
+    return this.httpClient.post(`api/recipient/rtips/${id}/iars`, {"request_motivation": ""});
   }
 
   requestAddAdminUser(param: any): Observable<any> {
@@ -373,7 +380,7 @@ export class HttpService {
       "operation": operation,
       "args": args
     };
-    return this.httpClient.put("api/rtips/" + tipId, req);
+    return this.httpClient.put("api/recipient/rtips/" + tipId, req);
   };
 
   constructor(private httpClient: HttpClient, private router: Router) {

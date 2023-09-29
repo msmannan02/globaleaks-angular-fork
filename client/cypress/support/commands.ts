@@ -11,6 +11,7 @@ declare global {
       waitForUrl: (url: string, timeout?: number) => Chainable<any>;
       login_admin: (username?: string, password?: string, url?: string, firstlogin?: boolean) => void;
       login_receiver: (username?: string, password?: string, url?: string, firstlogin?: boolean) => void;
+      login_custodian: (username?: string, password?: string, url?: string, firstlogin?: boolean) => void;
     }
   }
 }
@@ -29,23 +30,48 @@ Cypress.Commands.add("login_receiver", (username, password, url, firstlogin) => 
   let finalURL = "/actions/forcedpasswordchange";
 
   cy.visit(url);
-  cy.get('[name="username"]').type("msmannan01");
+  cy.get('[name="username"]').type(username);
 
   // @ts-ignore
-  cy.get('[name="password"]').type("Imammehdi@001122");
+  cy.get('[name="password"]').type(password);
   cy.get("#login-button").click();
 
-  // if (!firstlogin) {
-  //   cy.url().should("include", "/login").then(() => {
-  //     cy.url().should("not.include", "/login").then((currentURL) => {
-  //       const hashPart = currentURL.split("#")[1];
-  //       finalURL = hashPart === "login" ? "/recipient/home" : hashPart;
-  //       cy.waitForUrl(finalURL);
-  //     });
-  //   });
-  // }
+  if (!firstlogin) {
+    cy.url().should("include", "/login").then(() => {
+      cy.url().should("not.include", "/login").then((currentURL) => {
+        const hashPart = currentURL.split("#")[1];
+        finalURL = hashPart === "login" ? "/recipient/home" : hashPart;
+        cy.waitForUrl(finalURL);
+      });
+    });
+  }
 
-  // cy.waitForPageIdle();
+  cy.waitForPageIdle();
+});
+
+Cypress.Commands.add("login_custodian", (username, password, url, firstlogin) => {
+  username = username === undefined ? "Custodian" : username;
+  password = password === undefined ? Cypress.env("user_password") : password;
+  url = url === undefined ? "/login" : url;
+
+  let finalURL = "/actions/forcedpasswordchange";
+
+  cy.visit(url);
+  cy.get('[name="username"]').type(username);
+  // @ts-ignore
+  cy.get('[name="password"]').type(password);
+  cy.get("#login-button").click();
+
+  if (!firstlogin) {
+    cy.url().should("include", "/login").then(() => {
+      cy.url().should("not.include", "/login").then((currentURL) => {
+        const hashPart = currentURL.split("#")[1];
+        finalURL = hashPart === "login" ? "/custodian/home" : hashPart;
+        cy.waitForUrl(finalURL);
+      });
+    });
+  }
+
 });
 
 function takeScreenshot(filename: string) {
@@ -70,7 +96,7 @@ Cypress.Commands.add("waitUntilClickable", (locator: string, timeout?: number) =
 
 Cypress.Commands.add("waitForLoader", () => {
   cy.intercept('**').as('allRequests');
-  cy.wait(1500);
+  cy.wait(2500);
   cy.wait('@allRequests', { requestTimeout: 4000 });
 });
 

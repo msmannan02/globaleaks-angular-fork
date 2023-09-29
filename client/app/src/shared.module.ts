@@ -84,6 +84,7 @@ import { QuestionnaireDuplicationComponent } from './shared/modals/questionnaire
 import { AddOptionHintComponent } from './shared/modals/add-option-hint/add-option-hint.component';
 import { TriggerReceiverComponent } from './shared/modals/trigger-receiver/trigger-receiver.component';
 import { AssignScorePointsComponent } from './shared/modals/assign-score-points/assign-score-points.component';
+import { TipOperationFileIdentityAccessReplyComponent } from './shared/modals/tip-operation-file-identity-access-reply/tip-operation-file-identity-access-reply.component';
 
 @NgModule({
     imports: [
@@ -181,6 +182,7 @@ import { AssignScorePointsComponent } from './shared/modals/assign-score-points/
     AddOptionHintComponent,
     TriggerReceiverComponent,
     AssignScorePointsComponent,
+    TipOperationFileIdentityAccessReplyComponent,
   ],
   exports: [
     FooterComponent,
