@@ -18,7 +18,7 @@ declare global {
 
 Cypress.Commands.add("waitForPageIdle", () => {
     const pageIdleDetector = new PageIdleDetector();
-    pageIdleDetector.WaitForPageToBeIdle();
+    pageIdleDetector.waitForPageToBeIdle();
   }
 );
 

@@ -37,10 +37,11 @@ export class HttpService {
   requestUpdateTenant(url: any, data: any): Observable<any> {
     return this.httpClient.put(url, data)
   }
-
+  
   authorizeIdentity(url: any, data: any): Observable<any> {
     return this.httpClient.put(url, data)
   }
+
   deleteDBFile(id: string): Observable<any> {
     return this.httpClient.delete("api/wbfile/" + id)
   }

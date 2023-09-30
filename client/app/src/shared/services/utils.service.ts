@@ -427,7 +427,8 @@ export class UtilsService {
 
     if (requireConfirmation.indexOf(operation) !== -1) {
       const confirm = (secret: string) => {
-        const headers = new HttpHeaders({"X-Confirmation": secret});
+
+        const headers = new HttpHeaders({"X-Confirmation": this.encodeString(secret)});
         return this.http.put(api, {
           "operation": operation,
           "args": args

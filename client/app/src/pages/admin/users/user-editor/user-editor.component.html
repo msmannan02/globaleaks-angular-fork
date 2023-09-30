@@ -187,7 +187,7 @@
         <div class="row" *ngIf="user.role === 'admin'">
             <div class="col-md-12">
                 <div class="form-group" *ngIf="nodeData.escrow && user.encryption && preferenceData.escrow">
-                    <input [(ngModel)]="user.escrow" type="checkbox" (ngModelChange)="toggleUserEscrow(user)"
+                    <input [(ngModel)]="user.escrow" name="user.escrow" type="checkbox" (ngModelChange)="toggleUserEscrow(user)"
                         [disabled]="authenticationData.session.user_id === user.id">
                     <label>{{ 'Give this admin ability to change user passwords' | translate }}</label>
                 </div>

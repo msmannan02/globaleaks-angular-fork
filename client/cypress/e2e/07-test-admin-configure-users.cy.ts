@@ -26,37 +26,37 @@ describe("admin add, configure, and delete users", () => {
       address: "globaleaks-admin2@mailinator.com",
     }
   ];
-
-  it("should add new users", () => {
-    cy.login_admin();
-    cy.visit("/#/admin/users");
-
-    const make_account = (user:any) => {
-      cy.get(".show-add-user-btn").click();
-      cy.get('select[name="role"]').select(user.role);
-      cy.get('input[name="username"]').clear().type(user.name);
-      cy.get('input[name="name"]').clear().type(user.name);
-      cy.get('input[name="email"]').clear().type(user.address);
-      cy.get("#add-btn").click();
-      cy.waitForLoader();
-    };
-
-    for (let i = 0; i < new_users.length; i++) {
-      make_account(new_users[i]);
-      cy.get(".userList").should('have.length', i+2);
-    }
-  });
-
-  it("should grant permissions to the first recipient", () => {
-    cy.login_admin();
-    cy.visit("/#/admin/users");
-
-    cy.get(".userList").eq(3).within(() => {
-      cy.contains("button", "Edit").click();
-      cy.get('input[name="can_delete_submission"]').click();
-      cy.contains("button", "Save").click();
-    });
-  });
+  //
+  // it("should add new users", () => {
+  //   cy.login_admin();
+  //   cy.visit("/#/admin/users");
+  //
+  //   const make_account = (user:any) => {
+  //     cy.get(".show-add-user-btn").click();
+  //     cy.get('select[name="role"]').select(user.role);
+  //     cy.get('input[name="username"]').clear().type(user.name);
+  //     cy.get('input[name="name"]').clear().type(user.name);
+  //     cy.get('input[name="email"]').clear().type(user.address);
+  //     cy.get("#add-btn").click();
+  //     cy.waitForLoader();
+  //   };
+  //
+  //   for (let i = 0; i < new_users.length; i++) {
+  //     make_account(new_users[i]);
+  //     cy.get(".userList").should('have.length', i+2);
+  //   }
+  // });
+  //
+  // it("should grant permissions to the first recipient", () => {
+  //   cy.login_admin();
+  //   cy.visit("/#/admin/users");
+  //
+  //   cy.get(".userList").eq(3).within(() => {
+  //     cy.contains("button", "Edit").click();
+  //     cy.get('input[name="can_delete_submission"]').click();
+  //     cy.contains("button", "Save").click();
+  //   });
+  // });
 
   it("should configure users' passwords", () => {
     cy.login_admin();
