@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { LoginDataRef } from '../pages/auth/login/model/login-model';
 import { HttpService } from '../shared/services/http.service';
 import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { AppDataService } from '../app-data.service';
 import { errorCodes } from '../models/app/error-code';
 import {AppConfigService} from "./app-config.service";
@@ -17,7 +17,7 @@ export class AuthenticationService {
   requireAuthCode: boolean = false;
   loginData: LoginDataRef = new LoginDataRef();
 
-  constructor(public httpService: HttpService, public rootDataService: AppDataService,public appConfigService:AppConfigService, private router: Router) {
+  constructor(private activatedRoute: ActivatedRoute, public httpService: HttpService, public rootDataService: AppDataService,public appConfigService:AppConfigService, private router: Router) {
     let json = window.sessionStorage.getItem("session")
     if (json != null) {
       this.session = JSON.parse(json);
@@ -112,7 +112,10 @@ export class AuthenticationService {
               }
             } else {
               if(!callback){
-                this.router.navigate([this.session.homepage]).then();
+                this.router.navigate([this.session.homepage], {
+                  queryParams: this.activatedRoute.snapshot.queryParams,
+                  queryParamsHandling: 'merge'
+                });
               }
             }
           }

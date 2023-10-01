@@ -61,7 +61,6 @@ export function createTranslateLoader(http: HttpClient) {
     RecipientModule,
     SharedModule,
     TranslateModule.forRoot({
-      defaultLanguage: 'en',
       loader: {
         provide: TranslateLoader,
         useFactory: createTranslateLoader,

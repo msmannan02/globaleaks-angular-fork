@@ -7,7 +7,6 @@ import {FieldUtilitiesService} from "../shared/services/field-utilities.service"
 import {TranslationService} from "./translation.service";
 import {Router,NavigationEnd, ActivatedRoute} from "@angular/router";
 import {PreferenceResolver} from "../shared/resolvers/preference.resolver";
-import {Title} from "@angular/platform-browser";
 import {AuthenticationService} from "./authentication.service";
 
 @Injectable({
@@ -22,8 +21,17 @@ export class AppConfigService{
   }
 
   initTranslation(){
-    this.translateService.setDefaultLang('en');
-    this.translateService.use('en');
+    if(this.authenticationService.session){
+      if(this.authenticationService.session.role == "admin"){
+        this.router.navigate(["/"+this.authenticationService.session.role]).then();
+      }
+      else if(this.authenticationService.session.role == "receiver"){
+        this.router.navigate(["/recipient"]).then();
+      }
+      else if(this.authenticationService.session.role == "custodian"){
+        this.router.navigate(["/custodian"]).then();
+      }
+    }
   }
 
   public setHomepage() {
@@ -35,7 +43,6 @@ export class AppConfigService{
   }
 
   public localInitialization(callback?: () => void){
-
     this.appServices.getPublicResource().subscribe({
       next: data => {
         this.appDataService.public = data.body;
@@ -109,13 +116,18 @@ export class AppConfigService{
           }
         });
 
-        if(this.preferenceResolver.dataModel && this.preferenceResolver.dataModel.language){
-          setTimeout(() => {
-            this.glTranslationService.onChange(this.preferenceResolver.dataModel.language)
-          }, 250);
-        }else {
-          this.glTranslationService.onChange(this.appDataService.public.node.default_language)
-        }
+        this.activatedRoute.queryParams.subscribe(params => {
+          if(params['lang']){
+            const paramLangValue = params['lang'] && this.appDataService.public.node.languages_enabled.includes(params['lang']) ? params['lang'] : '';
+            this.glTranslationService.onInit(paramLangValue)
+          }else {
+            if(this.preferenceResolver.dataModel && this.preferenceResolver.dataModel.language){
+              this.glTranslationService.onChange(this.preferenceResolver.dataModel.language)
+            }else {
+              this.glTranslationService.onChange(this.appDataService.public.node.default_language)
+            }
+          }
+        });
 
         this.appDataService.started = true;
         this.onValidateInitialConfiguration();

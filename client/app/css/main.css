@@ -433,7 +433,11 @@ table tr td {
 }
 
 .loginForm {
-	min-width: 300px;
+	max-width: 320px;
+}
+
+.loginFormContainer {
+	min-width: 350px;
 }
 
 .recoverykeyinput {

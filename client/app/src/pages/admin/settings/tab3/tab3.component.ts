@@ -3,6 +3,9 @@ import { NgForm } from '@angular/forms';
 import { NgbTooltipConfig } from '@ng-bootstrap/ng-bootstrap';
 import { NodeResolver } from 'app/src/shared/resolvers/node.resolver';
 import { UtilsService } from 'app/src/shared/services/utils.service';
+import {AppConfigService} from "../../../../services/app-config.service";
+import {TranslationService} from "../../../../services/translation.service";
+import {AppDataService} from "../../../../app-data.service";
 
 @Component({
   selector: 'src-tab3',
@@ -11,7 +14,7 @@ import { UtilsService } from 'app/src/shared/services/utils.service';
 })
 export class Tab3Component implements OnInit {
   @Input() contentForm: NgForm;
-  constructor(public utilsService: UtilsService, public node: NodeResolver, config: NgbTooltipConfig) {
+  constructor(private appDataService:AppDataService, private translationService:TranslationService, public appConfigService: AppConfigService, public utilsService: UtilsService, public node: NodeResolver, config: NgbTooltipConfig) {
     config.placement = 'top';
   }
   showLangSelect = false;
@@ -61,7 +64,8 @@ export class Tab3Component implements OnInit {
 
   updateNode() {
     this.utilsService.update(this.node.dataModel).subscribe(res => {
-      this.utilsService.reloadCurrentRoute();
+      this.appDataService.public.node.languages_enabled = res['languages_enabled']
+      this.translationService.onChange(res['default_language'])
     })
   }
 

@@ -3,6 +3,8 @@ import { TranslateService } from "@ngx-translate/core";
 import { AppDataService } from "../app-data.service";
 import { PreferenceResolver } from "../shared/resolvers/preference.resolver";
 import {UtilsService} from "../shared/services/utils.service";
+import {ActivatedRoute, Router} from "@angular/router";
+import {AppConfigService} from "./app-config.service";
 
 @Injectable({
   providedIn: "root",
@@ -15,22 +17,20 @@ export class TranslationService {
     public preferenceResolver: PreferenceResolver,
     public translateService: TranslateService,
     public appDataService: AppDataService,
+    public appConfigService: AppConfigService,
+    private router: Router,
     public utilsService:UtilsService
   ) {
-    this.onInit(this.language);
   }
 
   onInit(changedLanguage: string) {
-    this.language = changedLanguage;
-    const selectedLanguage = this.preferenceResolver.dataModel?.language || this.language;
-    this.translateService.setDefaultLang(selectedLanguage);
+    this.onChange(changedLanguage)
   }
 
   onChange(changedLanguage: string) {
     this.language = changedLanguage;
     this.translateService.use(this.language).subscribe(() => {
       this.translateService.getTranslation(this.language).subscribe();
-      this.utilsService.reloadCurrentRoute()
     });
   }
 }

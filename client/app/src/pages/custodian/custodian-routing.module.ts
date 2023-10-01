@@ -17,6 +17,11 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
+    path: '',
+    component: HomeComponent,
+    pathMatch: 'full',
+  },
+  {
     path: 'settings',
     component: SettingsComponent,
     pathMatch: 'full',
