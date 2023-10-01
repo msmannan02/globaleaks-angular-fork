@@ -11,6 +11,8 @@ import {tokenResponse} from "../models/authentication/token-response";
 import {CryptoService} from "../crypto.service";
 import {AuthenticationService} from "./authentication.service";
 import {AppDataService} from "../app-data.service";
+import {TranslationService} from "./translation.service";
+import {ActivatedRoute} from "@angular/router";
 
 const protectedUrls = [
   'api/wizard',
@@ -26,25 +28,55 @@ const protectedUrls = [
 
 @Injectable()
 export class RequestInterceptor implements HttpInterceptor {
+  constructor(
+    private route: ActivatedRoute,
+    private authenticationService: AuthenticationService,
+    private httpClient: HttpClient,
+    private cryptoService: CryptoService,
+    private translationService:TranslationService
+  ) {}
 
-  constructor(public authenticationService: AuthenticationService, private httpClient: HttpClient, private cryptoService: CryptoService) {
+  private getAcceptLanguageHeader(): string | null {
+    if (this.translationService.language) {
+      return this.translationService.language;
+    } else {
+      const url = window.location.href;
+      const hashFragment = url.split('#')[1];
+
+      if (hashFragment && hashFragment.includes('lang=')) {
+        return  hashFragment.split('lang=')[1].split('&')[0];
+      }else {
+        return "";
+      }
+    }
   }
+
   intercept(httpRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (httpRequest.url.endsWith('/data/i18n/.json')) {
       return new Observable<HttpEvent<any>>();
     }
 
     let authHeader = this.authenticationService.getHeader();
-    let authRequest = httpRequest
+    let authRequest = httpRequest;
+
     for (let [key, value] of authHeader) {
-      authRequest = httpRequest.clone({
+      authRequest = authRequest.clone({
         headers: authRequest.headers
           .set(key, value)
       });
     }
+
+    let lang = this.getAcceptLanguageHeader()
+    if(lang){
+      authRequest = authRequest.clone({
+        headers: authRequest.headers.set('Accept-Language', lang)
+      });
+    }else {
+    }
+
     if (protectedUrls.includes(httpRequest.url)) {
       return this.httpClient.post('api/auth/token', {}).pipe(switchMap((response) => {
-        let token = Object.assign(new tokenResponse(), response)
+        let token = Object.assign(new tokenResponse(), response);
         return from(this.cryptoService.proofOfWork(token.id))
           .pipe(
             switchMap(ans => {

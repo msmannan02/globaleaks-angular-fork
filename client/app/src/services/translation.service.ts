@@ -24,7 +24,16 @@ export class TranslationService {
   }
 
   onInit(changedLanguage: string) {
-    this.onChange(changedLanguage)
+    let storageLanguage = localStorage.getItem("default_language")
+
+    this.language = changedLanguage;
+    this.translateService.use(this.language).subscribe(() => {
+      this.translateService.getTranslation(this.language).subscribe();
+      localStorage.setItem("default_language", changedLanguage)
+      if(storageLanguage != changedLanguage){
+        location.reload()
+      }
+    });
   }
 
   onChange(changedLanguage: string) {

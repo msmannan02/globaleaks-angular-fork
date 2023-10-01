@@ -865,6 +865,10 @@ p:last-child {
 	width: max-content;
 }
 
+#LanguagePickerBox{
+	width:200px;
+}
+
 #LoginStatusBox,
 #WhistleblowerLoginBox {
 	color: #1d1f2a;

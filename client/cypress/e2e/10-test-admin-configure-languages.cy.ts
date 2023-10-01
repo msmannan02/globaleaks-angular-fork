@@ -44,7 +44,6 @@ describe("admin configure languages", () => {
     cy.get('[name="node.dataModel.presentation"]').clear().type("TEXT2_IT");
     cy.get('button.btn.btn-primary').eq(0).contains('Salva').click();
 
-    cy.contains("button", "Lingue").click();
     cy.get('#LanguagePickerBox').find('ng-select').last().click().get('ng-dropdown-panel').contains('English').click();
 
     cy.logout();

@@ -20,26 +20,7 @@ export class UserComponent {
 
   onChangeLanguage() {
     this.cdr.detectChanges();
-    setTimeout(() => {
-
-
-
-
-
-
-      this.httpService.getPublicResource().subscribe({
-        next: data => {
-
-        }
-      });
-
-
-
-
-
-
-
-
-    }, 2000); // The delay is specified in milliseconds (2000ms or 2 seconds in this example)
+    this.translationService.onChange(this.translationService.language)
+    this.appConfigService.reinit(false)
   }
 }

@@ -42,7 +42,7 @@ export class AppConfigService{
     this.appDataService.page = page
   }
 
-  public localInitialization(callback?: () => void){
+  public localInitialization(languageInit = true, callback?: () => void){
     this.appServices.getPublicResource().subscribe({
       next: data => {
         this.appDataService.public = data.body;
@@ -116,19 +116,22 @@ export class AppConfigService{
           }
         });
 
-        this.activatedRoute.queryParams.subscribe(params => {
-          if(params['lang']){
-            const paramLangValue = params['lang'] && this.appDataService.public.node.languages_enabled.includes(params['lang']) ? params['lang'] : '';
-            this.glTranslationService.onInit(paramLangValue)
-          }else {
-            if(this.preferenceResolver.dataModel && this.preferenceResolver.dataModel.language){
-              this.glTranslationService.onChange(this.preferenceResolver.dataModel.language)
+        if(languageInit){
+          this.activatedRoute.queryParams.subscribe(params => {
+            if(params['lang']){
+              const paramLangValue = params['lang'] && this.appDataService.public.node.languages_enabled.includes(params['lang']) ? params['lang'] : '';
+              this.glTranslationService.onInit(paramLangValue)
             }else {
-              this.glTranslationService.onChange(this.appDataService.public.node.default_language)
+              if(this.preferenceResolver.dataModel && this.preferenceResolver.dataModel.language){
+                this.glTranslationService.onChange(this.preferenceResolver.dataModel.language)
+              }else {
+                this.glTranslationService.onChange(this.appDataService.public.node.default_language)
+              }
             }
-          }
-        });
+          });
+        }
 
+        this.setTitle()
         this.appDataService.started = true;
         this.onValidateInitialConfiguration();
         if(callback){
@@ -147,7 +150,8 @@ export class AppConfigService{
     let projectTitle = rootData.node.name;
     let pageTitle = rootData.node.header_title_homepage;
 
-    if (location.pathname.substring(1) !== "/") {
+
+    if (this.header_title && this.router.url !== "/") {
       pageTitle = this.header_title;
     } else if (this.appDataService.page === "receiptpage") {
       pageTitle = "Your report was successful.";
@@ -168,6 +172,8 @@ export class AppConfigService{
       if (element instanceof HTMLMetaElement) {
         element.content = rootData.node.description;
       }
+    }else {
+      window.document.title = projectTitle;
     }
   }
   onValidateInitialConfiguration(){
@@ -211,7 +217,7 @@ export class AppConfigService{
     });
   }
 
-  reinit(){
-    this.localInitialization()
+  reinit(languageInit = true){
+    this.localInitialization(languageInit)
   }
 }
