@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {AuthenticationService} from "../../services/authentication.service";
 import {AppDataService} from "../../app-data.service";
 import {TranslateService} from "@ngx-translate/core";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {RequestSupportComponent} from "../modals/request-support/request-support.component";
 import {HttpService} from "./http.service";
@@ -23,6 +23,7 @@ import {NodeResolver} from "../resolvers/node.resolver";
 export class UtilsService {
 
   constructor(
+    private activatedRoute: ActivatedRoute,
     private nodeResolver: NodeResolver,
     private utilsService: UtilsService,
     private http: HttpClient,
@@ -153,7 +154,7 @@ export class UtilsService {
   }
 
   isWhistleblowerPage() {
-    return ["/", "/submission"].indexOf(this.router.url) !== -1;
+    return ["/", "/submission"].indexOf(this.router.url.split('?')[0]) !== -1;
   }
 
   stopPropagation(event: Event) {
