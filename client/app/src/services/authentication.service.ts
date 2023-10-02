@@ -79,13 +79,13 @@ export class AuthenticationService {
     this.loginInProgress = true;
     this.rootDataService.showLoadingPanel = true;
     if (authtoken) {
-      requestObservable = this.httpService.requestAuthTokenLogin(JSON.stringify({ "authtoken": authtoken }));
+      requestObservable = this.httpService.requestAuthTokenLogin(JSON.stringify({}));
     } else {
       if (username === "whistleblower") {
         password = password.replace(/\D/g, "");
-        requestObservable = this.httpService.requestWhistleBlowerLogin(JSON.stringify({ "receipt": password }));
+        requestObservable = this.httpService.requestWhistleBlowerLogin(JSON.stringify({}));
       } else {
-        requestObservable = this.httpService.requestGeneralLogin(JSON.stringify({ "tid": tid, "username": username, "password": password, "authcode": authcode }));
+        requestObservable = this.httpService.requestGeneralLogin(JSON.stringify({}));
       }
     }
 
@@ -133,6 +133,7 @@ export class AuthenticationService {
               this.reset();
             }
           }
+
           this.rootDataService.errorCodes = new errorCodes(error.error.error_message, error.error.error_code, error.error.arguments);
         }
       }

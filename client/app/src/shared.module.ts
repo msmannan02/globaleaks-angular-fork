@@ -86,6 +86,7 @@ import { TriggerReceiverComponent } from './shared/modals/trigger-receiver/trigg
 import { AssignScorePointsComponent } from './shared/modals/assign-score-points/assign-score-points.component';
 import { TipOperationFileIdentityAccessReplyComponent } from './shared/modals/tip-operation-file-identity-access-reply/tip-operation-file-identity-access-reply.component';
 import { DemoComponent } from './shared/partials/demo/demo.component';
+import { MessageconsoleComponent } from './shared/partials/messageconsole/messageconsole.component';
 
 @NgModule({
     imports: [
@@ -185,6 +186,8 @@ import { DemoComponent } from './shared/partials/demo/demo.component';
     AssignScorePointsComponent,
     TipOperationFileIdentityAccessReplyComponent,
     DemoComponent,
+    MessageconsoleComponent,
+    MessageconsoleComponent,
   ],
   exports: [
     FooterComponent,
@@ -233,6 +236,7 @@ import { DemoComponent } from './shared/partials/demo/demo.component';
     TriggerReceiverComponent,
     AssignScorePointsComponent,
     PreferencesComponent,
-    DemoComponent
+    DemoComponent,
+    MessageconsoleComponent
   ]})
 export class SharedModule { }

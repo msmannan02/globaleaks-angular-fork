@@ -13,6 +13,8 @@ import {AuthenticationService} from "./authentication.service";
 import {AppDataService} from "../app-data.service";
 import {TranslationService} from "./translation.service";
 import {ActivatedRoute} from "@angular/router";
+import {AppConfigService} from "./app-config.service";
+import {errorCodes} from "../models/app/error-code";
 
 const protectedUrls = [
   'api/wizard',
@@ -86,7 +88,7 @@ export class RequestInterceptor implements HttpInterceptor {
 @Injectable()
 export class ErrorCatchingInterceptor implements HttpInterceptor {
 
-  constructor(private authenticationService:AuthenticationService) {
+  constructor(private authenticationService:AuthenticationService, private appDataService:AppDataService) {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -104,7 +106,7 @@ export class ErrorCatchingInterceptor implements HttpInterceptor {
               location.pathname = this.authenticationService.session.homepage
             }
           }
-
+          this.appDataService.errorCodes = new errorCodes(error.error['error_message'], error.error['error_code'], error.error['arguments']);
           return throwError(() => error);
         })
       )

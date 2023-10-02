@@ -433,7 +433,12 @@ table tr td {
 }
 
 .loginForm {
-	max-width: 290px;
+	min-width: 320px;
+}
+
+.custom-close-button{
+	font-size: 11px;
+	color:red;
 }
 
 .loginFormContainer {
@@ -893,7 +898,7 @@ p:last-child {
 	width: 30rem;
 	min-width: 20rem;
 	z-index: 10;
-	top: 1rem;
+	top: 2.0rem;
 	padding: 0 5em;
 }
 
