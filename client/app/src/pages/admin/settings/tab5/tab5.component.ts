@@ -59,7 +59,7 @@ export class Tab5Component {
   }
   toggleEscrow() {
     this.node.dataModel.escrow = !this.node.dataModel.escrow;
-    this.utilsService.runAdminOperation("toggle_escrow", {},true).then(
+    this.utilsService.runAdminOperation("toggle_escrow", {},true).subscribe(
       () => {
         this.preference.dataModel.escrow = !this.preference.dataModel.escrow;
       },
