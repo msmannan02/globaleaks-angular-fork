@@ -963,9 +963,9 @@ text.axis-worktime {
 	left: 1rem;
 }
 
-.imageUpload .changePictureButton {
+/* .imageUpload .changePictureButton {
 	right: 1rem;
-}
+} */
 
 .tip-action-open {
 	cursor: pointer;
@@ -1018,4 +1018,14 @@ html#Receipt {
 .receipt-input {
 	width: 300px;
 	text-align: center;
+}
+
+.container-disabled {
+	pointer-events: none;
+	opacity: 0.4;
+	user-select: none;
+}
+
+.custom-switch .custom-control-label::after {
+	background-color: #fff !important;
 }

@@ -1,5 +1,5 @@
 <label>{{ adminFile.title }}</label>
-<div class="card card-body uploadfile" [ngClass]="'file-' + adminFile.varname">
+<div class="uploadfile" [ngClass]="'file-' + adminFile.varname">
     <ng-container #flow="flow" flowDrop
         [flowConfig]="{target: 'api/admin/files/' + adminFile.varname, speedSmoothingFactor:0.01, singleFile:true,  allowDuplicateUploads:false, testChunks:false, permanentErrors : [ 500, 501 ], headers : {'X-Session':authenticationService.session.id}}"></ng-container>
     <ng-container *ngIf="!nodeData[adminFile.varname]">

@@ -31,7 +31,7 @@ export class SettingsComponent implements AfterViewInit ,OnInit {
     if (this.authenticationService.session.role === "admin") {
       this.tabs = this.tabs.concat([
         {
-          title: 'Theme customization',
+          title: 'Files',
           component: this.tab2
         },
         {

@@ -7,6 +7,7 @@ import { FlowDirective } from '@flowjs/ngx-flow';
 import { NgbTooltipConfig } from '@ng-bootstrap/ng-bootstrap';
 import { AuthenticationService } from 'app/src/services/authentication.service';
 import { NodeResolver } from 'app/src/shared/resolvers/node.resolver';
+import { PreferenceResolver } from 'app/src/shared/resolvers/preference.resolver';
 import { UtilsService } from 'app/src/shared/services/utils.service';
 import { Subscription } from 'rxjs';
 
@@ -20,25 +21,35 @@ export class Tab2Component implements OnInit {
   @ViewChild('flowAdvanced', { static: true }) flowAdvanced: FlowDirective;
   @ViewChild('uploader') uploader: ElementRef;
 
-  admin_files: any[] = [{
-    "title": "Favicon",
-    "varname": "favicon",
-    "filename": "custom_favicon.ico",
-    "size": "131072"
-  },
-  {
-    "title": "CSS",
-    "varname": "css",
-    "filename": "custom_stylesheet.css",
-    "size": "1048576"
-  }];
+  admin_files: any[] = [
+      {
+        "title": "Favicon",
+        "varname": "favicon",
+        "filename": "custom_favicon.ico",
+        "size": "200000"
+      },
+      {
+        "title": "CSS",
+        "varname": "css",
+        "filename": "custom_stylesheet.css",
+        "size": "10000000"
+      },
+      {
+        "title": "JavaScript",
+        "varname": "script",
+        "filename": "custom_script.js",
+        "size": "10000000"
+      }
+];
 
   files: FlowFile[] = [];
   flow: FlowDirective;
   flowConfig: any = {};
   autoUploadSubscription: Subscription;
+  preferenceData: any = [];
+  authenticationData: any = []
 
-  constructor(private httpClient: HttpClient, public utilsService: UtilsService, public node: NodeResolver, config: NgbTooltipConfig, public authenticationService: AuthenticationService) { }
+  constructor(public preference: PreferenceResolver, private httpClient: HttpClient, public utilsService: UtilsService, public node: NodeResolver, config: NgbTooltipConfig, public authenticationService: AuthenticationService) { }
 
 
   // onFileSelected(files: FileList | null) {
@@ -55,6 +66,14 @@ export class Tab2Component implements OnInit {
 
 
   ngOnInit(): void {
+    this.preferenceData = this.preference.dataModel
+    this.authenticationData = this.authenticationService
+    this.authenticationData.permissions = {
+      can_upload_files: false
+    };
+    this.preferenceData.permissions = {
+      can_upload_files: false
+    };
     this.updateFiles();
   }
   onFileSelected(files: FileList | null) {
@@ -107,5 +126,32 @@ export class Tab2Component implements OnInit {
   uploadSuccess($event: FlowEvent): void {
     // Implement upload success logic
     this.reload();
+  }
+ 
+  togglePermissionUploadFiles(status:any): void {
+    
+    this.authenticationData.session.permissions.can_upload_files = !this.authenticationData.session.permissions.can_upload_files;
+    status.checked = this.authenticationData.session.permissions.can_upload_files
+  
+    if (!this.authenticationData.session.permissions.can_upload_files) {
+      this.utilsService.runAdminOperation("enable_user_permission_file_upload", {},false).subscribe(
+        () => {
+          this.authenticationData.session.permissions.can_upload_files = true;
+          status.checked = true
+        },
+        () => {
+          this.authenticationData.session.permissions.can_upload_files = false;
+          status.checked = false
+        }
+      );
+    } else {
+      this.utilsService.runAdminOperation("disable_user_permission_file_upload", {},false).subscribe(
+        () => {
+          this.authenticationData.session.permissions.can_upload_files = false;
+          status.checked = false
+        },
+        () => {}
+      );
+    }
   }
 }

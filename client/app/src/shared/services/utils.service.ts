@@ -8,7 +8,7 @@ import {RequestSupportComponent} from "../modals/request-support/request-support
 import {HttpService} from "./http.service";
 import {TokenResource} from './token-resource.service';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Observable, Subject} from 'rxjs';
+import {EMPTY, Observable, Subject, catchError, map, of, switchMap} from 'rxjs';
 import {
   ConfirmationWithPasswordComponent
 } from '../modals/confirmation-with-password/confirmation-with-password.component';
@@ -406,22 +406,22 @@ export class UtilsService {
   }
 
   runAdminOperation(operation: any, args: any, refresh: any) {
-    return this.runOperation("api/admin/config", operation, args, refresh);
+    return this.runOperation("api/admin/config", operation, args, refresh)
   }
 
   deleteDialog() {
     return this.openConfirmableModalDialog("", "")
   }
 
-  runOperation(api: string, operation: string, args?: any, refresh?: boolean): Promise<void> {
-    const deferred = new Subject<void>();
-
+  
+  runOperation(api: string, operation: string, args?: any, refresh?: boolean): Observable<any> {
     const requireConfirmation = [
       "enable_encryption",
       "disable_2fa",
       "get_recovery_key",
       "toggle_escrow",
       "toggle_user_escrow",
+      "enable_user_permission_file_upload",
       "reset_submissions"
     ];
 
@@ -434,61 +434,142 @@ export class UtilsService {
     }
 
     if (requireConfirmation.indexOf(operation) !== -1) {
-      const confirm = (secret: string) => {
-
-        const headers = new HttpHeaders({"X-Confirmation": this.encodeString(secret)});
-        return this.http.put(api, {
-          "operation": operation,
-          "args": args
-        }, {headers}).toPromise().then(
-          (response: any) => {
-            if (refresh) {
-              this.reloadCurrentRoute();
+      return new Observable((observer) => {
+        this.getConfirmation().subscribe((secret: string) => {
+          const headers = new HttpHeaders({ "X-Confirmation": this.encodeString(secret) });
+          this.http.put(api, { "operation": operation, "args": args }, { headers }).subscribe(
+            (response: any) => {
+              if (refresh) {
+                this.reloadCurrentRoute();
+              }
+              observer.next(response);
+              observer.complete();
+            },
+            (error: any) => {
+              observer.error(error);
             }
-            deferred.next(response);
-          },
-          () => {
-            this.getConfirmation(confirm);
-          }
-        );
-      };
-
-      this.getConfirmation(confirm);
+          );
+        });
+      });
     } else {
-      this.http.put(api, {
-        "operation": operation,
-        "args": args
-      }).toPromise().then(
-        (response: any) => {
+      return this.http.put(api, { "operation": operation, "args": args }).pipe(
+        map((response: any) => {
           if (refresh) {
             this.reloadCurrentRoute();
           }
-          deferred.next(response);
-        },
-        () => {
-        }
+          return response;
+        })
       );
     }
-
-    return deferred.toPromise();
   }
 
-  getConfirmation(confirmFun: (secret: string) => Promise<void>): void {
-    var modalRef = this.modalService.open(ConfirmationWithPasswordComponent, {});
-    if (this.preferenceResolver.dataModel.two_factor) {
-      modalRef = this.modalService.open(ConfirmationWith2faComponent, {});
-    }
+  getConfirmation(): Observable<string> {
+    return new Observable((observer) => {
+      var modalRef = this.modalService.open(ConfirmationWithPasswordComponent, {});
+      if (this.preferenceResolver.dataModel.two_factor) {
+        modalRef = this.modalService.open(ConfirmationWith2faComponent, {});
+      }
 
-    modalRef.componentInstance.confirmFunction = (secret: string) => {
-      confirmFun(secret).then(
-        () => {
-        },
-        () => {
-          this.getConfirmation(confirmFun);
-        }
-      );
-    };
+      modalRef.componentInstance.confirmFunction = (secret: string) => {
+        observer.next(secret);
+        observer.complete();
+      };
+    });
+    
   }
+  // getConfirmation(confirmFun: (secret: string) => Observable<any>): void {
+  //   let modalRef = this.modalService.open(ConfirmationWithPasswordComponent, {});
+  //   if (this.preferenceResolver.dataModel.two_factor) {
+  //     modalRef = this.modalService.open(ConfirmationWith2faComponent, {});
+  //   }
+
+  //   modalRef.componentInstance.confirmFunction = (secret: string) => {
+  //     confirmFun(secret).subscribe(
+  //       () => {},
+  //       () => {
+  //         this.getConfirmation(confirmFun);
+  //       }
+  //     );
+  //   };
+  // }
+  
+  // runOperation(api: string, operation: string, args?: any, refresh?: boolean): Promise<void> {
+  //   const deferred = new Subject<void>();
+
+  //   const requireConfirmation = [
+  //     "enable_encryption",
+  //     "disable_2fa",
+  //     "get_recovery_key",
+  //     "toggle_escrow",
+  //     "toggle_user_escrow",
+  //     "enable_user_permission_file_upload",
+  //     "reset_submissions"
+  //   ];
+
+  //   if (!args) {
+  //     args = {};
+  //   }
+
+  //   if (!refresh) {
+  //     refresh = false;
+  //   }
+
+  //   if (requireConfirmation.indexOf(operation) !== -1) {
+  //     const confirm = (secret: string) => {
+
+  //       const headers = new HttpHeaders({"X-Confirmation": this.encodeString(secret)});
+  //       return this.http.put(api, {
+  //         "operation": operation,
+  //         "args": args
+  //       }, {headers}).toPromise().then(
+  //         (response: any) => {
+  //           if (refresh) {
+  //             this.reloadCurrentRoute();
+  //           }
+  //           deferred.next(response);
+  //         },
+  //         () => {
+  //           this.getConfirmation(confirm);
+  //         }
+  //       );
+  //     };
+
+  //     this.getConfirmation(confirm);
+  //   } else {
+  //     this.http.put(api, {
+  //       "operation": operation,
+  //       "args": args
+  //     }).toPromise().then(
+  //       (response: any) => {
+  //         if (refresh) {
+  //           this.reloadCurrentRoute();
+  //         }
+  //         deferred.next(response);
+  //       },
+  //       () => {
+  //       }
+  //     );
+  //   }
+
+  //   return deferred.toPromise();
+  // }
+
+  // getConfirmation(confirmFun: (secret: string) => Promise<any>): any {
+  //   var modalRef = this.modalService.open(ConfirmationWithPasswordComponent, {});
+  //   if (this.preferenceResolver.dataModel.two_factor) {
+  //     modalRef = this.modalService.open(ConfirmationWith2faComponent, {});
+  //   }
+
+  //   modalRef.componentInstance.confirmFunction = (secret: string) => {
+  //     confirmFun(secret).then(
+  //       () => {
+  //       },
+  //       () => {
+  //         this.getConfirmation(confirmFun);
+  //       }
+  //     );
+  //   };
+  // }
 
   getFiles(): Observable<any[]> {
     return this.http.get<any[]>("api/admin/files");
