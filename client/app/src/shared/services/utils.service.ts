@@ -141,6 +141,13 @@ export class UtilsService {
     });
   }
 
+  reloadCurrentRouteFresh() {
+    const currentUrl = this.router.url;
+    this.router.navigateByUrl('/blank', { skipLocationChange: true }).then(() => {
+      this.router.navigateByUrl(currentUrl, { replaceUrl: true });
+    });
+  }
+
   showWBLoginBox() {
     return location.pathname === "/submission";
   }

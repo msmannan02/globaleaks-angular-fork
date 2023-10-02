@@ -33,8 +33,9 @@ export class RequestInterceptor implements HttpInterceptor {
     private authenticationService: AuthenticationService,
     private httpClient: HttpClient,
     private cryptoService: CryptoService,
-    private translationService:TranslationService
-  ) {}
+    private translationService: TranslationService
+  ) {
+  }
 
   private getAcceptLanguageHeader(): string | null {
     if (this.translationService.language) {
@@ -44,8 +45,8 @@ export class RequestInterceptor implements HttpInterceptor {
       const hashFragment = url.split('#')[1];
 
       if (hashFragment && hashFragment.includes('lang=')) {
-        return  hashFragment.split('lang=')[1].split('&')[0];
-      }else {
+        return hashFragment.split('lang=')[1].split('&')[0];
+      } else {
         return "";
       }
     }
@@ -53,41 +54,29 @@ export class RequestInterceptor implements HttpInterceptor {
 
   intercept(httpRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (httpRequest.url.endsWith('/data/i18n/.json')) {
-      return new Observable<HttpEvent<any>>();
+      return next.handle(httpRequest);
     }
 
     let authHeader = this.authenticationService.getHeader();
     let authRequest = httpRequest;
 
     for (let [key, value] of authHeader) {
-      authRequest = authRequest.clone({
-        headers: authRequest.headers
-          .set(key, value)
-      });
+      authRequest = authRequest.clone({headers: authRequest.headers.set(key, value)});
     }
 
-    let lang = this.getAcceptLanguageHeader()
-    if(lang){
-      authRequest = authRequest.clone({
-        headers: authRequest.headers.set('Accept-Language', lang)
-      });
-    }else {
-    }
+    authRequest = authRequest.clone({
+      headers: authRequest.headers.set('Accept-Language', this.getAcceptLanguageHeader() || ''),
+    });
 
     if (protectedUrls.includes(httpRequest.url)) {
-      return this.httpClient.post('api/auth/token', {}).pipe(switchMap((response) => {
-        let token = Object.assign(new tokenResponse(), response);
-        return from(this.cryptoService.proofOfWork(token.id))
-          .pipe(
-            switchMap(ans => {
-              const clone = httpRequest.clone({
-                headers: httpRequest.headers
-                  .set('x-token', token.id + ":" + ans)
-              });
-              return next.handle(clone);
-            })
-          );
-      }));
+      return this.httpClient.post('api/auth/token', {}).pipe(
+        switchMap((response) => from(this.cryptoService.proofOfWork(Object.assign(new tokenResponse(), response).id)).pipe(
+          switchMap((ans) => next.handle(httpRequest.clone({
+            headers: httpRequest.headers.set('x-token', Object.assign(new tokenResponse(), response).id + ':' + ans)
+              .set('Accept-Language', this.getAcceptLanguageHeader() || ''),
+          })))
+        ))
+      );
     } else {
       return next.handle(authRequest);
     }

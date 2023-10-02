@@ -33,7 +33,7 @@ import {IarsResolver} from "./shared/resolvers/iars.resolver";
 
 const routes: Routes = [
   {
-    path: 'routing',
+    path: 'blank',
     pathMatch: 'full',
   },
   {

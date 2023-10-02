@@ -20,16 +20,16 @@ export class AppConfigService{
     this.localInitialization()
   }
 
-  initTranslation(){
-    if(this.authenticationService.session){
-      if(this.authenticationService.session.role == "admin"){
-        this.router.navigate(["/"+this.authenticationService.session.role]).then();
-      }
-      else if(this.authenticationService.session.role == "receiver"){
-        this.router.navigate(["/recipient"]).then();
-      }
-      else if(this.authenticationService.session.role == "custodian"){
-        this.router.navigate(["/custodian"]).then();
+  initRoutes(){
+    if (this.authenticationService.session) {
+      const queryParams = this.activatedRoute.snapshot.queryParams;
+
+      if (this.authenticationService.session.role == "admin") {
+        this.router.navigate(["/" + this.authenticationService.session.role], { queryParams }).then();
+      } else if (this.authenticationService.session.role == "receiver") {
+        this.router.navigate(["/recipient"], { queryParams }).then();
+      } else if (this.authenticationService.session.role == "custodian") {
+        this.router.navigate(["/custodian"], { queryParams }).then();
       }
     }
   }
@@ -116,19 +116,9 @@ export class AppConfigService{
           }
         });
 
-        if(languageInit){
-          this.activatedRoute.queryParams.subscribe(params => {
-            if(params['lang']){
-              const paramLangValue = params['lang'] && this.appDataService.public.node.languages_enabled.includes(params['lang']) ? params['lang'] : '';
-              this.glTranslationService.onInit(paramLangValue)
-            }else {
-              if(this.preferenceResolver.dataModel && this.preferenceResolver.dataModel.language){
-                this.glTranslationService.onChange(this.preferenceResolver.dataModel.language)
-              }else {
-                this.glTranslationService.onChange(this.appDataService.public.node.default_language)
-              }
-            }
-          });
+        let storageLanguage = localStorage.getItem("default_language")
+        if(languageInit && storageLanguage){
+          this.glTranslationService.onChange(storageLanguage)
         }
 
         this.setTitle()
@@ -211,13 +201,14 @@ export class AppConfigService{
             this.header_title = currentRoute.data['pageTitle'];
             this.sidebar = currentRoute.data['sidebar'];
           }
-          this.setTitle()
+          this.setTitle();
         });
       }
     });
   }
 
   reinit(languageInit = true){
+    //this.utilsService.reloadCurrentRouteFresh()
     this.localInitialization(languageInit)
   }
 }

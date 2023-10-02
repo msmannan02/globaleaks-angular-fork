@@ -17,7 +17,7 @@ const routes: Routes = [
     path: '',
     component: adminHomeComponent,
     pathMatch: 'full',
-    data: { sidebar: 'admin-sidebar', pageTitle: 'Home'}
+    data: { sidebar: 'admin-sidebar', pageTitle: 'Home'},
   },
   {
     path: 'home',

@@ -102,7 +102,7 @@ export class AppModule {
   }
 
   globalInitializations() {
-    this.appConfigService.initTranslation();
+    this.appConfigService.initRoutes();
   }
 
   initIdleState(){
