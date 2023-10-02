@@ -102,7 +102,6 @@ export class AppModule {
   }
 
   globalInitializations() {
-    this.appConfigService.initRoutes();
   }
 
   initIdleState(){

@@ -85,6 +85,7 @@ import { AddOptionHintComponent } from './shared/modals/add-option-hint/add-opti
 import { TriggerReceiverComponent } from './shared/modals/trigger-receiver/trigger-receiver.component';
 import { AssignScorePointsComponent } from './shared/modals/assign-score-points/assign-score-points.component';
 import { TipOperationFileIdentityAccessReplyComponent } from './shared/modals/tip-operation-file-identity-access-reply/tip-operation-file-identity-access-reply.component';
+import { DemoComponent } from './shared/partials/demo/demo.component';
 
 @NgModule({
     imports: [
@@ -183,6 +184,7 @@ import { TipOperationFileIdentityAccessReplyComponent } from './shared/modals/ti
     TriggerReceiverComponent,
     AssignScorePointsComponent,
     TipOperationFileIdentityAccessReplyComponent,
+    DemoComponent,
   ],
   exports: [
     FooterComponent,
@@ -230,6 +232,7 @@ import { TipOperationFileIdentityAccessReplyComponent } from './shared/modals/ti
     AddOptionHintComponent,
     TriggerReceiverComponent,
     AssignScorePointsComponent,
-    PreferencesComponent
+    PreferencesComponent,
+    DemoComponent
   ]})
 export class SharedModule { }

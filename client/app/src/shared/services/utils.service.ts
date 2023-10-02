@@ -141,8 +141,13 @@ export class UtilsService {
     });
   }
 
-  reloadCurrentRouteFresh() {
-    const currentUrl = this.router.url;
+  reloadCurrentRouteFresh(removeQueryParam=false) {
+
+    let currentUrl = this.router.url;
+    if(removeQueryParam){
+      currentUrl = this.router.url.split('?')[0];
+    }
+
     this.router.navigateByUrl('/blank', { skipLocationChange: true }).then(() => {
       this.router.navigateByUrl(currentUrl, { replaceUrl: true });
     });

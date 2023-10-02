@@ -17,12 +17,17 @@ export class AppConfigService{
   public header_title: string= '';
 
   constructor(private appConfigService: AppConfigService, private preferenceResolver:PreferenceResolver, private router: Router, private activatedRoute: ActivatedRoute, public appServices: HttpService, public translateService: TranslateService, public utilsService:UtilsService, public authenticationService:AuthenticationService, public appDataService:AppDataService, public fieldUtilitiesService:FieldUtilitiesService, private glTranslationService:TranslationService)  {
+    this.initRoutes()
     this.localInitialization()
   }
 
   initRoutes(){
-    if (this.authenticationService.session) {
+    if (this.authenticationService && this.authenticationService.session) {
       const queryParams = this.activatedRoute.snapshot.queryParams;
+      let param = localStorage.getItem("default_language")
+      if(param){
+        queryParams['lang'] = param
+      }
 
       if (this.authenticationService.session.role == "admin") {
         this.router.navigate(["/" + this.authenticationService.session.role], { queryParams }).then();
@@ -31,6 +36,8 @@ export class AppConfigService{
       } else if (this.authenticationService.session.role == "custodian") {
         this.router.navigate(["/custodian"], { queryParams }).then();
       }
+    }else {
+      localStorage.removeItem("default_language")
     }
   }
 
@@ -117,9 +124,14 @@ export class AppConfigService{
         });
 
         let storageLanguage = localStorage.getItem("default_language")
-        if(languageInit && storageLanguage){
+        if(languageInit){
+          if(!storageLanguage){
+            storageLanguage = self.appDataService.public.node.default_language
+            localStorage.setItem("default_language", storageLanguage)
+          }
           this.glTranslationService.onChange(storageLanguage)
         }
+
 
         this.setTitle()
         this.appDataService.started = true;
