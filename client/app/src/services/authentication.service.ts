@@ -153,7 +153,7 @@ export class AuthenticationService {
     return header;
   }
 
-  logout() {
+  logout(callback?: () => void) {
     let requestObservable = this.httpService.requestDeleteUserSession();
     requestObservable.subscribe(
       {
@@ -164,6 +164,9 @@ export class AuthenticationService {
           } else {
             this.deleteSession();
             this.loginRedirect();
+          }
+          if(callback){
+            callback();
           }
         }
       }

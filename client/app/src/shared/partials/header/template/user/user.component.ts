@@ -16,7 +16,7 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class UserComponent {
 
-  constructor(public activatedRoute: ActivatedRoute, public httpService: HttpService, public appConfigService: AppConfigService, public translateSersvice: TranslateService, private cdr: ChangeDetectorRef,public translateService: TranslationService ,public authentication: AuthenticationService, public preferences:PreferenceResolver, public appConfig: AppConfigService, public utils: UtilsService, public appDataService:AppDataService, public translationService:TranslationService) {
+  constructor(public activatedRoute: ActivatedRoute, public httpService: HttpService, public appConfigService: AppConfigService, private cdr: ChangeDetectorRef,public translateService: TranslationService ,public authentication: AuthenticationService, public preferences:PreferenceResolver, public appConfig: AppConfigService, public utils: UtilsService, public appDataService:AppDataService, public translationService:TranslationService) {
     this.onQueryParameterChangeListener()
   }
 
@@ -35,6 +35,16 @@ export class UserComponent {
         }
       }
     });
+  }
+
+  onLogout(){
+    const promise = () => {
+      localStorage.removeItem("default_language")
+      this.appConfigService.reinit(false)
+      this.translationService.onChange(this.appDataService.public.node.default_language)
+    };
+
+    this.authentication.logout(promise)
   }
 
   onChangeLanguage() {

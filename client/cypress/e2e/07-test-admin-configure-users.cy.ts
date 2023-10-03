@@ -38,7 +38,6 @@ describe("admin add, configure, and delete users", () => {
       cy.get('input[name="name"]').clear().type(user.name);
       cy.get('input[name="email"]').clear().type(user.address);
       cy.get("#add-btn").click();
-      cy.waitForLoader();
     };
 
     for (let i = 0; i < new_users.length; i++) {
@@ -71,6 +70,7 @@ describe("admin add, configure, and delete users", () => {
             cy.contains("span", "Set password").first().click();
             cy.get('input[name="password"]').clear().type(Cypress.env("init_password"));
             cy.get('#setPasswordButton').should('be.visible').click();
+            cy.waitForLoader()
           }
         });
       }

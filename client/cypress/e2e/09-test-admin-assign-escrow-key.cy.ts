@@ -10,7 +10,6 @@ describe("key escrow assignment and revocation", () => {
     cy.get(path).within(() => {
       cy.contains("button", "Edit").click();
 
-      // Toggle key escrow
       cy.get("[name='user.escrow']").click();
 
     });

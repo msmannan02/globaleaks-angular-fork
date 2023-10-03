@@ -95,10 +95,36 @@ Cypress.Commands.add("waitUntilClickable", (locator: string, timeout?: number) =
 });
 
 Cypress.Commands.add("waitForLoader", () => {
-  cy.intercept('**').as('allRequests');
-  cy.wait(2500);
-  cy.wait('@allRequests', { requestTimeout: 4000 });
+  // Use cy.intercept to wait for all ongoing HTTP requests to complete
+  cy.intercept("**").as("httpRequests");
+
+  cy.get("#PageOverlay", { timeout: 1000, log: false }) // Adjust the timeout as needed
+    .should(($overlay) => {
+      return new Cypress.Promise((resolve, reject) => {
+        let visible = false;
+        let startTime = Date.now();
+
+        const checkVisibility = () => {
+          if (Cypress.$($overlay).is(":visible")) {
+            visible = true;
+            resolve();
+          } else if (Date.now() - startTime > 2000) {
+            resolve();
+          } else {
+            setTimeout(checkVisibility, 100);
+          }
+        };
+
+        checkVisibility();
+      });
+    })
+    .then(() => {
+      cy.wait("@httpRequests");
+      cy.wait(1000)
+    });
 });
+
+
 
 Cypress.Commands.add("waitForUrl", (url: string, timeout?: number) => {
   const t = timeout === undefined ? Cypress.config().defaultCommandTimeout : timeout;

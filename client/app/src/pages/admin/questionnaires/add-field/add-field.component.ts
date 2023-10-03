@@ -30,8 +30,7 @@ export class AddFieldComponent implements OnInit {
   }
   add_field() {
     if (this.type === "step") {
-      console.log("step condition");
-      
+
       let field = new new_field()
       field.step_id = this.step.id
       field.template_id = ""
@@ -71,7 +70,6 @@ export class AddFieldComponent implements OnInit {
       });
     }
     if (this.type === "field") {
-      console.log("field condition");
 
       let field = new new_field()
       field.fieldgroup_id = this.step.id

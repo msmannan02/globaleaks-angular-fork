@@ -8,19 +8,16 @@ describe("admin configure languages", () => {
     cy.get("body").click("top");
     cy.get('ng-select').last().click();
     cy.get('div.ng-option').contains('English [en]').click();
-    cy.get('span.ng-clear-wrapper').click();
     cy.get('ul.selectionList li').should('contain', 'English [en]');
 
     cy.get("body").click("top");
     cy.get('ng-select').last().click();
     cy.get('div.ng-option').contains('Italian [it]').click();
-    cy.get('span.ng-clear-wrapper').click();
     cy.get('ul.selectionList li').should('contain', 'Italian [it]');
 
     cy.get("body").click("top");
     cy.get('ng-select').last().click();
     cy.get('div.ng-option').contains('German [de]').click();
-    cy.get('span.ng-clear-wrapper').click();
     cy.get('ul.selectionList li').should('contain', 'German [de]');
 
 
@@ -34,8 +31,6 @@ describe("admin configure languages", () => {
     cy.get(".non-default-language").eq(0).click();
     cy.get(".remove-lang-btn").eq(1).click();
     cy.contains("button", "Salva").click();
-    cy.reload();
-    cy.waitForLoader()
 
     cy.visit("/#/admin/settings");
     cy.get('#LanguagePickerBox').find('ng-select').last().click().get('ng-dropdown-panel').contains('Italiano').click();

@@ -56,7 +56,6 @@ export class TipComponent {
         next: (response: any) => {
           this.rtipService.initialize(response)
           this.tip = this.rtipService.tip
-          console.log(response)
           this.activatedRoute.queryParams.subscribe((params: { [x: string]: any; }) => {
             this.tip.tip_id = params['tip_id']
           });

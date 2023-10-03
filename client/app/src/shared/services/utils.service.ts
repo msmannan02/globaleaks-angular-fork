@@ -286,7 +286,7 @@ export class UtilsService {
   }
 
   submitSupportRequest(arg: any) {
-    const param = JSON.stringify({"mail_address": arg.mail_address, "text": arg.text, "url": location.pathname});
+    const param = JSON.stringify({"mail_address": arg.mail_address, "text": arg.text, "url": window.location.href.replace("localhost","127.0.0.1")});
     this.httpService.requestSuppor(param).subscribe();
   }
 
@@ -420,6 +420,7 @@ export class UtilsService {
 
   
   runOperation(api: string, operation: string, args?: any, refresh?: boolean): Observable<any> {
+    alert(operation)
     const requireConfirmation = [
       "enable_encryption",
       "disable_2fa",

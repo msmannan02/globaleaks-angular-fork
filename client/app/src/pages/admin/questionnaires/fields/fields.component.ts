@@ -192,7 +192,6 @@ export class FieldsComponent implements OnInit {
     modalRef.componentInstance.arg = arg;
     // modalRef.componentInstance.scope = scope;
     modalRef.componentInstance.confirmFunction = (res: any) => {
-      console.log(res, "res");
 
       // return this.httpService.requestDeleteAdminQuestionareField(arg.id).subscribe(res => {
       //   this.appConfigService.reinit()
@@ -230,7 +229,6 @@ export class FieldsComponent implements OnInit {
     modalRef.componentInstance.arg = arg;
     // modalRef.componentInstance.scope = scope;
     modalRef.componentInstance.confirmFunction = (res: any) => {
-      console.log(res, "res");
       // return this.httpService.requestDeleteAdminQuestionareField(arg.id).subscribe(res => {
       //   this.appConfigService.reinit()
       //   // this.utilsService.reloadCurrentRoute()
@@ -247,7 +245,6 @@ export class FieldsComponent implements OnInit {
     modalRef.componentInstance.arg = arg;
     // modalRef.componentInstance.scope = scope;
     modalRef.componentInstance.confirmFunction = (res: any) => {
-      console.log(res, "res");
       // return this.httpService.requestDeleteAdminQuestionareField(arg.id).subscribe(res => {
       //   this.appConfigService.reinit()
       //   // this.utilsService.reloadCurrentRoute()

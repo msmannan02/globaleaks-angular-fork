@@ -28,10 +28,10 @@
   <div [dir]="translate.currentLang === 'ar' ? 'rtl' : 'ltr'" *ngIf="appDataService.started">
 
     <div *ngIf="!appDataService.public.node.root_tenant && appDataService.public.node.mode === 'demo'">
-      <src-privacybadge></src-privacybadge>
+      <src-demo></src-demo>
     </div>
     <div *ngIf="utilsService.isWhistleblowerPage() && !appDataService.public.node.disable_privacy_badge">
-      <src-demo></src-demo>
+      <src-privacybadge></src-privacybadge>
     </div>
 
     <views-header></views-header>

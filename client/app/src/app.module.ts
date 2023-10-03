@@ -38,7 +38,7 @@ import { AdminModule } from './pages/admin/admin.module';
 import {CustodianModule} from "./pages/custodian/custodian.module";
 
 export function createTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, './data/i18n/', '.json');
+  return new TranslateHttpLoader(http, 'l10n/', '');
 }
 
 @NgModule({

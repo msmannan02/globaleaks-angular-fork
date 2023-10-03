@@ -60,7 +60,6 @@ describe("Should browser opens a pop while clicking the support icon", () => {
     cy.get('input[name="customSupportURL"]').clear();
 
     cy.contains("button", "Save").click();
-    cy.waitForLoader();
     cy.contains("button", "Advanced").click();
 
     cy.get('input[name="customSupportURL"]')
@@ -101,5 +100,7 @@ describe("Validating custom support url", () => {
     cy.get('input[name="customSupportURL"]')
       .invoke("val")
       .should("equal", "https://www.globaleaks.org/");
+    cy.logout();
+
   });
 });
