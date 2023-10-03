@@ -25,7 +25,6 @@ export class IarsResolver implements Resolve<boolean> {
     if (this.authenticationService.session.role === 'custodian') {
       return this.httpService.iarResource().pipe(
         map((response: IarData[]) => {
-          console.log(response)
           this.dataModel = response;
           return true;
         })

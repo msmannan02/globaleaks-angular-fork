@@ -87,6 +87,10 @@ import { AssignScorePointsComponent } from './shared/modals/assign-score-points/
 import { TipOperationFileIdentityAccessReplyComponent } from './shared/modals/tip-operation-file-identity-access-reply/tip-operation-file-identity-access-reply.component';
 import { DemoComponent } from './shared/partials/demo/demo.component';
 import { MessageconsoleComponent } from './shared/partials/messageconsole/messageconsole.component';
+import { AcceptAgreementComponent } from './shared/modals/accept-agreement/accept-agreement.component';
+import { DisclaimerComponent } from './shared/modals/disclaimer/disclaimer.component';
+import { SecurityAwarenessConfidentialityComponent } from './shared/modals/security-awareness-confidentiality/security-awareness-confidentiality.component';
+import { TransferAccessComponent } from './shared/modals/transfer-access/transfer-access.component';
 
 @NgModule({
     imports: [
@@ -188,6 +192,10 @@ import { MessageconsoleComponent } from './shared/partials/messageconsole/messag
     DemoComponent,
     MessageconsoleComponent,
     MessageconsoleComponent,
+    AcceptAgreementComponent,
+    TransferAccessComponent,
+    SecurityAwarenessConfidentialityComponent,
+    DisclaimerComponent
   ],
   exports: [
     FooterComponent,
@@ -237,6 +245,10 @@ import { MessageconsoleComponent } from './shared/partials/messageconsole/messag
     AssignScorePointsComponent,
     PreferencesComponent,
     DemoComponent,
-    MessageconsoleComponent
+    MessageconsoleComponent,
+    AcceptAgreementComponent,
+    TransferAccessComponent,
+    SecurityAwarenessConfidentialityComponent,
+    DisclaimerComponent
   ]})
 export class SharedModule { }

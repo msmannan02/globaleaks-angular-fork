@@ -191,12 +191,12 @@
               </span>
               <!-- <span data-date-range-picker data-ng-model="reportDateModel"
               data-on-date-change="onReportFilterChange"></span> -->
-              <div class="ngb-dtepicker-container ms-1">
+              <span class="ngb-dtepicker-container ms-1">
                 <i class="fas fa-calendar" [ngClass]="{'calendar-active':  reportDateFilter}"
                   (click)="reportDatePicker=!reportDatePicker;lastUpdatePicker=false;expirationDatePicker=false;"></i>
                 <ngbd-datepicker-range #datePicker [currentDates]="reportDateModel"
                   (emitDateSelection)="onReportFilterChange($event)" *ngIf="reportDatePicker"></ngbd-datepicker-range>
-              </div>
+              </span>
 
             </th>
             <th class="TipInfoUpdateDate">
@@ -210,12 +210,12 @@
               </span>
               <!-- <span data-date-range-picker data-ng-model="updateDateModel"
               data-on-date-change="onUpdateFilterChange"></span> -->
-              <div class="ngb-dtepicker-container ms-1">
+              <span class="ngb-dtepicker-container ms-1">
                 <i class="fas fa-calendar" [ngClass]="{'calendar-active':  updateDateFilter}"
                   (click)="lastUpdatePicker=!lastUpdatePicker;reportDatePicker=false;expirationDatePicker=false;"></i>
                 <ngbd-datepicker-range #datePicker [currentDates]="updateDateModel"
                   (emitDateSelection)="onUpdateFilterChange($event)" *ngIf="lastUpdatePicker"></ngbd-datepicker-range>
-              </div>
+              </span>
             </th>
             <th class="TipInfoExpirationDate">
               <span (click)="sortKey = 'expiration_date'; sortReverse = !sortReverse">
@@ -228,13 +228,13 @@
               </span>
               <!-- <span data-date-range-picker data-ng-model="expiryDateModel"
               data-on-date-change="onExpiryFilterChange"></span> -->
-              <div class="ngb-dtepicker-container ms-1">
+              <span class="ngb-dtepicker-container ms-1">
                 <i class="fas fa-calendar" [ngClass]="{'calendar-active':  expiryDateFilter}"
                   (click)="expirationDatePicker=!expirationDatePicker;reportDatePicker=false;lastUpdatePicker=false;"></i>
                 <ngbd-datepicker-range #datePicker [currentDates]="expiryDateModel"
                   (emitDateSelection)="onExpiryFilterChange($event)"
                   *ngIf="expirationDatePicker"></ngbd-datepicker-range>
-              </div>
+              </span>
             </th>
             <th class="TipInfoReadReceipt">
               <i class="fa-solid fa-envelope-circle-check"></i>
