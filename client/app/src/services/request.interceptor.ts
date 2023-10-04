@@ -21,7 +21,7 @@ const protectedUrls = [
   'api/signup',
   'api/whistleblower/submission',
   'api/auth/receiptauth',
-  'api/tokenauth',
+  'api/auth/tokenauth',
   'api/auth/authentication',
   'api/user/reset/password',
   'api/user/preferences',

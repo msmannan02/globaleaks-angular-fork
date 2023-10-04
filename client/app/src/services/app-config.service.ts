@@ -8,6 +8,7 @@ import {TranslationService} from "./translation.service";
 import {Router,NavigationEnd, ActivatedRoute} from "@angular/router";
 import {PreferenceResolver} from "../shared/resolvers/preference.resolver";
 import {AuthenticationService} from "./authentication.service";
+import * as url from "url";
 
 @Injectable({
   providedIn: 'root'
@@ -17,12 +18,16 @@ export class AppConfigService{
   public header_title: string= '';
 
   constructor(private appConfigService: AppConfigService, private preferenceResolver:PreferenceResolver, private router: Router, private activatedRoute: ActivatedRoute, public appServices: HttpService, public translateService: TranslateService, public utilsService:UtilsService, public authenticationService:AuthenticationService, public appDataService:AppDataService, public fieldUtilitiesService:FieldUtilitiesService, private glTranslationService:TranslationService)  {
-    this.initRoutes()
-    this.localInitialization()
+
+    this.activatedRoute.paramMap.subscribe(params => {
+      let currentURL = window.location.hash.substring(2).split("?")[0]; // Use window.location for full URL including query parameters
+      this.initRoutes(currentURL)
+      this.localInitialization()
+    });
   }
 
-  initRoutes(){
-    if (this.authenticationService && this.authenticationService.session) {
+  initRoutes(currentURL:string){
+    if (this.authenticationService && this.authenticationService.session && currentURL != "login") {
       const queryParams = this.activatedRoute.snapshot.queryParams;
       let param = localStorage.getItem("default_language")
       if(param){

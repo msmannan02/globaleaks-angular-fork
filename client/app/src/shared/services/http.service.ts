@@ -15,7 +15,7 @@ export class HttpService {
   }
 
   requestAuthTokenLogin(param: string): Observable<any> {
-    return this.httpClient.post("api/tokenauth", param)
+    return this.httpClient.post("api/auth/tokenauth", param)
   }
 
   requestGeneralLogin(param: string): Observable<any> {

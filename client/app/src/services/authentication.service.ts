@@ -68,6 +68,7 @@ export class AuthenticationService {
   }
 
   login(tid?: any, username?: any, password?: any, authcode?: any, authtoken?: any, callback?: () => void) {
+
     if (authtoken === undefined) {
       authtoken = "";
     }

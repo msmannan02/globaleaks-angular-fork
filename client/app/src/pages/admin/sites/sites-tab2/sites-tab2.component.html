@@ -12,7 +12,7 @@
         <div class="form-group">
             <label>{{'Root domain used for secondary sites'|translate}}</label>
             <div>
-                <input class="form-control" [(ngModel)]="nodeResolver.dataModel.rootdomain" type="text" />
+                <input class="form-control" name="nodeResolver.dataModel.rootdomain" [(ngModel)]="nodeResolver.dataModel.rootdomain" type="text" />
             </div>
         </div>
         <div class="form-group">
@@ -24,7 +24,7 @@
         <div *ngIf="!nodeResolver.dataModel.adminonly">
             <div class="form-group">
                 <label>
-                    <input [(ngModel)]="nodeResolver.dataModel.enable_signup" type="checkbox" />
+                    <input name="nodeResolver.dataModel.enable_signup" [(ngModel)]="nodeResolver.dataModel.enable_signup" type="checkbox" />
                     <span>{{'Allow users to sign up'|translate}}</span>
                 </label>
             </div>
