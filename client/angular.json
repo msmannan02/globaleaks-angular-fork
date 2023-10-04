@@ -58,6 +58,7 @@
           "configurations": {
             "production": {
               "sourceMap": true,
+              "aot": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -109,14 +110,29 @@
               "zone.js",
               "zone.js/testing"
             ],
-            "tsConfig": "tsconfig.spec.json",
+            "tsConfig": "tsconfig.app.json",
             "assets": [
               "app/assets"
             ],
             "styles": [
-              "app/styles.css"
+              "node_modules/bootstrap/dist/css/bootstrap.css",
+              "app/css/main.css",
+              "app/css/ui-select-bootstrap4-fix.css",
+              "app/css/loader.css",
+              "app/css/print.css",
+              "app/css/button.css",
+              "app/css/ng-select.css",
+              "node_modules/font-awesome/css/font-awesome.css",
+              "node_modules/@fortawesome/fontawesome-free/css/fontawesome.css",
+              "node_modules/@fortawesome/fontawesome-free/css/solid.css",
+              "app/assets/lib/css/solid.css",
+              "node_modules/@ng-select/ng-select/themes/default.theme.css",
+              "node_modules/ng-multiselect-dropdown/themes/ng-multiselect-dropdown.theme.scss",
+              "app/css/bootstrap-fixes.css"
             ],
-            "scripts": [],
+            "scripts": [
+              "node_modules/marked/marked.min.js"
+            ],
             "codeCoverage": true,
             "codeCoverageExclude": ["**/*.spec.ts"]
           }

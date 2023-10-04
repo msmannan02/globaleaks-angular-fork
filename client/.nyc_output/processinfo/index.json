@@ -1,0 +1,1 @@
+{"processes":{"acba76b4-505d-43ac-ab76-8c25ea71228a":{"parent":null,"children":["ff84de50-e3f5-4fc6-9d86-e0cf6ad5e986"]},"ff84de50-e3f5-4fc6-9d86-e0cf6ad5e986":{"parent":"acba76b4-505d-43ac-ab76-8c25ea71228a","children":[]}},"files":{"/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/cypress.config.ts":["ff84de50-e3f5-4fc6-9d86-e0cf6ad5e986"]},"externalIds":{}}

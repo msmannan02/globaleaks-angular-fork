@@ -6,7 +6,7 @@ declare global {
       waitForLoader: () => void;
       waitForPageIdle: () => void;
       logout: () => void;
-      takeScreenshot: (filename: string) => void;
+      takeScreenshot: (filename: string, locator?:any) => void;
       waitUntilClickable: (locator: string, timeout?: number) => void;
       waitForUrl: (url: string, timeout?: number) => Chainable<any>;
       login_admin: (username?: string, password?: string, url?: string, firstlogin?: boolean) => void;
@@ -74,20 +74,28 @@ Cypress.Commands.add("login_custodian", (username, password, url, firstlogin) =>
 
 });
 
-function takeScreenshot(filename: string) {
+Cypress.Commands.add("takeScreenshot", (filename, locator?:any) => {
   if (!Cypress.env('takeScreenshots')) {
     return;
   }
 
-  cy.document().then((doc: Document) => {
-    const height = doc.body.scrollHeight;
-    cy.viewport(1280, height);
-  });
+  cy.wait(1000)
+  cy.get("html, body").invoke(
+    "attr",
+    "style",
+    "height: auto; scroll-behavior: auto;"
+  );
 
-  cy.screenshot(filename, {
-    overwrite: true
+  return cy.document().then((doc) => {
+    cy.viewport(1280, doc.body.scrollHeight);
+
+    cy.waitForPageIdle();
+
+    cy.screenshot("../" + filename, {
+      overwrite: true
+    });
   });
-}
+});
 
 Cypress.Commands.add("waitUntilClickable", (locator: string, timeout?: number) => {
   const t = timeout === undefined ? Cypress.config().defaultCommandTimeout : timeout;
@@ -163,5 +171,3 @@ Cypress.Commands.add("login_admin", (username, password, url, firstlogin) => {
 Cypress.Commands.add("logout", () => {
   cy.waitUntilClickable("#LogoutLink");
 });
-
-Cypress.Commands.add("takeScreenshot", takeScreenshot);

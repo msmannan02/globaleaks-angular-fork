@@ -10,6 +10,9 @@ export default defineConfig({
   },
   env: {
     "coverage": true,
+    "codeCoverage": {
+      "enabled": true
+    },
     "pgp": false,
     "init_password": "Password12345#",
     "user_password": "ACollectionOfDiplomaticHistorySince_1966_ToThe_Pr esentDay#",
