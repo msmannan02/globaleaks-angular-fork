@@ -80,7 +80,7 @@ export class Tab2Component implements OnInit {
     if (files && files.length > 0) {
       const file = files[0]; // Assuming you only handle a single file at a time
 
-      const flowJsInstance = new Flow({ target: 'api/admin/files/custom', speedSmoothingFactor: 0.01, singleFile: true, allowDuplicateUploads: false, testChunks: false, permanentErrors: [500, 501], headers: { 'X-Session': this.authenticationService.session.id } });
+      const flowJsInstance = new Flow({ target: 'api/admin/files/custom', speedSmoothingFactor: 0.01, singleFile: true, allowDuplicateUploads: false, testChunks: false, permanentErrors: [500, 501],query: { fileSizeLimit: this.node.dataModel.maximum_filesize*1024*1024 },headers: { 'X-Session': this.authenticationService.session.id } });
       flowJsInstance.addFile(file);
       flowJsInstance.upload();
       this.utilsService.reloadCurrentRoute();
