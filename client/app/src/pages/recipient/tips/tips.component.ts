@@ -134,7 +134,7 @@ export class TipsComponent implements OnInit {
   async tipsExport() {
     for (let i = 0; i < this.selectedTips.length; i++) {
       const token: any = await this.tokenResourceService.getWithProofOfWork();
-      window.open(`api/rtips/${this.selectedTips[i]}/export?token=${token.id}:${token.answer}`);
+      window.open(`api/recipient/rtips/${this.selectedTips[i]}/export?token=${token.id}:${token.answer}`);
     }
   }
 
@@ -156,7 +156,7 @@ export class TipsComponent implements OnInit {
   }
 
   exportTip(tipId: any) {
-    this.utils.download("api/rtips/" + tipId + "/export")
+    this.utils.download("api/recipient/rtips/" + tipId + "/export")
   }
 
   markReportStatus(date: string): boolean {

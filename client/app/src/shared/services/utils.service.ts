@@ -420,7 +420,7 @@ export class UtilsService {
 
   
   runOperation(api: string, operation: string, args?: any, refresh?: boolean): Observable<any> {
-    alert(operation)
+    // alert(operation)
     const requireConfirmation = [
       "enable_encryption",
       "disable_2fa",

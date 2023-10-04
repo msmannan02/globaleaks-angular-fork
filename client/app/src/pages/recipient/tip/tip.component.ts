@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppDataService } from 'app/src/app-data.service';
@@ -24,7 +24,10 @@ import { AuthenticationService } from 'app/src/services/authentication.service';
   templateUrl: './tip.component.html',
   styleUrls: ['./tip.component.css'],
 })
-export class TipComponent {
+export class TipComponent implements OnInit, AfterViewInit {
+  @ViewChild('tab1') tab1!: TemplateRef<any>;
+  @ViewChild('tab2') tab2!: TemplateRef<any>;
+  @ViewChild('tab3') tab3!: TemplateRef<any>;
   tip_id: string | null;
   itemsPerPage: number = 5;
   currentCommentsPage: number = 1;
@@ -45,10 +48,29 @@ export class TipComponent {
   fileupload_url: string;
   showEditLabelInput: boolean;
   // tip: any;
-
-
+  tabs: any[];
+  active:string
+  
   ngOnInit() {
     this.loadTipDate();
+  }
+  ngAfterViewInit(): void {
+    this.active="Public"
+    this.tabs = [
+      {
+        title: 'Public',
+        component: this.tab1
+      },
+      {
+        title: 'Internal',
+        component: this.tab2
+      },
+      {
+        title: 'Personal',
+        component: this.tab3
+      },
+    ];
+
   }
   loadTipDate() {
     this.tip_id = this.activatedRoute.snapshot.paramMap.get('tip_id');
@@ -134,40 +156,40 @@ export class TipComponent {
   }
 
   openTipTransferModal() {
-    this.http
-      .put('api/user/operations', {
-        operation: 'get_users_names',
-        args: {},
-      })
-      .subscribe((response: any) => {
-        const selectableRecipients: any = [];
-        this.appDataService.public.receivers.forEach(async (receiver: { id: string | number; }) => {
-          if (
-            receiver.id !== this.authenticationService.session.user_id &&
-            !this.tip.receivers_by_id[receiver.id]
-          ) {
-            selectableRecipients.push(receiver);
-          }
-        });
-        const modalRef = this.modalService.open(TransferAccessComponent);
-        modalRef.componentInstance.usersNames = response;
-        modalRef.componentInstance.selectableRecipients = selectableRecipients;
-        modalRef.result.then(
-          (receiverId) => {
-            const req = {
-              operation: 'transfer',
-              args: {
-                receiver: receiverId,
-              },
-            };
-            this.http
-              .put(`api/recipient/rtips/${this.tip.id}`, req)
-              .subscribe(() => { });
-          },
-          () => {
-          }
-        );
-      });
+    this.utils.runUserOperation("get_users_names", {}, true).subscribe(
+      {
+        next: (response: any) => {
+          const selectableRecipients: any = [];
+          this.appDataService.public.receivers.forEach(async (receiver: { id: string | number; }) => {
+            if (receiver.id !== this.authenticationService.session.user_id && !this.tip.receivers_by_id[receiver.id]) {
+              selectableRecipients.push(receiver);
+            }
+          });
+          const modalRef = this.modalService.open(TransferAccessComponent);
+          modalRef.componentInstance.usersNames = response;
+          modalRef.componentInstance.selectableRecipients = selectableRecipients;
+          modalRef.result.then(
+            (receiverId) => {
+              if (receiverId) {
+                const req = {
+                  operation: 'transfer',
+                  args: {
+                    receiver: receiverId,
+                  },
+                };
+                this.http
+                  .put(`api/recipient/rtips/${this.tip.id}`, req)
+                  .subscribe(() => { });
+              }
+            },
+            () => {
+            }
+          );
+        },
+        error: (error: any) => {
+        }
+      }
+    )
   }
 
   reload(): void {
@@ -285,7 +307,7 @@ export class TipComponent {
         {
           next: async token => {
             const ans = await this.cryptoService.proofOfWork(token.id);
-            window.open("api/rtips/" + tipId + "/export" + "?token=" + token.id + ":" + ans);
+            window.open("api/recipient/rtips/" + tipId + "/export" + "?token=" + token.id + ":" + ans);
           },
           error: (error: any) => {
           }
@@ -305,6 +327,6 @@ export class TipComponent {
     public rtipService: RecieverTipService,
     public fieldUtilities: FieldUtilitiesService,
     public authenticationService: AuthenticationService,
-  ) {}
+  ) { }
 
 }

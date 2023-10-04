@@ -1,10 +1,10 @@
-import {Component, ElementRef, Input, ViewChild} from '@angular/core';
-import {WbtipService} from "../../../services/wbtip.service";
-import {AuthenticationService} from "../../../services/authentication.service";
-import {UtilsService} from "../../services/utils.service";
-import {orderBy, reverse} from "lodash";
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { WbtipService } from "../../../services/wbtip.service";
+import { AuthenticationService } from "../../../services/authentication.service";
+import { UtilsService } from "../../services/utils.service";
+import { orderBy, reverse } from "lodash";
 import { OrderPipe } from 'ngx-order-pipe';
-import {ScrollToBottomDirective} from "../../directive/scroll-to-bottom.directive";
+import { ScrollToBottomDirective } from "../../directive/scroll-to-bottom.directive";
 import { RecieverTipService } from 'app/src/services/recievertip.service';
 
 @Component({
@@ -13,7 +13,8 @@ import { RecieverTipService } from 'app/src/services/recievertip.service';
   styleUrls: ['./tip-comments.component.css']
 })
 export class TipCommentsComponent {
-  @Input() tipService: RecieverTipService | WbtipService  ;
+  @Input() tipService: RecieverTipService | WbtipService;
+  @Input() key: any;
   @ViewChild(ScrollToBottomDirective)
   scroll: ScrollToBottomDirective;
 
@@ -22,17 +23,17 @@ export class TipCommentsComponent {
   currentCommentsPage: number = 1;
   itemsPerPage = 5;
 
-  public toggleColapse(){
+  public toggleColapse() {
     this.collapsed = !this.collapsed
   }
 
-  constructor(public authenticationService:AuthenticationService, public utilsService:UtilsService) {
+  constructor(public authenticationService: AuthenticationService, public utilsService: UtilsService) {
 
   }
-  ngOnInit(){
+  ngOnInit() {
   }
   newComment() {
-   
+
     this.tipService.newComment(this.newCommentContent);
     this.newCommentContent = "";
   }
