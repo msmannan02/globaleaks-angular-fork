@@ -14,7 +14,9 @@ import { TipOperationSetReminderComponent } from 'app/src/shared/modals/tip-oper
 import { DeleteConfirmationComponent } from 'app/src/shared/modals/delete-confirmation/delete-confirmation.component';
 import { HttpClient } from '@angular/common/http';
 import { TipOperationPostponeComponent } from 'app/src/shared/modals/tip-operation-postpone/tip-operation-postpone.component';
-import {CryptoService} from "../../../crypto.service";
+import { CryptoService } from "../../../crypto.service";
+import { TransferAccessComponent } from 'app/src/shared/modals/transfer-access/transfer-access.component';
+import { AuthenticationService } from 'app/src/services/authentication.service';
 
 
 @Component({
@@ -44,13 +46,13 @@ export class TipComponent {
   showEditLabelInput: boolean;
   // tip: any;
 
- 
+
   ngOnInit() {
     this.loadTipDate();
   }
   loadTipDate() {
     this.tip_id = this.activatedRoute.snapshot.paramMap.get('tip_id');
-    let requestObservable: Observable<any> = this.httpService.recieverTip( this.tip_id)
+    let requestObservable: Observable<any> = this.httpService.recieverTip(this.tip_id)
     requestObservable.subscribe(
       {
         next: (response: any) => {
@@ -131,6 +133,43 @@ export class TipComponent {
     );
   }
 
+  openTipTransferModal() {
+    this.http
+      .put('api/user/operations', {
+        operation: 'get_users_names',
+        args: {},
+      })
+      .subscribe((response: any) => {
+        const selectableRecipients: any = [];
+        this.appDataService.public.receivers.forEach(async (receiver: { id: string | number; }) => {
+          if (
+            receiver.id !== this.authenticationService.session.user_id &&
+            !this.tip.receivers_by_id[receiver.id]
+          ) {
+            selectableRecipients.push(receiver);
+          }
+        });
+        const modalRef = this.modalService.open(TransferAccessComponent);
+        modalRef.componentInstance.usersNames = response;
+        modalRef.componentInstance.selectableRecipients = selectableRecipients;
+        modalRef.result.then(
+          (receiverId) => {
+            const req = {
+              operation: 'transfer',
+              args: {
+                receiver: receiverId,
+              },
+            };
+            this.http
+              .put(`api/recipient/rtips/${this.tip.id}`, req)
+              .subscribe(() => { });
+          },
+          () => {
+          }
+        );
+      });
+  }
+
   reload(): void {
     this.utils.reloadCurrentRoute();
   }
@@ -185,9 +224,9 @@ export class TipComponent {
     }
   }
 
- 
 
- 
+
+
 
   tipToggleStar() {
     this.httpService.tipOperation("set", { "key": "important", "value": !this.rtipService.tip.important }, this.rtipService.tip.id)
@@ -238,19 +277,19 @@ export class TipComponent {
       Utils: this.utils
     };
   }
-  
+
   exportTip(tipId: any) {
-      const param=JSON.stringify({});
-      this.httpService.requestToken(param).subscribe
+    const param = JSON.stringify({});
+    this.httpService.requestToken(param).subscribe
       (
-          {
-              next: async token => {
-                  const ans = await this.cryptoService.proofOfWork(token.id);
-                  window.open("api/rtips/" + tipId + "/export" + "?token=" + token.id + ":" + ans);
-              },
-              error: (error: any) => {
-              }
+        {
+          next: async token => {
+            const ans = await this.cryptoService.proofOfWork(token.id);
+            window.open("api/rtips/" + tipId + "/export" + "?token=" + token.id + ":" + ans);
+          },
+          error: (error: any) => {
           }
+        }
       );
   }
 
@@ -263,9 +302,9 @@ export class TipComponent {
     public httpService: HttpService,
     public http: HttpClient,
     public appDataService: AppDataService,
-    public rtipService: RecieverTipService, public fieldUtilities: FieldUtilitiesService,
-  ) {
-   
-  }
- 
+    public rtipService: RecieverTipService,
+    public fieldUtilities: FieldUtilitiesService,
+    public authenticationService: AuthenticationService,
+  ) {}
+
 }
