@@ -38,8 +38,8 @@ export class RecieverTipService {
     return this.httpService.runOperation(url, operation, args, false).subscribe({});
   }
 
-  newComment(content: string) {
-    const param = JSON.stringify({"id": this.tip.msg_receiver_selected, "content": content});
+  newComment(content: string,visibility:string) {
+    const param = JSON.stringify({"id": this.tip.msg_receiver_selected, "content": content,"visibility":visibility});
     this.httpService.rtipsRequestNewComment(param, this.tip.id).subscribe({
       next: () => {
         this.utilsService.reloadCurrentRoute();

@@ -27,14 +27,16 @@ export class TipCommentsComponent {
     this.collapsed = !this.collapsed
   }
 
-  constructor(public authenticationService: AuthenticationService, public utilsService: UtilsService) {
+  constructor(private rtipService: RecieverTipService, public authenticationService: AuthenticationService, public utilsService: UtilsService) {
 
   }
   ngOnInit() {
   }
   newComment() {
-
-    this.tipService.newComment(this.newCommentContent);
+    this.tipService.newComment(this.newCommentContent, this.key);
     this.newCommentContent = "";
+  }
+  onEnableTwoWayCommentsChange() {
+    this.rtipService.operation('api/recipient/rtips/' + this.tipService.tip.id, 'set', { 'key': 'enable_two_way_comments', 'value': this.tipService.tip.enable_two_way_comments })
   }
 }

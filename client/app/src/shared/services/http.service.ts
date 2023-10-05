@@ -43,7 +43,7 @@ export class HttpService {
   }
 
   deleteDBFile(id: string): Observable<any> {
-    return this.httpClient.delete("api/wbfile/" + id)
+    return this.httpClient.delete("api/recipient/rfiles/" + id)
   }
 
   requestOperations(data: any, header?: any): Observable<any> {

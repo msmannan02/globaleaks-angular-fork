@@ -25,8 +25,8 @@
 				</button>
 				<div *ngif="authenticationService.session.role === 'receiver' && !tipService.tip.context.enable_two_way_comments" class="form-group">
 					<label class="inline-checkbox">
-					    <input [(ngModel)]="tipService.tip.enable_two_way_comments" data-ng-change="tip.operation('set', {'key': 'enable_two_way_comments', 'value': tip.enable_two_way_comments})" type="checkbox" />
-					    <span data-translate>Allow the whistleblower to write comments</span>
+					    <input [(ngModel)]="tipService.tip.enable_two_way_comments" (ngModelChange)="onEnableTwoWayCommentsChange()" type="checkbox" />
+					    <span>{{'Allow the whistleblower to write comments'|translate}}</span>
 					</label>
 				</div>
 			</div>
@@ -34,19 +34,19 @@
 
 		<div *ngIf="tipService.tip.comments.length">
 			<div id="SubmissionComments"
-				*ngFor="let comment of ((tipService.tip.comments | orderBy:'creation_date': true) | slice: (currentCommentsPage-1) * itemsPerPage : (currentCommentsPage-1) * itemsPerPage + itemsPerPage); let index = index">
-				<div id="comment-{{index}}" [ngSwitch]="comment.type" class="mt-2">
-					<div *ngSwitchCase="'whistleblower'" class="messageWB">
+				*ngFor="let comment of ((tipService.tip.comments | orderBy:'creation_date': true) | filter : 'visibility' : key  | slice: (currentCommentsPage-1) * itemsPerPage : (currentCommentsPage-1) * itemsPerPage + itemsPerPage); let index = index">
+				<div id="comment-{{index}}" class="mt-2">
+					<div  *ngIf="!comment.author_id" class="messageWB">
 						<div class="row">
 							<div class="col-md-6">{{'Whistleblower'|translate}}</div>
-							<div class="col-md-6 text-right">{{comment.creation_date | date:'dd-MM-yyyy HH:mm'}}</div>
+							<div class="col-md-6 text-end">{{comment.creation_date | date:'dd-MM-yyyy HH:mm'}}</div>
 						</div>
 						<div class="preformatted">{{comment.content}}</div>
 					</div>
-					<div *ngSwitchCase="'receiver'" class="message">
+					<div *ngIf="comment.author_id" class="message">
 						<div class="row">
-							<div class="col-md-6">{{tipService.tip.receivers_by_id[comment.author].name}}</div>
-							<div class="col-md-6 text-right">{{comment.creation_date | date:'dd-MM-yyyy HH:mm'}}</div>
+							<div class="col-md-6">{{tipService.tip.receivers_by_id[comment.author_id].name}}</div>
+							<div class="col-md-6 text-end">{{comment.creation_date | date:'dd-MM-yyyy HH:mm'}}</div>
 						</div>
 						<div class="preformatted">{{comment.content}}</div>
 					</div>
