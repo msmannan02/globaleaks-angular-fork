@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 import { Inject, Injectable } from '@angular/core';
 import { AuthenticationService } from "../../services/authentication.service";
 import { AppDataService } from "../../app-data.service";
@@ -18,58 +17,12 @@ import { PreferenceResolver } from '../resolvers/preference.resolver';
 import { DeleteConfirmationComponent } from '../modals/delete-confirmation/delete-confirmation.component';
 import { userResolverModel } from 'app/src/models/resolvers/userResolverModel';
 import { contextResolverModel } from 'app/src/models/resolvers/contextResolverModel';
-=======
-import {Injectable} from '@angular/core';
-import {AuthenticationService} from "../../services/authentication.service";
-import {AppDataService} from "../../app-data.service";
-import {TranslateService} from "@ngx-translate/core";
-import {ActivatedRoute, Router} from "@angular/router";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {RequestSupportComponent} from "../modals/request-support/request-support.component";
-import {HttpService} from "./http.service";
-import {TokenResource} from './token-resource.service';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {EMPTY, Observable, Subject, catchError, map, of, switchMap} from 'rxjs';
-import {
-  ConfirmationWithPasswordComponent
-} from '../modals/confirmation-with-password/confirmation-with-password.component';
-import {ConfirmationWith2faComponent} from '../modals/confirmation-with2fa/confirmation-with2fa.component';
-import {PreferenceResolver} from '../resolvers/preference.resolver';
-import {DeleteConfirmationComponent} from '../modals/delete-confirmation/delete-confirmation.component';
-import {NodeResolver} from "../resolvers/node.resolver";
-import {ServiceInstanceService} from "./service-instance.service";
->>>>>>> Stashed changes
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilsService {
 
-<<<<<<< Updated upstream
-=======
-  public authenticationService: AuthenticationService
-  constructor(
-    private serviceInstanceService:ServiceInstanceService,
-    private nodeResolver: NodeResolver,
-    private http: HttpClient,
-    public httpService: HttpService,
-    public modalService: NgbModal,
-    public translateService: TranslateService,
-    public appDataService: AppDataService,
-    public preferenceResolver: PreferenceResolver,
-    public tokenResourceService: TokenResource,
-    private router: Router) {
-  }
-
-  init(){
-    this.authenticationService = this.serviceInstanceService.authenticationService
-  }
-
-  updateNode() {
-    this.httpService.updateNodeResource(this.nodeResolver.dataModel).subscribe();
-  }
-
->>>>>>> Stashed changes
   str2Uint8Array(str: string) {
     let result = new Uint8Array(str.length);
     for (let i = 0; i < str.length; i++) {

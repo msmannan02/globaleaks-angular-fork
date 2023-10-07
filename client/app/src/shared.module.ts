@@ -79,22 +79,6 @@ import { ImageUploadDirective } from './shared/directive/image-upload.directive'
 import { ImageUploadComponent } from './shared/partials/image-upload/image-upload.component';
 import { EnableEncryptionComponent } from './shared/modals/enable-encryption/enable-encryption.component';
 import { AdminFileComponent } from './shared/partials/admin-file/admin-file.component';
-<<<<<<< Updated upstream
-=======
-import { ConfirmationComponent } from './shared/modals/confirmation/confirmation.component';
-import { QuestionnaireDuplicationComponent } from './shared/modals/questionnaire-duplication/questionnaire-duplication.component';
-import { AddOptionHintComponent } from './shared/modals/add-option-hint/add-option-hint.component';
-import { TriggerReceiverComponent } from './shared/modals/trigger-receiver/trigger-receiver.component';
-import { AssignScorePointsComponent } from './shared/modals/assign-score-points/assign-score-points.component';
-import { TipOperationFileIdentityAccessReplyComponent } from './shared/modals/tip-operation-file-identity-access-reply/tip-operation-file-identity-access-reply.component';
-import { DemoComponent } from './shared/partials/demo/demo.component';
-import { MessageconsoleComponent } from './shared/partials/messageconsole/messageconsole.component';
-import { AcceptAgreementComponent } from './shared/modals/accept-agreement/accept-agreement.component';
-import { DisclaimerComponent } from './shared/modals/disclaimer/disclaimer.component';
-import { SecurityAwarenessConfidentialityComponent } from './shared/modals/security-awareness-confidentiality/security-awareness-confidentiality.component';
-import { TransferAccessComponent } from './shared/modals/transfer-access/transfer-access.component';
-import { BlankComponent } from './shared/blank/blank.component';
->>>>>>> Stashed changes
 
 @NgModule({
     imports: [
@@ -187,7 +171,6 @@ import { BlankComponent } from './shared/blank/blank.component';
         EnableEncryptionComponent,
         AdminFileComponent
     ],
-<<<<<<< Updated upstream
     exports: [
         FooterComponent,
         ReceiptComponent,
@@ -230,138 +213,4 @@ import { BlankComponent } from './shared/blank/blank.component';
         EnableEncryptionComponent,
         AdminFileComponent
     ]})
-=======
-  declarations: [
-    FooterComponent,
-    ReceiptComponent,
-    TranslatorPipe,
-    Enable2fa,
-    PasswordChangeComponent,
-    PasswordMeterComponent,
-    PrivacybadgeComponent,
-    StripHtmlPipe,
-    DatePipe,
-    ReceiptvalidatorDirective,
-    TipInfoComponent,
-    TipQuestionnaireAnswersComponent,
-    TipSubmissionStatusComponent,
-    TipAdditionalQuestionnaireInviteComponent,
-    TipFieldComponent,
-    TipFieldAnswerEntryComponent,
-    DatePipe,
-    SplitPipe,
-    TipFilesWhistleblowerComponent,
-    WidgetWbfilesComponent,
-    ByteFmtPipe,
-    RfileUploadButtonComponent,
-    RfileUploadStatusComponent,
-    TipCommentsComponent,
-    TipMessagesComponent,
-    TipMessageComponent,
-    LimitToPipe,
-    OrderByPipe,
-    ScrollToBottomDirective,
-    TipReceiverListComponent,
-    FilterPipe,
-    RequestSupportComponent,
-    WhistleblowerIdentityFieldComponent,
-    RfilesUploadStatusComponent,
-    NgFormChangeDirective,
-    WbfilesComponent,
-    DisableCcpDirective,
-    SubdomainvalidatorDirective,
-    PasswordStrengthValidatorDirective,
-    PasswordStrengthValidatorDirective,
-    ImageUploadDirective,
-    ImageUploadComponent,
-    UserHomeComponent,
-    UserWarningsComponent,
-    GrantAccessComponent,
-    RevokeAccessComponent,
-    DeleteConfirmationComponent,
-    PreferencesComponent,
-    PreferenceTab1Component,
-    PreferenceTab2Component,
-    Enable2faComponent,
-    EncryptionRecoveryKeyComponent,
-    ConfirmationWithPasswordComponent,
-    ConfirmationWith2faComponent,
-    TipOperationFileIdentityAccessRequestComponent,
-    TipFilesReceiverComponent,
-    TipOperationSetReminderComponent,
-    TipOperationPostponeComponent,
-    FileViewComponent,
-    TipUploadWbfileComponent,
-    EnableEncryptionComponent,
-    AdminFileComponent,
-    ConfirmationComponent,
-    QuestionnaireDuplicationComponent,
-    AddOptionHintComponent,
-    TriggerReceiverComponent,
-    AssignScorePointsComponent,
-    TipOperationFileIdentityAccessReplyComponent,
-    DemoComponent,
-    MessageconsoleComponent,
-    MessageconsoleComponent,
-    AcceptAgreementComponent,
-    TransferAccessComponent,
-    SecurityAwarenessConfidentialityComponent,
-    DisclaimerComponent,
-    BlankComponent
-  ],
-  exports: [
-    FooterComponent,
-    ReceiptComponent,
-    TranslatorPipe,
-    PrivacybadgeComponent,
-    Enable2fa,
-    PasswordChangeComponent,
-    StripHtmlPipe,
-    FilterPipe,
-    OrderByPipe,
-    TipInfoComponent,
-    TipQuestionnaireAnswersComponent,
-    TipAdditionalQuestionnaireInviteComponent,
-    TipFieldComponent,
-    TipFilesWhistleblowerComponent,
-    WidgetWbfilesComponent,
-    TipCommentsComponent,
-    TipMessagesComponent,
-    TipReceiverListComponent,
-    RfileUploadStatusComponent,
-    RfileUploadButtonComponent,
-    RfilesUploadStatusComponent,
-    NgFormChangeDirective,
-    DisableCcpDirective,
-    SubdomainvalidatorDirective,
-    PasswordMeterComponent,
-    PasswordStrengthValidatorDirective,
-    ImageUploadDirective,
-    ImageUploadComponent,
-    UserHomeComponent,
-    UserWarningsComponent,
-    GrantAccessComponent,
-    RevokeAccessComponent,
-    DeleteConfirmationComponent,
-    DateRangeSelectorComponent,
-    TipOperationFileIdentityAccessRequestComponent,
-    TipFilesReceiverComponent,
-    TipOperationSetReminderComponent,
-    TipUploadWbfileComponent,
-    EnableEncryptionComponent,
-    AdminFileComponent,
-    ConfirmationComponent,
-    QuestionnaireDuplicationComponent,
-    AddOptionHintComponent,
-    TriggerReceiverComponent,
-    AssignScorePointsComponent,
-    PreferencesComponent,
-    DemoComponent,
-    MessageconsoleComponent,
-    AcceptAgreementComponent,
-    TransferAccessComponent,
-    SecurityAwarenessConfidentialityComponent,
-    DisclaimerComponent
-  ]})
->>>>>>> Stashed changes
 export class SharedModule { }

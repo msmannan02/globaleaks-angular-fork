@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-<<<<<<< Updated upstream
 import {LoginDataRef} from "../pages/auth/login/model/login-model";
 import {HttpService} from "../shared/services/http.service";
 import {Observable} from "rxjs";
@@ -9,49 +8,15 @@ import {LocationStrategy} from "@angular/common";
 import {HttpClient} from "@angular/common/http";
 import {AppDataService} from "../app-data.service";
 import {errorCodes} from "../models/app/error-code";
-=======
-import { LoginDataRef } from '../pages/auth/login/model/login-model';
-import { HttpService } from '../shared/services/http.service';
-import { Observable } from 'rxjs';
-import {ActivatedRoute, Router} from '@angular/router';
-import { AppDataService } from '../app-data.service';
-import { errorCodes } from '../models/app/error-code';
-import {AppConfigService} from "./app-config.service";
-import {ServiceInstanceService} from "../shared/services/service-instance.service";
->>>>>>> Stashed changes
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-<<<<<<< Updated upstream
   loginInProgress:Boolean = false;
   requireAuthCode:Boolean = false;
   loginData:LoginDataRef = new LoginDataRef();
   public session:any = undefined;
-=======
-  public session: any = undefined;
-
-  loginInProgress: boolean = false;
-  requireAuthCode: boolean = false;
-  loginData: LoginDataRef = new LoginDataRef();
-
-  public appConfigService:AppConfigService
-
-  constructor(private serviceInstanceService:ServiceInstanceService, private activatedRoute: ActivatedRoute, public httpService: HttpService, public rootDataService: AppDataService, private router: Router) {
-  }
-
-  init(){
-    this.appConfigService = this.serviceInstanceService.appConfigService
-
-    let json = window.sessionStorage.getItem("session")
-    if (json != null) {
-      this.session = JSON.parse(json);
-    } else {
-      this.session = undefined
-    }
-  }
->>>>>>> Stashed changes
 
   public reset() {
     this.loginInProgress = false;

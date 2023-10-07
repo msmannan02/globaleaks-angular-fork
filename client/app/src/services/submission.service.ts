@@ -1,18 +1,9 @@
-<<<<<<< Updated upstream
 import { Injectable } from '@angular/core';
 import {AppDataService} from "../app-data.service";
 import {AuthenticationService} from "./authentication.service";
 import {SubmissionResourceService} from "./submission-resource.service";
 import {HttpService} from "../shared/services/http.service";
 import {Router} from "@angular/router";
-=======
-import {Injectable} from '@angular/core';
-import {AppDataService} from '../app-data.service';
-import {AuthenticationService} from './authentication.service';
-import {SubmissionResourceService} from './submission-resource.service';
-import {HttpService} from '../shared/services/http.service';
-import {ServiceInstanceService} from "../shared/services/service-instance.service";
->>>>>>> Stashed changes
 
 @Injectable({
   providedIn: 'root'
@@ -25,34 +16,12 @@ export class SubmissionService {
   receivers :any=[];
   mandatory_receivers = 0;
   optional_receivers = 0;
-<<<<<<< Updated upstream
   selected_receivers:any = {};
   blocked = false
   uploads:any = {}
   errorComponentState:any = {}
 
   setContextReceivers(context_id:number){
-=======
-  selected_receivers: any = {};
-  blocked = false;
-  uploads: any = {};
-
-  public authenticationService: AuthenticationService
-
-  constructor(
-    private serviceInstanceService: ServiceInstanceService,
-    public httpService: HttpService,
-    public appDataService: AppDataService,
-    public submissionResourceService: SubmissionResourceService
-  ) {
-  }
-
-  init(){
-    this.authenticationService = this.serviceInstanceService.authenticationService
-  }
-
-  setContextReceivers(context_id: number) {
->>>>>>> Stashed changes
     this.context = this.appDataService.contexts_by_id[context_id];
 
     if (Object.keys(this.selected_receivers).length && this.context.allow_recipients_selection) {
