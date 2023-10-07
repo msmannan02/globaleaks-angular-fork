@@ -25,7 +25,19 @@ module.exports = function (grunt) {
       tmp: ["tmp", "dist"]
     },
     shell: {
+<<<<<<< Updated upstream
       command: 'cd app && npx ng build --configuration production'
+=======
+      build: {
+        command: 'npx ng build --configuration=production && echo "Build completed"'
+      },
+      babel: {
+        command: "npx ng build --configuration=production --source-map && nyc instrument dist instrument"
+      },
+      serve: {
+        command: "ng serve --proxy-config proxy.conf.json"
+      }
+>>>>>>> Stashed changes
     },
     copy: {
       sources: {
@@ -995,10 +1007,16 @@ module.exports = function (grunt) {
   // Run this to build your app. You should have run updateTranslations before you do so, if you have changed something in your translations.
   grunt.registerTask("build", ["clean", "copy:sources", "shell", "copy:build", "concat", "cssmin", "string-replace", "terser", "copy:package", "clean:tmp"]);
 
+<<<<<<< Updated upstream
   grunt.registerTask("instrument-client", [
     "clean",
     "copy:sources",
     "copy:coverage",
     "instrument"
   ]);
+=======
+  grunt.registerTask("serve", ["shell:serve"]);
+
+  grunt.registerTask("instrument-client", ["clean", "copy:sources", "shell:babel", "copy:instrument" , "copy:build", "string-replace", "copy:package", "shell:babel", "clean:tmp"]);
+>>>>>>> Stashed changes
 };

@@ -22,12 +22,24 @@ import {JobResolver} from "./shared/resolvers/job.resolver";
 import {TipsResolver} from "./shared/resolvers/tips.resolver";
 import { ContextsResolver } from './shared/resolvers/contexts.resolver';
 import { NotificationsResolver } from './shared/resolvers/notifications.resolver';
+<<<<<<< Updated upstream
+=======
+import { NetworkResolver } from './shared/resolvers/network.resolver';
+import { RedirectsResolver } from './shared/resolvers/redirects.resolver';
+import { FieldtemplatesResolver } from './shared/resolvers/fieldtemplates.resolver';
+import {TitleResolver} from "./shared/resolvers/title-resolver.resolver";
+import { StatuseResolver } from './shared/resolvers/statuses.resolver';
+import {CustodianRoutingModule} from "./pages/custodian/custodian-routing.module";
+import {IarsResolver} from "./shared/resolvers/iars.resolver";
+import {BlankComponent} from "./shared/blank/blank.component";
+>>>>>>> Stashed changes
 
 
 const routes: Routes = [
   {
     path: 'routing',
     pathMatch: 'full',
+    component:BlankComponent
   },
   {
     path: '',

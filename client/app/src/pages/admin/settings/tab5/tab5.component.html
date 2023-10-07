@@ -9,7 +9,7 @@
 
         <div class="form-group">
             <label>
-                <input [(ngModel)]="node.dataModel.encryption" type="checkbox" (ngModelChange)="enableEncryption()"
+                <input name="node.dataModel.encryption" [(ngModel)]="node.dataModel.encryption" type="checkbox" (ngModelChange)="enableEncryption()"
                     [disabled]="node.dataModel.encryption" />
                 <span>{{'Enable encryption' | translate}}</span>
             </label>
@@ -18,7 +18,7 @@
         <div *ngIf="node.dataModel.encryption">
             <div class="form-group">
                 <label>
-                    <input [(ngModel)]="node.dataModel.escrow" type="checkbox" (ngModelChange)="toggleEscrow()"
+                    <input name="node.dataModel.escrow" [(ngModel)]="node.dataModel.escrow" type="checkbox" (ngModelChange)="toggleEscrow()"
                         [disabled]="node.dataModel.escrow && !preference.dataModel.escrow" />
                     <span>{{'Enable administrators to change user passwords' | translate}}</span>
                 </label>
@@ -42,7 +42,7 @@
 
         <div class="form-group">
             <label>
-                <input [(ngModel)]="node.dataModel.pgp" type="checkbox" />
+                <input name="node.dataModel.pgp" [(ngModel)]="node.dataModel.pgp" type="checkbox" />
                 <span>{{ 'Enable PGP' | translate }}</span>
             </label>
         </div>
@@ -50,14 +50,14 @@
 
         <div class="form-group">
             <label>
-                <input [(ngModel)]="node.dataModel.simplified_login" type="checkbox" />
+                <input name="node.dataModel.simplified_login" [(ngModel)]="node.dataModel.simplified_login" type="checkbox" />
                 <span>{{ 'Enable simplified login' | translate }}</span>
             </label>
         </div>
 
         <div class="form-group">
             <label>
-                <input [(ngModel)]="node.dataModel.allow_indexing" type="checkbox" />
+                <input name="node.dataModel.allow_indexing" [(ngModel)]="node.dataModel.allow_indexing" type="checkbox" />
                 <span>{{ 'Enable search engines indexing' | translate }}</span>
             </label>
         </div>
@@ -65,7 +65,7 @@
 
         <div class="form-group">
             <label>{{ 'Default questionnaire' | translate }}</label>
-            <select class="form-control" [(ngModel)]="node.dataModel.default_questionnaire">
+            <select name="node.dataModel.default_questionnaire" class="form-control" [(ngModel)]="node.dataModel.default_questionnaire">
                 <option [value]="item.id" *ngFor="let item of questionnaireData">{{ item.name }}</option>
             </select>
         </div>
@@ -73,7 +73,7 @@
         <div class="form-group">
             <label>{{ 'Text shown on top of the interface for selecting channels' | translate }}</label>
             <div>
-                <textarea class="form-control" [(ngModel)]="node.dataModel.contexts_clarification"></textarea>
+                <textarea name="node.dataModel.contexts_clarification" class="form-control" [(ngModel)]="node.dataModel.contexts_clarification"></textarea>
             </div>
         </div>
 

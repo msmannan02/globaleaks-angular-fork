@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 /* Custom styles for NGBootstrap datepicker */
 ngb-datepicker{
   /* top: 35px !;
@@ -166,3 +167,8 @@ ngbd-datepicker-range{
 
 /* NG SELECT */
 .input-group ng-select{ width: calc(100% - 52px);}
+=======
+.alert-secondary{
+    background-color: #f4f4f4;
+}
+>>>>>>> Stashed changes

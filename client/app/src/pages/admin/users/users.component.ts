@@ -1,5 +1,9 @@
+<<<<<<< Updated upstream
 import { Component, OnInit } from '@angular/core';
 import { userResolverModel } from 'app/src/models/resolvers/userResolverModel';
+=======
+import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild, ChangeDetectorRef } from '@angular/core';
+>>>>>>> Stashed changes
 import { NodeResolver } from 'app/src/shared/resolvers/node.resolver';
 import { TenantsResolver } from 'app/src/shared/resolvers/tenants.resolver';
 import { HttpService } from 'app/src/shared/services/http.service';
@@ -13,6 +17,7 @@ import { PreferenceResolver } from 'app/src/shared/resolvers/preference.resolver
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css']
 })
+<<<<<<< Updated upstream
 export class UsersComponent implements OnInit{
   showAddUser = false;
   tenantData: any = {}
@@ -20,9 +25,23 @@ export class UsersComponent implements OnInit{
   new_user: any = {};
   editing = false;
   protected readonly Constants = Constants;
+=======
+export class UsersComponent implements AfterViewInit, OnInit {
+  @ViewChild('tab1') tab1!: TemplateRef<any>;
+  @ViewChild('tab2') tab2!: TemplateRef<any>;
+  tabs: any[];
+  nodeData: any;
+  active: string;
+
+  constructor(
+    public node: NodeResolver,
+    private cdr: ChangeDetectorRef
+  ) { }
+>>>>>>> Stashed changes
 
   constructor(public preference:PreferenceResolver,public httpService: HttpService,public authenticationService: AuthenticationService, public node: NodeResolver,public users:UsersResolver, public tenants: TenantsResolver, public utilsService: UtilsService) { }
 
+<<<<<<< Updated upstream
   ngOnInit(): void {
     if(this.users.dataModel){
       this.usersData = this.users.dataModel
@@ -60,5 +79,25 @@ export class UsersComponent implements OnInit{
   }
   toggleAddUser(): void {
     this.showAddUser = !this.showAddUser;
+=======
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.active = "Users";
+
+      this.nodeData = this.node;
+      this.tabs = [
+        {
+          title: 'Users',
+          component: this.tab1
+        },
+        {
+          title: 'Options',
+          component: this.tab2
+        },
+      ];
+
+      this.cdr.detectChanges();
+    });
+>>>>>>> Stashed changes
   }
 }

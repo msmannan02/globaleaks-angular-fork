@@ -5,17 +5,65 @@ import {UtilsService} from "../shared/services/utils.service";
 import {AppDataService} from "../app-data.service";
 import {FieldUtilitiesService} from "../shared/services/field-utilities.service";
 import {TranslationService} from "./translation.service";
+<<<<<<< Updated upstream
 import {Route, Router,NavigationEnd, ActivatedRoute} from "@angular/router";
 import {PreferenceResolver} from "../shared/resolvers/preference.resolver";
+=======
+import {Router,NavigationEnd, ActivatedRoute} from "@angular/router";
+import {AuthenticationService} from "./authentication.service";
+import {ServiceInstanceService} from "../shared/services/service-instance.service";
+>>>>>>> Stashed changes
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppConfigService implements OnInit{
   public sidebar: string= '';
+<<<<<<< Updated upstream
   initTranslation(){
     this.translateService.setDefaultLang('en');
     this.translateService.use('en');
+=======
+  public header_title: string= '';
+
+  private translationService:TranslationService
+  public authenticationService:AuthenticationService
+  public utilsService:UtilsService
+
+  constructor(private serviceInstanceService:ServiceInstanceService, private router: Router, private activatedRoute: ActivatedRoute, public appServices: HttpService, public translateService: TranslateService, public appDataService:AppDataService, public fieldUtilitiesService:FieldUtilitiesService)  {
+  }
+
+  init(){
+    this.translationService = this.serviceInstanceService.translationService
+    this.authenticationService = this.serviceInstanceService.authenticationService
+    this.utilsService = this.serviceInstanceService.utilsService
+
+    this.activatedRoute.paramMap.subscribe(params => {
+      let currentURL = window.location.hash.substring(2).split("?")[0]; // Use window.location for full URL including query parameters
+      this.initRoutes(currentURL)
+      this.localInitialization()
+    });
+  }
+
+  initRoutes(currentURL:string){
+    if (this.authenticationService && this.authenticationService.session && currentURL != "login") {
+      const queryParams = this.activatedRoute.snapshot.queryParams;
+      let param = localStorage.getItem("default_language")
+      if(param){
+        queryParams['lang'] = param
+      }
+
+      if (this.authenticationService.session.role == "admin") {
+        this.router.navigate(["/" + this.authenticationService.session.role], { queryParams }).then();
+      } else if (this.authenticationService.session.role == "receiver") {
+        this.router.navigate(["/recipient"], { queryParams }).then();
+      } else if (this.authenticationService.session.role == "custodian") {
+        this.router.navigate(["/custodian"], { queryParams }).then();
+      }
+    }else {
+      localStorage.removeItem("default_language")
+    }
+>>>>>>> Stashed changes
   }
 
   public setHomepage() {
@@ -115,12 +163,22 @@ export class AppConfigService implements OnInit{
           }
         });
 
+<<<<<<< Updated upstream
         if(this.preferenceResolver.dataModel && this.preferenceResolver.dataModel.language){
           setTimeout(() => {
             this.glTranslationService.onChange(this.preferenceResolver.dataModel.language)
           }, 250);
         }else {
           this.glTranslationService.onChange(this.rootDataService.public.node.default_language)
+=======
+        let storageLanguage = localStorage.getItem("default_language")
+        if(languageInit){
+          if(!storageLanguage){
+            storageLanguage = self.appDataService.public.node.default_language
+            localStorage.setItem("default_language", storageLanguage)
+          }
+          this.translationService.onChange(storageLanguage)
+>>>>>>> Stashed changes
         }
 
         this.setTitle()
@@ -176,6 +234,7 @@ export class AppConfigService implements OnInit{
     });
   }
 
+<<<<<<< Updated upstream
   reloadRoute(newPath: string) {
     const promise = () => {
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
@@ -187,6 +246,17 @@ export class AppConfigService implements OnInit{
       });
     };
     this.localInitialization(promise)
+=======
+  loadAdminRoute(newPath: string) {
+    this.appDataService.public.node.wizard_done = true
+    this.appDataService.public.node.languages_enabled = []
+    this.appDataService.public.node.name = "Globaleaks"
+
+    this.router.navigateByUrl(newPath).then(() => {
+      this.sidebar='admin-sidebar'
+      this.setTitle()
+    });
+>>>>>>> Stashed changes
   }
 
 
