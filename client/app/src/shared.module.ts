@@ -91,6 +91,7 @@ import { AcceptAgreementComponent } from './shared/modals/accept-agreement/accep
 import { DisclaimerComponent } from './shared/modals/disclaimer/disclaimer.component';
 import { SecurityAwarenessConfidentialityComponent } from './shared/modals/security-awareness-confidentiality/security-awareness-confidentiality.component';
 import { TransferAccessComponent } from './shared/modals/transfer-access/transfer-access.component';
+import { BlankComponent } from './shared/partials/blank/blank.component';
 
 @NgModule({
     imports: [
@@ -195,7 +196,8 @@ import { TransferAccessComponent } from './shared/modals/transfer-access/transfe
     AcceptAgreementComponent,
     TransferAccessComponent,
     SecurityAwarenessConfidentialityComponent,
-    DisclaimerComponent
+    DisclaimerComponent,
+    BlankComponent
   ],
   exports: [
     FooterComponent,

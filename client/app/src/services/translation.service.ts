@@ -14,12 +14,12 @@ export class TranslationService {
   language = "";
 
   constructor(
-    public preferenceResolver: PreferenceResolver,
-    public translateService: TranslateService,
-    public appDataService: AppDataService,
-    public appConfigService: AppConfigService,
-    private router: Router,
-    public utilsService:UtilsService
+    // public preferenceResolver: PreferenceResolver,
+    // public translateService: TranslateService,
+    // public appDataService: AppDataService,
+    // public appConfigService: AppConfigService,
+    // private router: Router,
+    // public utilsService:UtilsService
   ) {
   }
 
@@ -27,9 +27,9 @@ export class TranslationService {
   }
 
   onChange(changedLanguage: string) {
-    this.language = changedLanguage;
-    this.translateService.use(this.language).subscribe(() => {
-      this.translateService.getTranslation(this.language).subscribe();
-    });
+    // this.language = changedLanguage;
+    // this.translateService.use(this.language).subscribe(() => {
+    //   this.translateService.getTranslation(this.language).subscribe();
+    // });
   }
 }

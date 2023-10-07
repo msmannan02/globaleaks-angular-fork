@@ -29,12 +29,14 @@ import {TitleResolver} from "./shared/resolvers/title-resolver.resolver";
 import { StatuseResolver } from './shared/resolvers/statuses.resolver';
 import {CustodianRoutingModule} from "./pages/custodian/custodian-routing.module";
 import {IarsResolver} from "./shared/resolvers/iars.resolver";
+import {BlankComponent} from "./shared/partials/blank/blank.component";
 
 
 const routes: Routes = [
   {
     path: 'blank',
     pathMatch: 'full',
+    component: BlankComponent
   },
   {
     path: '',

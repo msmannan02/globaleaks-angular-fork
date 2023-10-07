@@ -6,9 +6,7 @@ import {AppDataService} from "../app-data.service";
 import {FieldUtilitiesService} from "../shared/services/field-utilities.service";
 import {TranslationService} from "./translation.service";
 import {Router,NavigationEnd, ActivatedRoute} from "@angular/router";
-import {PreferenceResolver} from "../shared/resolvers/preference.resolver";
 import {AuthenticationService} from "./authentication.service";
-import * as url from "url";
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +15,7 @@ export class AppConfigService{
   public sidebar: string= '';
   public header_title: string= '';
 
-  constructor(private appConfigService: AppConfigService, private preferenceResolver:PreferenceResolver, private router: Router, private activatedRoute: ActivatedRoute, public appServices: HttpService, public translateService: TranslateService, public utilsService:UtilsService, public authenticationService:AuthenticationService, public appDataService:AppDataService, public fieldUtilitiesService:FieldUtilitiesService, private glTranslationService:TranslationService)  {
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, public appServices: HttpService, public translateService: TranslateService, public utilsService:UtilsService, public authenticationService:AuthenticationService, public appDataService:AppDataService, public fieldUtilitiesService:FieldUtilitiesService, private glTranslationService:TranslationService)  {
 
     this.activatedRoute.paramMap.subscribe(params => {
       let currentURL = window.location.hash.substring(2).split("?")[0]; // Use window.location for full URL including query parameters
@@ -203,7 +201,7 @@ export class AppConfigService{
     this.appDataService.public.node.name = "Globaleaks"
 
     this.router.navigateByUrl(newPath).then(() => {
-      this.appConfigService.sidebar='admin-sidebar'
+      this.sidebar='admin-sidebar'
       this.setTitle()
     });
   }
