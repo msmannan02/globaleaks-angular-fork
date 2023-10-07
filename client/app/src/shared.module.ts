@@ -15,7 +15,7 @@ import {
     NgbPaginationNext, NgbPaginationNumber, NgbPaginationPages,
     NgbPaginationPrevious,
     NgbNav, NgbNavItem, NgbNavLink, NgbNavContent,
-    NgbProgressbar,NgbDatepickerModule,NgbDropdownModule, NgbTooltipModule
+    NgbProgressbar,NgbDatepickerModule,NgbDropdownModule
 } from "@ng-bootstrap/ng-bootstrap";
 import { PrivacybadgeComponent } from './shared/partials/privacybadge/privacybadge.component';
 import {MarkdownModule} from "ngx-markdown";
@@ -79,6 +79,8 @@ import { ImageUploadDirective } from './shared/directive/image-upload.directive'
 import { ImageUploadComponent } from './shared/partials/image-upload/image-upload.component';
 import { EnableEncryptionComponent } from './shared/modals/enable-encryption/enable-encryption.component';
 import { AdminFileComponent } from './shared/partials/admin-file/admin-file.component';
+<<<<<<< Updated upstream
+=======
 import { ConfirmationComponent } from './shared/modals/confirmation/confirmation.component';
 import { QuestionnaireDuplicationComponent } from './shared/modals/questionnaire-duplication/questionnaire-duplication.component';
 import { AddOptionHintComponent } from './shared/modals/add-option-hint/add-option-hint.component';
@@ -91,6 +93,8 @@ import { AcceptAgreementComponent } from './shared/modals/accept-agreement/accep
 import { DisclaimerComponent } from './shared/modals/disclaimer/disclaimer.component';
 import { SecurityAwarenessConfidentialityComponent } from './shared/modals/security-awareness-confidentiality/security-awareness-confidentiality.component';
 import { TransferAccessComponent } from './shared/modals/transfer-access/transfer-access.component';
+import { BlankComponent } from './shared/blank/blank.component';
+>>>>>>> Stashed changes
 
 @NgModule({
     imports: [
@@ -117,9 +121,116 @@ import { TransferAccessComponent } from './shared/modals/transfer-access/transfe
         NgbNavItem,
         NgbNavLink,
         NgbNavContent,
-        NgbDropdownModule,
-        NgbTooltipModule
+        NgbDropdownModule
     ],
+    declarations: [
+        FooterComponent,
+        ReceiptComponent,
+        TranslatorPipe,
+        Enable2fa,
+        PasswordChangeComponent,
+        PasswordMeterComponent,
+        PrivacybadgeComponent,
+        StripHtmlPipe,
+        DatePipe,
+        ReceiptvalidatorDirective,
+        TipInfoComponent,
+        TipQuestionnaireAnswersComponent,
+        TipSubmissionStatusComponent,
+        TipAdditionalQuestionnaireInviteComponent,
+        TipFieldComponent,
+        TipFieldAnswerEntryComponent,
+        DatePipe,
+        SplitPipe,
+        TipFilesWhistleblowerComponent,
+        WidgetWbfilesComponent,
+        ByteFmtPipe,
+        RfileUploadButtonComponent,
+        RfileUploadStatusComponent,
+        TipCommentsComponent,
+        TipMessagesComponent,
+        TipMessageComponent,
+        LimitToPipe,
+        OrderByPipe,
+        ScrollToBottomDirective,
+        TipReceiverListComponent,
+        FilterPipe,
+        RequestSupportComponent,
+        WhistleblowerIdentityFieldComponent,
+        RfilesUploadStatusComponent,
+        NgFormChangeDirective,
+        WbfilesComponent,
+        DisableCcpDirective,
+        SubdomainvalidatorDirective,
+        PasswordStrengthValidatorDirective,
+        PasswordStrengthValidatorDirective,
+        ImageUploadDirective,
+        ImageUploadComponent,
+        UserHomeComponent,
+        UserWarningsComponent,
+        GrantAccessComponent,
+        RevokeAccessComponent,
+        DeleteConfirmationComponent,
+        PreferencesComponent,
+        PreferenceTab1Component,
+        PreferenceTab2Component,
+        Enable2faComponent,
+        EncryptionRecoveryKeyComponent,
+        ConfirmationWithPasswordComponent,
+        ConfirmationWith2faComponent,
+        TipOperationFileIdentityAccessRequestComponent,
+        TipFilesReceiverComponent,
+        TipOperationSetReminderComponent,
+        TipOperationPostponeComponent,
+        FileViewComponent,
+        TipUploadWbfileComponent,
+        EnableEncryptionComponent,
+        AdminFileComponent
+    ],
+<<<<<<< Updated upstream
+    exports: [
+        FooterComponent,
+        ReceiptComponent,
+        TranslatorPipe,
+        PrivacybadgeComponent,
+        Enable2fa,
+        PasswordChangeComponent,
+        StripHtmlPipe,
+        FilterPipe,
+        OrderByPipe,
+        TipInfoComponent,
+        TipQuestionnaireAnswersComponent,
+        TipAdditionalQuestionnaireInviteComponent,
+        TipFieldComponent,
+        TipFilesWhistleblowerComponent,
+        WidgetWbfilesComponent,
+        TipCommentsComponent,
+        TipMessagesComponent,
+        TipReceiverListComponent,
+        RfileUploadStatusComponent,
+        RfileUploadButtonComponent,
+        RfilesUploadStatusComponent,
+        NgFormChangeDirective,
+        DisableCcpDirective,
+        SubdomainvalidatorDirective,
+        PasswordMeterComponent,
+        PasswordStrengthValidatorDirective,
+        ImageUploadDirective,
+        ImageUploadComponent,
+        UserHomeComponent,
+        UserWarningsComponent,
+        GrantAccessComponent,
+        RevokeAccessComponent,
+        DeleteConfirmationComponent,
+        DateRangeSelectorComponent,
+        TipOperationFileIdentityAccessRequestComponent,
+        TipFilesReceiverComponent,
+        TipOperationSetReminderComponent,
+        TipUploadWbfileComponent,
+        EnableEncryptionComponent,
+        AdminFileComponent
+    ]})
+=======
   declarations: [
     FooterComponent,
     ReceiptComponent,
@@ -195,7 +306,8 @@ import { TransferAccessComponent } from './shared/modals/transfer-access/transfe
     AcceptAgreementComponent,
     TransferAccessComponent,
     SecurityAwarenessConfidentialityComponent,
-    DisclaimerComponent
+    DisclaimerComponent,
+    BlankComponent
   ],
   exports: [
     FooterComponent,
@@ -251,4 +363,5 @@ import { TransferAccessComponent } from './shared/modals/transfer-access/transfe
     SecurityAwarenessConfidentialityComponent,
     DisclaimerComponent
   ]})
+>>>>>>> Stashed changes
 export class SharedModule { }

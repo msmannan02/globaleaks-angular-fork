@@ -22,6 +22,8 @@ import {JobResolver} from "./shared/resolvers/job.resolver";
 import {TipsResolver} from "./shared/resolvers/tips.resolver";
 import { ContextsResolver } from './shared/resolvers/contexts.resolver';
 import { NotificationsResolver } from './shared/resolvers/notifications.resolver';
+<<<<<<< Updated upstream
+=======
 import { NetworkResolver } from './shared/resolvers/network.resolver';
 import { RedirectsResolver } from './shared/resolvers/redirects.resolver';
 import { FieldtemplatesResolver } from './shared/resolvers/fieldtemplates.resolver';
@@ -29,18 +31,20 @@ import {TitleResolver} from "./shared/resolvers/title-resolver.resolver";
 import { StatuseResolver } from './shared/resolvers/statuses.resolver';
 import {CustodianRoutingModule} from "./pages/custodian/custodian-routing.module";
 import {IarsResolver} from "./shared/resolvers/iars.resolver";
+import {BlankComponent} from "./shared/blank/blank.component";
+>>>>>>> Stashed changes
 
 
 const routes: Routes = [
   {
-    path: 'blank',
+    path: 'routing',
     pathMatch: 'full',
+    component:BlankComponent
   },
   {
     path: '',
     canActivate: [Pageguard],
     component: HomeComponent,
-    data: { pageTitle: ''},
     resolve: {
     },
     pathMatch: 'full',
@@ -50,7 +54,7 @@ const routes: Routes = [
     path: 'login',
     
     resolve: {
-
+      PreferenceResolver
     },
     loadChildren: () => AuthRoutingModule,
   },
@@ -65,6 +69,7 @@ const routes: Routes = [
   {
     path: 'action',
     resolve: {
+      PreferenceResolver
     },
     loadChildren: () => ActionRoutingModule,
   },
@@ -72,7 +77,7 @@ const routes: Routes = [
     path: 'recipient',
     canActivate: [SessionGuard],
     resolve: {
-      PreferenceResolver,NodeResolver,RtipsResolver
+       PreferenceResolver,NodeResolver,RtipsResolver
     },
     loadChildren: () => RecipientRoutingModule,
     data:{
@@ -80,25 +85,14 @@ const routes: Routes = [
     }
   },
   {
-    path: 'custodian',
-    canActivate: [SessionGuard],
-    resolve: {
-      PreferenceResolver,NodeResolver, RtipsResolver, IarsResolver
-    },
-    loadChildren: () => CustodianRoutingModule,
-    data:{
-      sidebar: 'custodian-sidebar'
-    }
-  },
-  {
     path: 'admin',
     canActivate: [SessionGuard],
     resolve: {
-      NodeResolver,PreferenceResolver,UsersResolver,QuestionnairesResolver, ContextsResolver, AuditlogResolver, JobResolver, TipsResolver,NotificationsResolver,NetworkResolver,RedirectsResolver,FieldtemplatesResolver,StatuseResolver
+      NodeResolver,PreferenceResolver,UsersResolver,QuestionnairesResolver, ContextsResolver,AuditlogResolver, JobResolver, TipsResolver,NotificationsResolver
     },
     loadChildren: () => AdminRoutingModule,
     data:{
-      sidebar: 'admin-sidebar', pageTitle: 'Home'
+      sidebar: 'admin-sidebar'
     }
   },
   {
@@ -111,10 +105,8 @@ const routes: Routes = [
   },
   {
     path: 'wizard',
-    data: { pageTitle: 'Platform wizard' },
     resolve: {
-      PreferenceResolver,
-      title: TitleResolver
+      PreferenceResolver
     },
     loadChildren: () => WizardRoutingModule,
   },

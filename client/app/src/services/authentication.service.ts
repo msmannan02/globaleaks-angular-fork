@@ -1,4 +1,15 @@
 import { Injectable } from '@angular/core';
+<<<<<<< Updated upstream
+import {LoginDataRef} from "../pages/auth/login/model/login-model";
+import {HttpService} from "../shared/services/http.service";
+import {Observable} from "rxjs";
+import {Router} from "@angular/router";
+import {TranslateService} from "@ngx-translate/core";
+import {LocationStrategy} from "@angular/common";
+import {HttpClient} from "@angular/common/http";
+import {AppDataService} from "../app-data.service";
+import {errorCodes} from "../models/app/error-code";
+=======
 import { LoginDataRef } from '../pages/auth/login/model/login-model';
 import { HttpService } from '../shared/services/http.service';
 import { Observable } from 'rxjs';
@@ -6,18 +17,33 @@ import {ActivatedRoute, Router} from '@angular/router';
 import { AppDataService } from '../app-data.service';
 import { errorCodes } from '../models/app/error-code';
 import {AppConfigService} from "./app-config.service";
+import {ServiceInstanceService} from "../shared/services/service-instance.service";
+>>>>>>> Stashed changes
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
+<<<<<<< Updated upstream
+  loginInProgress:Boolean = false;
+  requireAuthCode:Boolean = false;
+  loginData:LoginDataRef = new LoginDataRef();
+  public session:any = undefined;
+=======
   public session: any = undefined;
 
   loginInProgress: boolean = false;
   requireAuthCode: boolean = false;
   loginData: LoginDataRef = new LoginDataRef();
 
-  constructor(private activatedRoute: ActivatedRoute, public httpService: HttpService, public rootDataService: AppDataService,public appConfigService:AppConfigService, private router: Router) {
+  public appConfigService:AppConfigService
+
+  constructor(private serviceInstanceService:ServiceInstanceService, private activatedRoute: ActivatedRoute, public httpService: HttpService, public rootDataService: AppDataService, private router: Router) {
+  }
+
+  init(){
+    this.appConfigService = this.serviceInstanceService.appConfigService
+
     let json = window.sessionStorage.getItem("session")
     if (json != null) {
       this.session = JSON.parse(json);
@@ -25,6 +51,7 @@ export class AuthenticationService {
       this.session = undefined
     }
   }
+>>>>>>> Stashed changes
 
   public reset() {
     this.loginInProgress = false;
@@ -33,72 +60,78 @@ export class AuthenticationService {
   };
 
   deleteSession() {
-    this.session = null;
+    this.session = null
     window.sessionStorage.removeItem("session");
   };
 
-  isSessionActive() {
-    return this.session;
+  isSessionActive(){
+    return this.session
   }
 
-  routeLogin() {
-    this.loginRedirect();
+  routeLogin(){
+    this.loginRedirect(true);
   }
 
-  setSession(response: any) {
+  setSession(response:any){
     this.session = response;
+
     if (this.session.role !== "whistleblower") {
       let role = this.session.role === "receiver" ? "recipient" : this.session.role;
 
       this.session.homepage = "/" + role + "/home";
       this.session.preferencespage = "/" + role + "/preferences";
-      window.sessionStorage.setItem("session", JSON.stringify(this.session));
+      window.sessionStorage.setItem("session",  JSON.stringify(this.session));
     }
   }
 
-  resetPassword(username: string) {
-    const param = JSON.stringify({ "username": username });
-    this.httpService.requestResetLogin(param).subscribe(
+  resetPassword(username:string){
+
+    const param=JSON.stringify({"username":username});
+    this.httpService.requestResetLogin(param).subscribe
+    (
       {
-        next: () => {
-          this.router.navigate(['/login/passwordreset/requested']).then();
+        next: response => {
+          this.router.navigate(['/login/passwordreset/requested']).then(r => {});
+        },
+        error: (error: any) => {
         }
       }
     );
   }
 
-  login(tid?: any, username?: any, password?: any, authcode?: any, authtoken?: any, callback?: () => void) {
+  login(tid?:any, username?:any, password?:any, authcode?:any, authtoken?:any, callback?: () => void){
 
-    if (authtoken === undefined) {
+    if(authtoken === undefined){
       authtoken = "";
     }
-    if (authcode === undefined) {
+    if(authcode === undefined){
       authcode = "";
     }
 
-    let requestObservable: Observable<any>;
     this.loginInProgress = true;
+
+    let requestObservable:Observable<any>
     this.rootDataService.showLoadingPanel = true;
     if (authtoken) {
-      requestObservable = this.httpService.requestAuthTokenLogin(JSON.stringify({ "authtoken": authtoken }));
+      requestObservable = this.httpService.requestAuthTokenLogin(JSON.stringify({"authtoken":authtoken}));
     } else {
       if (username === "whistleblower") {
-        password = password.replace(/\D/g, "");
-        requestObservable = this.httpService.requestWhistleBlowerLogin(JSON.stringify({ "receipt": password }));
+        password = password.replace(/\D/g,"");
+        requestObservable = this.httpService.requestWhistleBlowerLogin(JSON.stringify({"receipt": password}));
       } else {
-        requestObservable = this.httpService.requestGeneralLogin(JSON.stringify({ "tid": tid, "username": username, "password": password, "authcode": authcode }));
+        requestObservable = this.httpService.requestGeneralLogin(JSON.stringify({"tid":tid,"username":username,"password":password,"authcode":authcode}));
       }
     }
 
     requestObservable.subscribe(
       {
-        next: (response: any) => {
+        next: response => {
           this.rootDataService.showLoadingPanel = false
           this.reset();
           this.setSession(response)
 
           if ("redirect" in response) {
-            this.router.navigate([response.data.redirect]).then();
+            this.router.navigate([response.data.redirect]).then(r => {});
           }
 
           let src = location.search;
@@ -108,16 +141,11 @@ export class AuthenticationService {
             if (this.session.role === "whistleblower") {
               if (password) {
                 this.rootDataService.receipt = password
-                this.rootDataService.page = "tippage";
-                this.router.navigate(['/']).then();
+                this.rootDataService.page="tippage";
+                this.router.navigate(['/']).then(r => {});
               }
             } else {
-              if(!callback){
-                this.router.navigate([this.session.homepage], {
-                  queryParams: this.activatedRoute.snapshot.queryParams,
-                  queryParamsHandling: 'merge'
-                });
-              }
+              this.router.navigate([this.session.homepage]).then(r => {});
             }
           }
           if (callback) {
@@ -134,51 +162,65 @@ export class AuthenticationService {
               this.reset();
             }
           }
-
           this.rootDataService.errorCodes = new errorCodes(error.error.error_message, error.error.error_code, error.error.arguments);
         }
       }
     );
   }
 
-  public getHeader(confirmation?: string) {
+  public getHeader(confirmation?:string){
     let header = new Map<string, string>();
     if (this.session) {
       header.set("X-Session", this.session.id);
       header.set("Accept-Language", "en");
     }
-    if (confirmation) {
+    if(confirmation){
       header.set("X-Confirmation", confirmation);
     }
 
     return header;
   }
 
-  logout(callback?: () => void) {
-    let requestObservable = this.httpService.requestDeleteUserSession();
+  logout() {
+    let requestObservable = this.httpService.requestDeleteSession();
     requestObservable.subscribe(
       {
-        next: () => {
+        next: response => {
+          let xx = response.data;
           if (this.session.role === "whistleblower") {
             this.deleteSession();
-            this.rootDataService.page = "homepage";
+            this.rootDataService.page="homepage";
           } else {
             this.deleteSession();
-            this.loginRedirect();
+            this.loginRedirect(true);
           }
-          if(callback){
-            callback();
-          }
+        },
+        error: (error: any) => {
         }
       }
     );
   };
 
-  loginRedirect() {
+  loginRedirect(isLogout:boolean) {
     let source_path = location.pathname;
 
+
+    if (!isLogout) {
+      //location.assign("src", source_path);
+    }
+
     if (source_path !== "/login") {
-      this.router.navigateByUrl("/login").then()
+      location.replace("/login");
+      window.location.reload();
     }
   };
+
+  constructor(public httpService: HttpService, public rootDataService:AppDataService, private router: Router) {
+    let json = window.sessionStorage.getItem("session")
+    if(json!=null){
+      this.session = JSON.parse(json);
+    }else {
+      this.session = undefined
+    }
+  }
 }

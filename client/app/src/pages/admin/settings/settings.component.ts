@@ -1,26 +1,44 @@
-import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, TemplateRef, ViewChild, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { NodeResolver } from 'app/src/shared/resolvers/node.resolver';
-import {AuthenticationService} from "../../../services/authentication.service";
+<<<<<<< Updated upstream
+=======
+import { AuthenticationService } from "../../../services/authentication.service";
+
+>>>>>>> Stashed changes
 @Component({
   selector: 'src-settings',
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.css']
 })
-export class SettingsComponent implements AfterViewInit ,OnInit {
+export class SettingsComponent implements OnInit, AfterViewInit {
   @ViewChild('tab1') tab1!: TemplateRef<any>;
   @ViewChild('tab2') tab2!: TemplateRef<any>;
   @ViewChild('tab3') tab3!: TemplateRef<any>;
   @ViewChild('tab4') tab4!: TemplateRef<any>;
   @ViewChild('tab5') tab5!: TemplateRef<any>;
   tabs: any[];
+<<<<<<< Updated upstream
   nodeData: any
   active:string
-  constructor(public node: NodeResolver, public authenticationService:AuthenticationService) { }
+  constructor(public node: NodeResolver) { }
+=======
+  nodeData: any;
+  active: string;
+
+  constructor(
+    public node: NodeResolver,
+    public authenticationService: AuthenticationService,
+    private cdr: ChangeDetectorRef
+  ) { }
+
+>>>>>>> Stashed changes
   ngOnInit() { }
 
   ngAfterViewInit(): void {
-  this.active="Settings"
+    setTimeout(() => {
+      this.active = "Settings";
 
+<<<<<<< Updated upstream
     this.nodeData = this.node
     this.tabs = [
       {
@@ -28,25 +46,43 @@ export class SettingsComponent implements AfterViewInit ,OnInit {
         component: this.tab1
       },
     ];
-    if (this.authenticationService.session.role === "admin") {
+    if (this.node.authenticationService.session.role === "admin") {
       this.tabs = this.tabs.concat([
         {
-          title: 'Files',
+          title: 'Theme customization',
           component: this.tab2
         },
+=======
+      this.nodeData = this.node;
+      this.tabs = [
+>>>>>>> Stashed changes
         {
-          title: 'Languages',
-          component: this.tab3
+          title: 'Settings',
+          component: this.tab1
         },
-        {
-          title: 'Text customization',
-          component: this.tab4
-        },
-        {
-          title: 'Advanced',
-          component: this.tab5
-        }
-      ]);
-    }
+      ];
+      if (this.authenticationService.session.role === "admin") {
+        this.tabs = this.tabs.concat([
+          {
+            title: 'Files',
+            component: this.tab2
+          },
+          {
+            title: 'Languages',
+            component: this.tab3
+          },
+          {
+            title: 'Text customization',
+            component: this.tab4
+          },
+          {
+            title: 'Advanced',
+            component: this.tab5
+          }
+        ]);
+      }
+
+      this.cdr.detectChanges();
+    });
   }
 }

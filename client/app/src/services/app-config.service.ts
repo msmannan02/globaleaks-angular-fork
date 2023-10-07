@@ -1,23 +1,42 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {HttpService} from "../shared/services/http.service";
 import {TranslateService} from "@ngx-translate/core";
 import {UtilsService} from "../shared/services/utils.service";
 import {AppDataService} from "../app-data.service";
 import {FieldUtilitiesService} from "../shared/services/field-utilities.service";
 import {TranslationService} from "./translation.service";
-import {Router,NavigationEnd, ActivatedRoute} from "@angular/router";
+<<<<<<< Updated upstream
+import {Route, Router,NavigationEnd, ActivatedRoute} from "@angular/router";
 import {PreferenceResolver} from "../shared/resolvers/preference.resolver";
+=======
+import {Router,NavigationEnd, ActivatedRoute} from "@angular/router";
 import {AuthenticationService} from "./authentication.service";
-import * as url from "url";
+import {ServiceInstanceService} from "../shared/services/service-instance.service";
+>>>>>>> Stashed changes
 
 @Injectable({
   providedIn: 'root'
 })
-export class AppConfigService{
+export class AppConfigService implements OnInit{
   public sidebar: string= '';
+<<<<<<< Updated upstream
+  initTranslation(){
+    this.translateService.setDefaultLang('en');
+    this.translateService.use('en');
+=======
   public header_title: string= '';
 
-  constructor(private appConfigService: AppConfigService, private preferenceResolver:PreferenceResolver, private router: Router, private activatedRoute: ActivatedRoute, public appServices: HttpService, public translateService: TranslateService, public utilsService:UtilsService, public authenticationService:AuthenticationService, public appDataService:AppDataService, public fieldUtilitiesService:FieldUtilitiesService, private glTranslationService:TranslationService)  {
+  private translationService:TranslationService
+  public authenticationService:AuthenticationService
+  public utilsService:UtilsService
+
+  constructor(private serviceInstanceService:ServiceInstanceService, private router: Router, private activatedRoute: ActivatedRoute, public appServices: HttpService, public translateService: TranslateService, public appDataService:AppDataService, public fieldUtilitiesService:FieldUtilitiesService)  {
+  }
+
+  init(){
+    this.translationService = this.serviceInstanceService.translationService
+    this.authenticationService = this.serviceInstanceService.authenticationService
+    this.utilsService = this.serviceInstanceService.utilsService
 
     this.activatedRoute.paramMap.subscribe(params => {
       let currentURL = window.location.hash.substring(2).split("?")[0]; // Use window.location for full URL including query parameters
@@ -44,6 +63,7 @@ export class AppConfigService{
     }else {
       localStorage.removeItem("default_language")
     }
+>>>>>>> Stashed changes
   }
 
   public setHomepage() {
@@ -51,16 +71,26 @@ export class AppConfigService{
   };
 
   public setPage(page:string){
-    this.appDataService.page = page
+    this.rootDataService.page = page
   }
 
-  public localInitialization(languageInit = true, callback?: () => void){
+  hello(){
+
+  }
+
+  private localInitialization(callback?: () => void){
+
     this.appServices.getPublicResource().subscribe({
       next: data => {
-        this.appDataService.public = data.body;
+        this.rootDataService.public = data.body;
+
+        //this.translateService.setDefaultLang(this.rootDataService.public.node.default_language);
+        //this.translateService.use(this.rootDataService.public.node.default_language);
+        //this.utilsService.routeCheck()
+
         let elem
         if (window.location.pathname === "/") {
-          if (this.appDataService.public.node.css) {
+          if (this.rootDataService.public.node.css) {
             elem = document.getElementById("load-custom-css");
             if (elem === null) {
               elem = document.createElement("link");
@@ -72,7 +102,7 @@ export class AppConfigService{
             }
           }
 
-          if (this.appDataService.public.node.script) {
+          if (this.rootDataService.public.node.script) {
             elem = document.getElementById("load-custom-script");
             if (elem === null) {
               elem = document.createElement("script");
@@ -82,7 +112,7 @@ export class AppConfigService{
             }
           }
 
-          if (this.appDataService.public.node.favicon) {
+          if (this.rootDataService.public.node.favicon) {
             const element = window.document.getElementById("favicon");
             if (element !== null) {
               element.setAttribute("href", "s/favicon");
@@ -90,142 +120,168 @@ export class AppConfigService{
           }
         }
 
-        this.appDataService.contexts_by_id = this.utilsService.array_to_map(this.appDataService.public.contexts);
-        this.appDataService.receivers_by_id = this.utilsService.array_to_map(this.appDataService.public.receivers);
-        this.appDataService.questionnaires_by_id = this.utilsService.array_to_map(this.appDataService.public.questionnaires);
-        this.appDataService.submission_statuses = this.appDataService.public.submission_statuses;
-        this.appDataService.submission_statuses_by_id = this.utilsService.array_to_map(this.appDataService.public.submission_statuses);
+        this.rootDataService.contexts_by_id = this.utilsService.array_to_map(this.rootDataService.public.contexts);
+        this.rootDataService.receivers_by_id = this.utilsService.array_to_map(this.rootDataService.public.receivers);
+        this.rootDataService.questionnaires_by_id = this.utilsService.array_to_map(this.rootDataService.public.questionnaires);
 
-        for (let [key] of Object.entries(this.appDataService.questionnaires_by_id)) {
-          this.fieldUtilitiesService.parseQuestionnaire(this.appDataService.questionnaires_by_id[key], {})
-          this.appDataService.questionnaires_by_id[key].steps = this.appDataService.questionnaires_by_id[key].steps.sort((a:any, b:any)=>a.order > b.order)
+
+        this.rootDataService.submission_statuses = this.rootDataService.public.submission_statuses;
+        this.rootDataService.submission_statuses_by_id = this.utilsService.array_to_map(this.rootDataService.public.submission_statuses);
+
+
+        for (let [key, element] of Object.entries(this.rootDataService.questionnaires_by_id)) {
+          this.fieldUtilitiesService.parseQuestionnaire(this.rootDataService.questionnaires_by_id[key], {})
+          this.rootDataService.questionnaires_by_id[key].steps = this.rootDataService.questionnaires_by_id[key].steps.sort((a:any,b:any)=>a.order > b.order)
         }
 
-        for (let [key] of Object.entries(this.appDataService.contexts_by_id)) {
-          this.appDataService.contexts_by_id[key].questionnaire = this.appDataService.questionnaires_by_id[this.appDataService.contexts_by_id[key].questionnaire_id];
-          if (this.appDataService.contexts_by_id[key].additional_questionnaire_id) {
-            this.appDataService.contexts_by_id[key].additional_questionnaire = this.appDataService.questionnaires_by_id[this.appDataService.contexts_by_id[key].additional_questionnaire_id];
+        for (let [key, element] of Object.entries(this.rootDataService.contexts_by_id)) {
+          this.rootDataService.contexts_by_id[key].questionnaire = this.rootDataService.questionnaires_by_id[this.rootDataService.contexts_by_id[key].questionnaire_id];
+          if (this.rootDataService.contexts_by_id[key].additional_questionnaire_id) {
+            this.rootDataService.contexts_by_id[key].additional_questionnaire = this.rootDataService.questionnaires_by_id[this.rootDataService.contexts_by_id[key].additional_questionnaire_id];
           }
         }
 
-        this.appDataService.connection = {
+        this.rootDataService.connection = {
           "tor": data.headers["X-Check-Tor"] === "true" || location.host.match(/\.onion$/),
         };
 
-        this.appDataService.privacy_badge_open = !this.appDataService.connection.tor;
+        this.rootDataService.privacy_badge_open = !this.rootDataService.connection.tor;
+
         this.utilsService.routeCheck();
-        this.appDataService.languages_enabled = new Map<number, string>();
-        this.appDataService.languages_enabled_selector = [];
-        this.appDataService.languages_supported = new Map<number, string>();
+
+        this.rootDataService.languages_enabled = new Map<number, string>();
+        this.rootDataService.languages_enabled_selector = [];
+        this.rootDataService.languages_supported = new Map<number, string>();
 
         let self = this
-        this.appDataService.public.node.languages_supported.forEach(function(lang:any){
-          self.appDataService.languages_supported.set(lang.code, lang)
+        this.rootDataService.public.node.languages_supported.forEach(function(lang:any){
+          self.rootDataService.languages_supported.set(lang.code, lang)
 
-          if (self.appDataService.public.node.languages_enabled.includes(lang.code)) {
-            self.appDataService.languages_enabled.set(lang.code, lang)
-            self.appDataService.languages_enabled_selector.push(lang);
+          if (self.rootDataService.public.node.languages_enabled.includes(lang.code)) {
+            self.rootDataService.languages_enabled.set(lang.code, lang)
+            self.rootDataService.languages_enabled_selector.push(lang);
           }
         });
 
+<<<<<<< Updated upstream
+        if(this.preferenceResolver.dataModel && this.preferenceResolver.dataModel.language){
+          setTimeout(() => {
+            this.glTranslationService.onChange(this.preferenceResolver.dataModel.language)
+          }, 250);
+        }else {
+          this.glTranslationService.onChange(this.rootDataService.public.node.default_language)
+=======
         let storageLanguage = localStorage.getItem("default_language")
         if(languageInit){
           if(!storageLanguage){
             storageLanguage = self.appDataService.public.node.default_language
             localStorage.setItem("default_language", storageLanguage)
           }
-          this.glTranslationService.onChange(storageLanguage)
+          this.translationService.onChange(storageLanguage)
+>>>>>>> Stashed changes
         }
 
-
         this.setTitle()
-        this.appDataService.started = true;
-        this.onValidateInitialConfiguration();
+        this.rootDataService.started = true;
         if(callback){
           callback()
         }
       }
     });
   }
-  setTitle() {
-    const { public: rootData } = this.appDataService;
-
-    if (!rootData || !rootData.node) {
+  setTitle(){
+    if (!this.rootDataService.public) {
       return;
     }
 
-    let projectTitle = rootData.node.name;
-    let pageTitle = rootData.node.header_title_homepage;
+    let projectTitle = this.rootDataService.public.node.name, pageTitle = this.rootDataService.public.node.header_title_homepage;
 
 
-    if (this.header_title && this.router.url !== "/") {
-      pageTitle = this.header_title;
-    } else if (this.appDataService.page === "receiptpage") {
-      pageTitle = "Your report was successful.";
+
+    if (location.pathname !== "/") {
+      pageTitle = "Globaleaks";
     }
 
-    if (pageTitle && pageTitle.length > 0) {
+    if(pageTitle.length>0){
       pageTitle = this.translateService.instant(pageTitle);
     }
 
-    this.appDataService.projectTitle = projectTitle !== "GLOBALEAKS" ? projectTitle : "";
-    this.appDataService.pageTitle = pageTitle !== projectTitle ? pageTitle : "";
+    this.rootDataService.projectTitle = projectTitle !== "GLOBALEAKS" ? projectTitle : "";
+    this.rootDataService.pageTitle = pageTitle !== projectTitle ? pageTitle : "";
 
-    if(pageTitle){
-      const finalPageTitle = pageTitle.length > 0 ? this.translateService.instant(pageTitle) : projectTitle;
-      window.document.title = `${projectTitle} - ${finalPageTitle}`;
-
-      const element = window.document.querySelector('meta[name="description"]');
-      if (element instanceof HTMLMetaElement) {
-        element.content = rootData.node.description;
-      }
-    }else {
+    if (pageTitle && pageTitle.length>0) {
+      pageTitle = this.translateService.instant("wow");
+      window.document.title = projectTitle + " - " + pageTitle;
+    } else {
       window.document.title = projectTitle;
     }
-  }
-  onValidateInitialConfiguration(){
-    if(this.appDataService.public.node){
-      if (!this.appDataService.public.node.wizard_done) {
-        location.replace("/#/wizard");
-      }
-      else if(this.router.url == "/" && this.appDataService.page == "signuppage"){
-        location.replace("/#/signup")
-      }
-      else if ((this.router.url === "/" || this.router.url === "/submission") && this.appDataService.public.node.adminonly && !this.authenticationService.session) {
-        location.replace("/#/admin/home")
-      }
+
+    let element = window.document.getElementsByName("description")[0]
+    if (element instanceof HTMLMetaElement) {
+      element.content = this.rootDataService.public.node.description;
     }
   }
+  onRouteChange(){
+    this.router.events.subscribe(() => {
+      if(this.rootDataService.public.node){
+        if (!this.rootDataService.public.node.wizard_done) {
+          location.replace("/#/wizard");
+        }
+        else if(this.router.url == "/" && this.rootDataService.page == "signuppage"){
+          location.replace("/#/signup")
+        }
+      }
+    });
+  }
 
+<<<<<<< Updated upstream
+  reloadRoute(newPath: string) {
+    const promise = () => {
+      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+      this.router.navigated = false;
+      this.router.navigateByUrl(this.router.url).then(() => {
+        if (newPath) {
+          this.router.navigate([newPath], { replaceUrl: true });
+        }
+      });
+    };
+    this.localInitialization(promise)
+=======
   loadAdminRoute(newPath: string) {
     this.appDataService.public.node.wizard_done = true
     this.appDataService.public.node.languages_enabled = []
     this.appDataService.public.node.name = "Globaleaks"
 
     this.router.navigateByUrl(newPath).then(() => {
-      this.appConfigService.sidebar='admin-sidebar'
+      this.sidebar='admin-sidebar'
       this.setTitle()
     });
+>>>>>>> Stashed changes
   }
 
+
+  
   routeChangeListener() {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        setTimeout(() => {
-          this.onValidateInitialConfiguration();
-          const currentRoute = this.activatedRoute.firstChild?.snapshot;
-          if (currentRoute?.data) {
-            this.header_title = currentRoute.data['pageTitle'];
-            this.sidebar = currentRoute.data['sidebar'];
-          }
-          this.setTitle();
-        });
+        const currentRoute = this.activatedRoute.firstChild?.snapshot;
+        if (currentRoute?.data) {
+          this.sidebar = currentRoute.data['sidebar'];
+        }
       }
     });
   }
 
-  reinit(languageInit = true){
-    //this.utilsService.reloadCurrentRouteFresh()
-    this.localInitialization(languageInit)
+  reinit(){
+    this.localInitialization()
+    this.onRouteChange();
+  }
+
+  constructor(private preferenceResolver:PreferenceResolver, private router: Router,private activatedRoute: ActivatedRoute, public appServices: HttpService, public translateService: TranslateService, public utilsService:UtilsService, public rootDataService:AppDataService, public fieldUtilitiesService:FieldUtilitiesService, private glTranslationService:TranslationService)  {
+    this.localInitialization()
+    this.onRouteChange();
+  }
+
+  ngOnInit(): void {
   }
 }

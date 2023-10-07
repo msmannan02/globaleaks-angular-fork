@@ -132,13 +132,13 @@
                         <input name="hint" class="form-control" [(ngModel)]="field.placeholder" type="text">
                     </div>
                     <div class="form-group" *ngIf="field.type !== 'fieldgroup'">
-                        <input [(ngModel)]="field.required" type="checkbox">
+                        <input name="field.required" [(ngModel)]="field.required" type="checkbox">
                         <label>{{ 'Mandatory' | translate }}</label>
                     </div>
                     <div class="form-group" *ngIf="(field.type === 'audioUpload') && field.template_id === ''">
                         <div class="form-group">
                             <label>{{ 'Minimum number of seconds' | translate }}</label>
-                            <input [(ngModel)]="field.attrs.min_time.value" value="10" type="text" class="form-control"
+                            <input name="field.attrs.min_time.value" [(ngModel)]="field.attrs.min_time.value" value="10" type="text" class="form-control"
                                 [disabled]="!field.editable" />
                             <div>{{ 'Set the value to 0 to disable this feature.' | translate }}</div>
                         </div>
