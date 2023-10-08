@@ -25,7 +25,7 @@ Cypress.Commands.add("waitForPageIdle", () => {
 Cypress.Commands.add("login_receiver", (username, password, url, firstlogin) => {
   username = username === undefined ? "Recipient" : username;
   password = password === undefined ? Cypress.env("user_password") : password;
-  url = url === undefined ? "/login" : url;
+  url = url === undefined ? "#/login" : url;
 
   let finalURL = "/actions/forcedpasswordchange";
 
@@ -37,8 +37,8 @@ Cypress.Commands.add("login_receiver", (username, password, url, firstlogin) => 
   cy.get("#login-button").click();
 
   if (!firstlogin) {
-    cy.url().should("include", "/login").then(() => {
-      cy.url().should("not.include", "/login").then((currentURL) => {
+    cy.url().should("include", "#/login").then(() => {
+      cy.url().should("not.include", "#/login").then((currentURL) => {
         const hashPart = currentURL.split("#")[1];
         finalURL = hashPart === "login" ? "/recipient/home" : hashPart;
         cy.waitForUrl(finalURL);
@@ -52,7 +52,7 @@ Cypress.Commands.add("login_receiver", (username, password, url, firstlogin) => 
 Cypress.Commands.add("login_custodian", (username, password, url, firstlogin) => {
   username = username === undefined ? "Custodian" : username;
   password = password === undefined ? Cypress.env("user_password") : password;
-  url = url === undefined ? "/login" : url;
+  url = url === undefined ? "#/login" : url;
 
   let finalURL = "/actions/forcedpasswordchange";
 
@@ -142,7 +142,7 @@ Cypress.Commands.add("waitForUrl", (url: string, timeout?: number) => {
 Cypress.Commands.add("login_admin", (username, password, url, firstlogin) => {
   username = username === undefined ? "admin" : username;
   password = password === undefined ? Cypress.env("user_password") : password;
-  url = url === undefined ? "login" : url;
+  url = url === undefined ? "#/login" : url;
 
   let finalURL = "";
 
@@ -158,8 +158,8 @@ Cypress.Commands.add("login_admin", (username, password, url, firstlogin) => {
     finalURL = "/actions/forcedpasswordchange";
     cy.waitForUrl(finalURL);
   } else {
-    cy.url().should("include", "/login").then(() => {
-      cy.url().should("not.include", "/login").then((currentURL) => {
+    cy.url().should("include", "#/login").then(() => {
+      cy.url().should("not.include", "#/login").then((currentURL) => {
         const hashPart = currentURL.split("#")[1];
         finalURL = hashPart === "login" ? "/admin/home" : hashPart;
         cy.waitForUrl(finalURL);

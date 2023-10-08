@@ -1,10 +1,7 @@
 import { Component, TemplateRef, ViewChild, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { NodeResolver } from 'app/src/shared/resolvers/node.resolver';
-<<<<<<< Updated upstream
-=======
 import { AuthenticationService } from "../../../services/authentication.service";
 
->>>>>>> Stashed changes
 @Component({
   selector: 'src-settings',
   templateUrl: './settings.component.html',
@@ -17,11 +14,6 @@ export class SettingsComponent implements OnInit, AfterViewInit {
   @ViewChild('tab4') tab4!: TemplateRef<any>;
   @ViewChild('tab5') tab5!: TemplateRef<any>;
   tabs: any[];
-<<<<<<< Updated upstream
-  nodeData: any
-  active:string
-  constructor(public node: NodeResolver) { }
-=======
   nodeData: any;
   active: string;
 
@@ -31,31 +23,14 @@ export class SettingsComponent implements OnInit, AfterViewInit {
     private cdr: ChangeDetectorRef
   ) { }
 
->>>>>>> Stashed changes
   ngOnInit() { }
 
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.active = "Settings";
 
-<<<<<<< Updated upstream
-    this.nodeData = this.node
-    this.tabs = [
-      {
-        title: 'Settings',
-        component: this.tab1
-      },
-    ];
-    if (this.node.authenticationService.session.role === "admin") {
-      this.tabs = this.tabs.concat([
-        {
-          title: 'Theme customization',
-          component: this.tab2
-        },
-=======
       this.nodeData = this.node;
       this.tabs = [
->>>>>>> Stashed changes
         {
           title: 'Settings',
           component: this.tab1

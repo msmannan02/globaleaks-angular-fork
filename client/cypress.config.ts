@@ -32,8 +32,9 @@ export default defineConfig({
     "takeScreenshots": true
   },
   e2e: {
-    baseUrl: 'https://localhost:8443',
     setupNodeEvents(on, config) {
+      return require('./cypress/plugin/index.ts').default(on, config)
     },
+    baseUrl: 'http://localhost:4200',
   },
 });

@@ -1,11 +1,6 @@
-<<<<<<< Updated upstream
-import {AfterViewInit, Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import {NodeResolver} from "../../../shared/resolvers/node.resolver";
-=======
 import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { NodeResolver } from "../../../shared/resolvers/node.resolver";
 import { AuthenticationService } from "../../../services/authentication.service";
->>>>>>> Stashed changes
 
 @Component({
   selector: 'src-auditlog',
@@ -20,15 +15,11 @@ export class AuditlogComponent implements AfterViewInit, OnInit {
   nodeData: any;
   active: string;
 
-<<<<<<< Updated upstream
-  constructor(public node: NodeResolver) { }
-=======
   constructor(
     public node: NodeResolver,
     public authenticationService: AuthenticationService,
     private cdr: ChangeDetectorRef // Inject ChangeDetectorRef
   ) {}
->>>>>>> Stashed changes
 
   ngOnInit() {}
 
@@ -36,20 +27,8 @@ export class AuditlogComponent implements AfterViewInit, OnInit {
     setTimeout(() => {
       this.active = "Audit Log";
 
-<<<<<<< Updated upstream
-    this.nodeData = this.node
-    this.tabs = [
-      {
-        title: 'Audit Log',
-        component: this.tab1
-      },
-    ];
-    if (this.node.authenticationService.session.role === "admin") {
-      this.tabs = this.tabs.concat([
-=======
       this.nodeData = this.node;
       this.tabs = [
->>>>>>> Stashed changes
         {
           title: 'Audit Log',
           component: this.tab1

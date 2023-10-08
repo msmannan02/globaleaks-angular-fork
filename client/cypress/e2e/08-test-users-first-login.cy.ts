@@ -1,6 +1,6 @@
 describe("Recipient first login", () => {
   it("should require password change upon successful authentication", () => {
-    cy.login_receiver("Recipient", Cypress.env("init_password"), "/login", true);
+    cy.login_receiver("Recipient", Cypress.env("init_password"), "#/login", true);
     cy.waitForLoader()
     cy.takeScreenshot("user/password");
     cy.get('input[name="changePasswordArgs.password"]').clear().type(Cypress.env("user_password"));
@@ -16,7 +16,7 @@ describe("Recipient first login", () => {
   });
 
   it("should be able to retrieve the account recovery key", () => {
-    cy.login_receiver("Recipient", Cypress.env("user_password"), "/login", true);
+    cy.login_receiver("Recipient", Cypress.env("user_password"), "#/login", true);
     cy.waitForUrl("/recipient");
     cy.visit("/#/recipient/preferences");
     cy.takeScreenshot("user/preferences");
@@ -33,7 +33,7 @@ describe("Recipient first login", () => {
 
 describe("Recipient2 first login", () => {
   it("should require password change upon successful authentication", () => {
-    cy.login_receiver("Recipient2", Cypress.env("init_password"), "/login", true);
+    cy.login_receiver("Recipient2", Cypress.env("init_password"), "#/login", true);
     cy.get('[name="changePasswordArgs.password"]').type(Cypress.env("user_password"));
     cy.get('[name="changePasswordArgs.confirm"]').type(Cypress.env("user_password"));
     cy.get('button[name="submit"]').click();
@@ -51,7 +51,7 @@ describe("Recipient2 first login", () => {
 
 describe("Custodian first login", () => {
   it("should require password change upon successful authentication", () => {
-    cy.login_custodian("Custodian", Cypress.env("init_password"), "/login", true);
+    cy.login_custodian("Custodian", Cypress.env("init_password"), "#/login", true);
     cy.get('[name="changePasswordArgs.password"]').type(Cypress.env("user_password"));
     cy.get('[name="changePasswordArgs.confirm"]').type(Cypress.env("user_password"));
     cy.get('button[name="submit"]').click();
@@ -62,7 +62,7 @@ describe("Custodian first login", () => {
 
 describe("Admin2 first login", () => {
   it("should require password change upon successful authentication", () => {
-    cy.login_custodian("Admin2", Cypress.env("init_password"), "/login", true);
+    cy.login_custodian("Admin2", Cypress.env("init_password"), "#/login", true);
     cy.get('[name="changePasswordArgs.password"]').type(Cypress.env("user_password"));
     cy.get('[name="changePasswordArgs.confirm"]').type(Cypress.env("user_password"));
     cy.get('button[name="submit"]').click();
