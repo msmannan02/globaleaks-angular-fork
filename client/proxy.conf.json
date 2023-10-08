@@ -3,6 +3,10 @@
     "target": "https://localhost:8443",
     "secure": false
   },
+  "/data/l10n": {
+    "target": "https://localhost:8443",
+    "secure": false
+  },
   "/l10n": {
     "target": "https://localhost:8443",
     "secure": false

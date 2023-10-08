@@ -79,7 +79,6 @@ Cypress.Commands.add("takeScreenshot", (filename, locator?:any) => {
     return;
   }
 
-  cy.wait(1000)
   cy.get("html, body").invoke(
     "attr",
     "style",
@@ -87,7 +86,7 @@ Cypress.Commands.add("takeScreenshot", (filename, locator?:any) => {
   );
 
   return cy.document().then((doc) => {
-    cy.viewport(1280, doc.body.scrollHeight);
+    cy.viewport(3280, doc.body.scrollHeight);
 
     cy.waitForPageIdle();
 
