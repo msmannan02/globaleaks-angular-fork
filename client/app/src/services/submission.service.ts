@@ -18,9 +18,8 @@ export class SubmissionService {
   blocked = false;
   uploads: any = {};
 
-  public authenticationService: AuthenticationService
-
   constructor(
+    public authenticationService: AuthenticationService,
     private serviceInstanceService: ServiceInstanceService,
     public httpService: HttpService,
     public appDataService: AppDataService,
