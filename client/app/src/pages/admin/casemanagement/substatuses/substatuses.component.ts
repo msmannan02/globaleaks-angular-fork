@@ -34,7 +34,7 @@ export class SubstatusesComponent implements OnInit{
     };
 
     this.http.post<any>(
-        `api/admin/statuses/${this.submissions_status.id}/substatuses`,
+        `/api/admin/statuses/${this.submissions_status.id}/substatuses`,
         new_submissions_substatuses
     ).subscribe(
         result => {
@@ -60,7 +60,7 @@ export class SubstatusesComponent implements OnInit{
     const ids = this.submissions_status.substatuses.map((c: any) => c.id);
 
     this.http.put<any>(
-        `api/admin/statuses/${this.submissions_status.id}/substatuses`,
+        `/api/admin/statuses/${this.submissions_status.id}/substatuses`,
         {
           operation: 'order_elements',
           args: { ids: ids }
@@ -70,7 +70,7 @@ export class SubstatusesComponent implements OnInit{
 
   save_submissions_substatuses(substatus:any):void{
     // let url = "http://127.0.0.1:8082/api/admin/statuses/" + this.submissions_status.id + "/substatuses/" + substatus.id
-    let url = "api/admin/statuses/" + this.submissions_status.id + "/substatuses/" + substatus.id
+    let url = "/api/admin/statuses/" + this.submissions_status.id + "/substatuses/" + substatus.id
     this.httpService.requestUpdateStatus(url, substatus).subscribe(res => {
       this.appConfigService.reinit()
     });
@@ -87,7 +87,7 @@ export class SubstatusesComponent implements OnInit{
     modalRef.componentInstance.scope = scope;
     modalRef.componentInstance.confirmFunction = () => {
 
-      let url = "api/admin/statuses/" + this.submissions_status.id + "/substatuses/"+arg.id
+      let url = "/api/admin/statuses/" + this.submissions_status.id + "/substatuses/"+arg.id
       return this.utilsService.deleteSubStatus(url).subscribe(res => {
         this.appConfigService.reinit()
       });

@@ -5,6 +5,8 @@ import { FlowDirective } from '@flowjs/ngx-flow';
 import { Subscription } from 'rxjs';
 import { AuthenticationService } from 'app/src/services/authentication.service';
 import * as Flow from '@flowjs/flow.js';
+import {AppConfigService} from "../../../services/app-config.service";
+import {AppDataService} from "../../../app-data.service";
 
 @Component({
   selector: 'src-admin-file',
@@ -20,10 +22,12 @@ export class AdminFileComponent implements AfterViewInit, OnDestroy {
   flowConfig: any = {};
   @ViewChild('uploader') uploaderElementRef!: ElementRef<HTMLInputElement>;
 
-  constructor(public node: NodeResolver, public utilsService: UtilsService, public authenticationService: AuthenticationService) {
+  constructor(public appConfigService: AppConfigService, public appDataService: AppDataService, public utilsService: UtilsService, public authenticationService: AuthenticationService) {
   }
   ngOnInit() {
-    this.nodeData = this.node.dataModel
+    this.nodeData["css"] = this.appDataService.public.node.css
+    this.nodeData["script"] = this.appDataService.public.node.script
+    this.nodeData["favicon"] = this.appDataService.public.node.favicon
   }
  
   ngAfterViewInit() {
@@ -39,7 +43,23 @@ export class AdminFileComponent implements AfterViewInit, OnDestroy {
       const file = files[0]; // Assuming you only handle a single file at a time
 
       const flowJsInstance = this.flow.flowJs;
-      flowJsInstance.addFile(file);
+
+      flowJsInstance.on('fileSuccess', (file, message) => {
+        this.appConfigService.reinit(false)
+        this.utilsService.reloadCurrentRoute()
+      });
+
+      flowJsInstance.on('fileError', (file, message) => {
+      });
+
+      const fileNameParts = file.name.split('.');
+      const fileExtension = fileNameParts.pop();
+      const fileNameWithoutExtension = fileNameParts.join('.');
+      const timestamp = new Date().getTime();
+      const fileNameWithTimestamp = `${fileNameWithoutExtension}_${timestamp}.${fileExtension}`;
+      const modifiedFile = new File([file], fileNameWithTimestamp, { type: file.type });
+
+      flowJsInstance.addFile(modifiedFile);
       flowJsInstance.upload();
     }
   }

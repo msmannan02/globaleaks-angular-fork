@@ -414,7 +414,7 @@ export class UtilsService {
   }
 
   runAdminOperation(operation: any, args: any, refresh: any) {
-    return this.runOperation("api/admin/config", operation, args, refresh)
+    return this.runOperation("/api/admin/config", operation, args, refresh)
   }
 
   deleteDialog() {
@@ -488,7 +488,7 @@ export class UtilsService {
   }
 
   getFiles(): Observable<any[]> {
-    return this.http.get<any[]>("api/admin/files");
+    return this.http.get<any[]>("/api/admin/files");
   }
 
   deleteFile(url: string): Observable<void> {

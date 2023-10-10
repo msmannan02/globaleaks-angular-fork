@@ -60,7 +60,7 @@ export class FieldsComponent implements OnInit {
     this.editing = !this.editing;
   }
   exportQuestion(field: any) {
-    this.utilsService.download("api/admin/fieldtemplates/" + field.id);
+    this.utilsService.download("/api/admin/fieldtemplates/" + field.id);
   }
   delField(field: any) {
     this.openConfirmableModalDialog(field, "")

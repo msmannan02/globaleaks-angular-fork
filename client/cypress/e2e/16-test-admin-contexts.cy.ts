@@ -42,11 +42,15 @@ describe("admin configure, add, and delete contexts", () => {
     cy.takeScreenshot("admin/contextstest-admin-contexts.png");
   });
 
-  // it("should delete existing contexts", () => {
-  //   cy.get("button:contains('Delete')").last().click();
-  //
-  //   cy.get("#modal-action-ok").click();
-  //
-  //   cy.logout();
-  // });
+  it("should delete existing contexts", () => {
+    cy.visit("/");
+    cy.login_admin();
+
+    cy.visit("#/admin/contexts");
+    cy.contains("button", "Delete").last().click();
+
+    cy.get("#modal-action-ok").click();
+
+    cy.logout();
+  });
 });

@@ -10,6 +10,7 @@ import { NodeResolver } from 'app/src/shared/resolvers/node.resolver';
 import { PreferenceResolver } from 'app/src/shared/resolvers/preference.resolver';
 import { UtilsService } from 'app/src/shared/services/utils.service';
 import { Subscription } from 'rxjs';
+import {AppConfigService} from "../../../../services/app-config.service";
 
 @Component({
   selector: 'src-tab2',
@@ -49,7 +50,7 @@ export class Tab2Component implements OnInit {
   preferenceData: any = [];
   authenticationData: any = []
 
-  constructor(public preference: PreferenceResolver, private httpClient: HttpClient, public utilsService: UtilsService, public node: NodeResolver, config: NgbTooltipConfig, public authenticationService: AuthenticationService) { }
+  constructor(public appConfigService: AppConfigService, public preference: PreferenceResolver, private httpClient: HttpClient, public utilsService: UtilsService, public node: NodeResolver, config: NgbTooltipConfig, public authenticationService: AuthenticationService) { }
 
 
   // onFileSelected(files: FileList | null) {
@@ -80,11 +81,25 @@ export class Tab2Component implements OnInit {
     if (files && files.length > 0) {
       const file = files[0]; // Assuming you only handle a single file at a time
 
-      const flowJsInstance = new Flow({ target: 'api/admin/files/custom', speedSmoothingFactor: 0.01, singleFile: true, allowDuplicateUploads: false, testChunks: false, permanentErrors: [500, 501],query: { fileSizeLimit: this.node.dataModel.maximum_filesize*1024*1024 },headers: { 'X-Session': this.authenticationService.session.id } });
-      flowJsInstance.addFile(file);
-      flowJsInstance.upload();
-      this.utilsService.reloadCurrentRoute();
+      const flowJsInstance = new Flow({ target: '/api/admin/files/custom', speedSmoothingFactor: 0.01, singleFile: true, allowDuplicateUploads: false, testChunks: false, permanentErrors: [500, 501],query: { fileSizeLimit: this.node.dataModel.maximum_filesize*1024*1024 },headers: { 'X-Session': this.authenticationService.session.id } });
 
+      flowJsInstance.on('fileSuccess', (file, message) => {
+        this.appConfigService.reinit(false)
+        this.utilsService.reloadCurrentRoute()
+      });
+
+      flowJsInstance.on('fileError', (file, message) => {
+      });
+
+      const fileNameParts = file.name.split('.');
+      const fileExtension = fileNameParts.pop();
+      const fileNameWithoutExtension = fileNameParts.join('.');
+      const timestamp = new Date().getTime();
+      const fileNameWithTimestamp = `${fileNameWithoutExtension}_${timestamp}.${fileExtension}`;
+      const modifiedFile = new File([file], fileNameWithTimestamp, { type: file.type });
+
+      flowJsInstance.addFile(modifiedFile);
+      flowJsInstance.upload();
     }
   }
   // ngAfterViewInit() {
@@ -106,7 +121,7 @@ export class Tab2Component implements OnInit {
     this.utilsService.deleteFile(url).subscribe(
       () => {
         this.updateFiles();
-        this.utilsService.reloadCurrentRoute();
+        this.utilsService.init();
       },
       (error) => {
         console.error('Error deleting file:', error);

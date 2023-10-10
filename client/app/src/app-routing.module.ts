@@ -95,9 +95,6 @@ const routes: Routes = [
   {
     path: 'admin',
     canActivate: [SessionGuard],
-    resolve: {
-      NodeResolver,PreferenceResolver,UsersResolver,QuestionnairesResolver, ContextsResolver, AuditlogResolver, JobResolver, TipsResolver,NotificationsResolver,NetworkResolver,RedirectsResolver,FieldtemplatesResolver,StatuseResolver
-    },
     loadChildren: () => AdminRoutingModule,
     data:{
       sidebar: 'admin-sidebar', pageTitle: 'Home'
