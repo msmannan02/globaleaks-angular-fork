@@ -44,24 +44,18 @@ export class AdminFileComponent implements AfterViewInit, OnDestroy {
 
       const flowJsInstance = this.flow.flowJs;
 
-      flowJsInstance.on('fileSuccess', (file, message) => {
-        this.appConfigService.reinit(false)
-        this.utilsService.reloadCurrentRoute()
-      });
-
-      flowJsInstance.on('fileError', (file, message) => {
-      });
-
       const fileNameParts = file.name.split('.');
       const fileExtension = fileNameParts.pop();
       const fileNameWithoutExtension = fileNameParts.join('.');
       const timestamp = new Date().getTime();
       const fileNameWithTimestamp = `${fileNameWithoutExtension}_${timestamp}.${fileExtension}`;
       const modifiedFile = new File([file], fileNameWithTimestamp, { type: file.type });
-
       flowJsInstance.addFile(modifiedFile);
       flowJsInstance.upload();
-    }
+
+      this.appConfigService.reinit(false)
+      this.utilsService.reloadCurrentRoute();
+   }
   }
   reload() {
   }
@@ -69,6 +63,7 @@ export class AdminFileComponent implements AfterViewInit, OnDestroy {
   delete_file(url: string): void {
     this.utilsService.deleteFile(url).subscribe(
       () => {
+        this.appConfigService.reinit(false)
         this.utilsService.reloadCurrentRoute();
       },
       (error) => {
