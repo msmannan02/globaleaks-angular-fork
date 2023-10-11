@@ -38,8 +38,6 @@ import { ByteFmtPipe } from './shared/pipes/byte-fmt.pipe';
 import { RfileUploadButtonComponent } from './shared/partials/rfile-upload-button/rfile-upload-button.component';
 import { RfileUploadStatusComponent } from './shared/partials/rfile-upload-status/rfile-upload-status.component';
 import { TipCommentsComponent } from './shared/partials/tip-comments/tip-comments.component';
-import { TipMessagesComponent } from './shared/partials/tip-messages/tip-messages.component';
-import { TipMessageComponent } from './shared/partials/tip-message/tip-message.component';
 import { LimitToPipe } from './shared/pipes/limit-to.pipe';
 import { OrderByPipe } from './shared/pipes/order-by.pipe';
 import { ScrollToBottomDirective } from './shared/directive/scroll-to-bottom.directive';
@@ -92,6 +90,7 @@ import { DisclaimerComponent } from './shared/modals/disclaimer/disclaimer.compo
 import { SecurityAwarenessConfidentialityComponent } from './shared/modals/security-awareness-confidentiality/security-awareness-confidentiality.component';
 import { TransferAccessComponent } from './shared/modals/transfer-access/transfer-access.component';
 import { BlankComponent } from './shared/blank/blank.component';
+import { VoiceRecorderComponent } from './shared/partials/voice-recorder/voice-recorder.component';
 
 @NgModule({
     imports: [
@@ -146,8 +145,6 @@ import { BlankComponent } from './shared/blank/blank.component';
     RfileUploadButtonComponent,
     RfileUploadStatusComponent,
     TipCommentsComponent,
-    TipMessagesComponent,
-    TipMessageComponent,
     LimitToPipe,
     OrderByPipe,
     ScrollToBottomDirective,
@@ -197,7 +194,8 @@ import { BlankComponent } from './shared/blank/blank.component';
     TransferAccessComponent,
     SecurityAwarenessConfidentialityComponent,
     DisclaimerComponent,
-    BlankComponent
+    BlankComponent,
+    VoiceRecorderComponent
   ],
   exports: [
     FooterComponent,
@@ -216,7 +214,6 @@ import { BlankComponent } from './shared/blank/blank.component';
     TipFilesWhistleblowerComponent,
     WidgetWbfilesComponent,
     TipCommentsComponent,
-    TipMessagesComponent,
     TipReceiverListComponent,
     RfileUploadStatusComponent,
     RfileUploadButtonComponent,
@@ -251,6 +248,7 @@ import { BlankComponent } from './shared/blank/blank.component';
     AcceptAgreementComponent,
     TransferAccessComponent,
     SecurityAwarenessConfidentialityComponent,
-    DisclaimerComponent
+    DisclaimerComponent,
+    VoiceRecorderComponent
   ]})
 export class SharedModule { }

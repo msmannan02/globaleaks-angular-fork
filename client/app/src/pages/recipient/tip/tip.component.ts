@@ -31,7 +31,6 @@ export class TipComponent implements AfterViewInit {
   tip_id: string | null;
   itemsPerPage: number = 5;
   currentCommentsPage: number = 1;
-  currentMessagesPage: number = 1;
   answers: any = {};
   uploads: any = {};
   questionnaire: any = {};

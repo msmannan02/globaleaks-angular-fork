@@ -15,9 +15,7 @@ export class new_context {
     select_all_receivers = true;
     maximum_selectable_receivers = 0;
     enable_comments = true;
-    enable_messages = false;
     enable_two_way_comments = true;
-    enable_two_way_messages = true;
     enable_attachments = true;
     questionnaire_id = "";
     additional_questionnaire_id = "";

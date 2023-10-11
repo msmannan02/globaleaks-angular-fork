@@ -23,5 +23,4 @@ export interface rtipResolverModel {
   substatus: any
   file_count: number
   comment_count: number
-  message_count: number
 }

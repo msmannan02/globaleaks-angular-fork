@@ -17,6 +17,7 @@ export class SubmissionService {
   selected_receivers: any = {};
   blocked = false;
   uploads: any = {};
+  private sharedData: any;
 
   constructor(
     public authenticationService: AuthenticationService,
@@ -99,5 +100,12 @@ export class SubmissionService {
         this.appDataService.page = 'receiptpage';
       }
     });
+  }
+
+  setSharedData(data: any) {
+    this.sharedData = data;
+  }
+  getSharedData(): any {
+    return this.sharedData;
   }
 }
