@@ -170,6 +170,7 @@ export class TippageComponent {
               this.tip.tip_id = params['tip_id']
             });
 
+            console.log(this.tip)
             this.fileupload_url = "api/whistleblower/wbtip/wbfiles";
             this.tip.context = this.appDataService.contexts_by_id[this.tip.context_id];
 

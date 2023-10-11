@@ -38,7 +38,6 @@ export class TipComponent implements AfterViewInit {
   tip: any = {};
   contexts_by_id: any;
   submission_statuses: any;
-  supportedViewTypes: string[];
   score: any;
   ctx: string;
   submission: {};
@@ -66,18 +65,18 @@ export class TipComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     setTimeout(() => {
-      this.active="Public"
+      this.active="Everyone"
       this.tabs = [
         {
-          title: 'Public',
+          title: 'Everyone',
           component: this.tab1
         },
         {
-          title: 'Internal',
+          title: 'Recipients only',
           component: this.tab2
         },
         {
-          title: 'Personal',
+          title: 'Only me',
           component: this.tab3
         },
       ];

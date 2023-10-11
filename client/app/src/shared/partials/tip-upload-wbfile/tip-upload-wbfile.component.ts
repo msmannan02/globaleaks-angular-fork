@@ -19,6 +19,7 @@ export class TipUploadWbfileComponent{
   fileinput: any = "fileinput";
 
   constructor(public appConfigService:AppConfigService, public authenticationService:AuthenticationService, public utilsService: UtilsService, public appDataService: AppDataService) {
+
   }
 
   public toggleCollapse() {
@@ -46,4 +47,7 @@ export class TipUploadWbfileComponent{
       flowJsInstance.upload();
     }
   }
+
+  protected readonly console = console;
+  protected readonly alert = alert;
 }

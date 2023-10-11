@@ -18,16 +18,16 @@ export class TipFieldAnswerEntryComponent {
   myDate = 'Tue Feb 05 2019 00:00:00 GMT+0530 (India Standard Time)';
   constructor(private utilsService: UtilsService, public authenticationService: AuthenticationService, public wbtipService: WbtipService) { }
   ngOnInit(): void {
-    this.fetchAudioFiles()
+    // this.fetchAudioFiles()
   }
   fetchAudioFiles(): void {
-    this.audiolist = {};
-    for (const file of this.wbtipService.tip.wbfiles) {
-      this.utilsService.load("api/recipient/wbfiles/" + file.id).then((url: string) => {
-        this.audiolist[file.reference_id] = url;
-        console.log(this.audiolist, "this.audiolist");
-
-      });
-    }
+    // this.audiolist = {};
+    // for (const file of this.wbtipService.tip.wbfiles) {
+    //   this.utilsService.load("api/recipient/wbfiles/" + file.id).then((url: string) => {
+    //     this.audiolist[file.reference_id] = url;
+    //     console.log(this.audiolist, "this.audiolist");
+    //
+    //   });
+    // }
   }
 }
