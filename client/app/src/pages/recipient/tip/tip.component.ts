@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, TemplateRef, ViewChild} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppDataService } from 'app/src/app-data.service';
@@ -22,12 +22,12 @@ import { AuthenticationService } from 'app/src/services/authentication.service';
 @Component({
   selector: 'src-tip',
   templateUrl: './tip.component.html',
-  styleUrls: ['./tip.component.css'],
 })
-export class TipComponent implements OnInit, AfterViewInit {
+export class TipComponent implements AfterViewInit {
   @ViewChild('tab1') tab1!: TemplateRef<any>;
   @ViewChild('tab2') tab2!: TemplateRef<any>;
   @ViewChild('tab3') tab3!: TemplateRef<any>;
+
   tip_id: string | null;
   itemsPerPage: number = 5;
   currentCommentsPage: number = 1;
@@ -36,8 +36,6 @@ export class TipComponent implements OnInit, AfterViewInit {
   uploads: any = {};
   questionnaire: any = {};
   rows: any = {}
-
-  //
   tip: any = {};
   contexts_by_id: any;
   submission_statuses: any;
@@ -47,31 +45,47 @@ export class TipComponent implements OnInit, AfterViewInit {
   submission: {};
   fileupload_url: string;
   showEditLabelInput: boolean;
-  // tip: any;
   tabs: any[];
   active:string
-  
-  ngOnInit() {
+
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private cryptoService: CryptoService,
+    public utils: UtilsService,
+    public preferencesService: PreferenceResolver,
+    public modalService: NgbModal,
+    private activatedRoute: ActivatedRoute,
+    public httpService: HttpService,
+    public http: HttpClient,
+    public appDataService: AppDataService,
+    public rtipService: RecieverTipService,
+    public fieldUtilities: FieldUtilitiesService,
+    public authenticationService: AuthenticationService,
+  ) {
     this.loadTipDate();
   }
-  ngAfterViewInit(): void {
-    this.active="Public"
-    this.tabs = [
-      {
-        title: 'Public',
-        component: this.tab1
-      },
-      {
-        title: 'Internal',
-        component: this.tab2
-      },
-      {
-        title: 'Personal',
-        component: this.tab3
-      },
-    ];
 
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.active="Public"
+      this.tabs = [
+        {
+          title: 'Public',
+          component: this.tab1
+        },
+        {
+          title: 'Internal',
+          component: this.tab2
+        },
+        {
+          title: 'Personal',
+          component: this.tab3
+        },
+      ];
+      this.cdr.detectChanges()
+    });
   }
+
   loadTipDate() {
     this.tip_id = this.activatedRoute.snapshot.paramMap.get('tip_id');
     let requestObservable: Observable<any> = this.httpService.recieverTip(this.tip_id)
@@ -84,20 +98,14 @@ export class TipComponent implements OnInit, AfterViewInit {
             this.tip.tip_id = params['tip_id']
           });
 
-          // this.tip.context = this.appDataService.contexts_by_id[this.tip.context_id];
           this.tip.receivers_by_id = this.utils.array_to_map(this.tip.receivers);
           this.score = this.tip.score;
           this.ctx = "rtip";
-          // this.exportTip = utils.RTipExport;
-          // this.downloadRFile = RTipDownloadRFile;
-          // this.viewRFile = RTipViewRFile;
           this.showEditLabelInput = this.tip.label === "";
           this.preprocessTipAnswers(this.tip);
           this.tip.submissionStatusStr = this.utils.getSubmissionStatusText(this.tip.status, this.tip.substatus, this.appDataService.submission_statuses)
           this.submission = {};
-
-        },
-        error: (error: any) => {
+          this.cdr.detectChanges()
         }
       }
     )
@@ -126,7 +134,6 @@ export class TipComponent implements OnInit, AfterViewInit {
     });
   }
 
-
   openRevokeTipAccessModal() {
     this.utils.runUserOperation("get_users_names", {}, true).subscribe(
       {
@@ -148,8 +155,6 @@ export class TipComponent implements OnInit, AfterViewInit {
               });
           };
           modalRef.componentInstance.cancelFun = null;
-        },
-        error: (error: any) => {
         }
       }
     );
@@ -185,8 +190,6 @@ export class TipComponent implements OnInit, AfterViewInit {
             () => {
             }
           );
-        },
-        error: (error: any) => {
         }
       }
     )
@@ -205,7 +208,7 @@ export class TipComponent implements OnInit, AfterViewInit {
   }
 
   preprocessTipAnswers(tip: any) {
-    let x, i, j, k, questionnaire, step;
+    let x, i, j, k, step;
 
     for (x = 0; x < tip.questionnaires.length; x++) {
       this.questionnaire = tip.questionnaires[x];
@@ -245,10 +248,6 @@ export class TipComponent implements OnInit, AfterViewInit {
       }
     }
   }
-
-
-
-
 
   tipToggleStar() {
     this.httpService.tipOperation("set", { "key": "important", "value": !this.rtipService.tip.important }, this.rtipService.tip.id)
@@ -308,25 +307,8 @@ export class TipComponent implements OnInit, AfterViewInit {
           next: async token => {
             const ans = await this.cryptoService.proofOfWork(token.id);
             window.open("api/recipient/rtips/" + tipId + "/export" + "?token=" + token.id + ":" + ans);
-          },
-          error: (error: any) => {
           }
         }
       );
   }
-
-  constructor(
-    private cryptoService: CryptoService,
-    public utils: UtilsService,
-    public preferencesService: PreferenceResolver,
-    public modalService: NgbModal,
-    private activatedRoute: ActivatedRoute,
-    public httpService: HttpService,
-    public http: HttpClient,
-    public appDataService: AppDataService,
-    public rtipService: RecieverTipService,
-    public fieldUtilities: FieldUtilitiesService,
-    public authenticationService: AuthenticationService,
-  ) { }
-
 }

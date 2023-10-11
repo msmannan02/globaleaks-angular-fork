@@ -1,5 +1,5 @@
 <ng-container *ngIf="tip">
-  <div id="Toolbar" class="row">
+  <div class="row">
     <div class="col-md-12">
       <a id="link-tiplist" routerLink="/recipient/reports" data-toggle="tooltip" title="{{'Reports' | translate}}"
         class="btn btn-outline-secondary">
@@ -91,23 +91,15 @@
       <src-tip-questionnaire-answers [tipService]="rtipService"></src-tip-questionnaire-answers>
     </div>
 
-    <div class="col-md-6" *ngIf="tip.enable_whistleblower_identity">
+    <ng-container class="col-md-6" *ngIf="tip.enable_whistleblower_identity">
       <src-whistleblower-identity-reciever></src-whistleblower-identity-reciever>
-    </div>
+    </ng-container>
   </div>
   <div class="row">
     <div class="col-md-12">
       <src-tip-files-receiver></src-tip-files-receiver>
-      <!-- <src-tip-upload-wbfile [tip]="tip"></src-tip-upload-wbfile> -->
     </div>
   </div>
-  <!-- <div class="row">
-    <ng-container *ngIf="tip.context">
-      <div class="col-md-6" *ngIf="tip.context.enable_comments || tip.comments.length">
-        <src-tip-comments [tipService]="rtipService"></src-tip-comments>
-      </div>
-    </ng-container>
-  </div> -->
 
   <ul ngbNav #nav="ngbNav" class="nav-tabs" [(activeId)]="active">
     <ng-container *ngFor="let tab of tabs">

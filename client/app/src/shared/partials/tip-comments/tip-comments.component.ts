@@ -33,9 +33,11 @@ export class TipCommentsComponent {
   ngOnInit() {
   }
   newComment() {
+    alert(JSON.stringify(this.key))
     this.tipService.newComment(this.newCommentContent, this.key);
     this.newCommentContent = "";
   }
+
   onEnableTwoWayCommentsChange() {
     this.rtipService.operation('api/recipient/rtips/' + this.tipService.tip.id, 'set', { 'key': 'enable_two_way_comments', 'value': this.tipService.tip.enable_two_way_comments })
   }

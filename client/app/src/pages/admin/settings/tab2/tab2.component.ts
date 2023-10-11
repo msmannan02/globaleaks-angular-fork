@@ -1,10 +1,8 @@
-import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import * as Flow from '@flowjs/flow.js';
-import { FlowEvent, FlowFile } from '@flowjs/flow.js';
+import { FlowFile } from '@flowjs/flow.js';
 import { FlowDirective } from '@flowjs/ngx-flow';
-import { NgbTooltipConfig } from '@ng-bootstrap/ng-bootstrap';
 import { AuthenticationService } from 'app/src/services/authentication.service';
 import { NodeResolver } from 'app/src/shared/resolvers/node.resolver';
 import { PreferenceResolver } from 'app/src/shared/resolvers/preference.resolver';
@@ -50,21 +48,7 @@ export class Tab2Component implements OnInit {
   preferenceData: any = [];
   authenticationData: any = []
 
-  constructor(public appConfigService: AppConfigService, public preference: PreferenceResolver, private httpClient: HttpClient, public utilsService: UtilsService, public node: NodeResolver, config: NgbTooltipConfig, public authenticationService: AuthenticationService) { }
-
-
-  // onFileSelected(files: FileList | null) {
-  //   if (files && files.length > 0) {
-  //     const file = files[0]; // Assuming you only handle a single file at a time
-
-  //     const flowJsInstance = this.flow.flowJs;
-  //     flowJsInstance.addFile(file);
-  //     flowJsInstance.upload();
-  //   }
-  // }
-
-
-
+  constructor(public appConfigService: AppConfigService, public preference: PreferenceResolver, public utilsService: UtilsService, public node: NodeResolver, public authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
     this.preferenceData = this.preference.dataModel
@@ -79,7 +63,7 @@ export class Tab2Component implements OnInit {
   }
   onFileSelected(files: FileList | null) {
     if (files && files.length > 0) {
-      const file = files[0]; // Assuming you only handle a single file at a time
+      const file = files[0];
 
       const flowJsInstance = new Flow({ target: '/api/admin/files/custom', speedSmoothingFactor: 0.01, singleFile: true, allowDuplicateUploads: false, testChunks: false, permanentErrors: [500, 501],query: { fileSizeLimit: this.node.dataModel.maximum_filesize*1024*1024 },headers: { 'X-Session': this.authenticationService.session.id } });
 
@@ -101,20 +85,6 @@ export class Tab2Component implements OnInit {
       flowJsInstance.addFile(modifiedFile);
       flowJsInstance.upload();
     }
-  }
-  // ngAfterViewInit() {
-  //   this.autoUploadSubscription = this.flowAdvanced.events$.subscribe(event => {
-  //     if (event.type === 'filesSubmitted') {
-  //       // this.flow.upload();
-  //     }
-  //   });
-  // }
-
-  // ngOnDestroy() {
-  //   this.autoUploadSubscription.unsubscribe();
-  // }
-  reload(): void {
-    // Implement reload logic if needed
   }
 
   delete_file(url: string): void {
@@ -138,11 +108,7 @@ export class Tab2Component implements OnInit {
       }
     );
   }
-  uploadSuccess($event: FlowEvent): void {
-    // Implement upload success logic
-    this.reload();
-  }
- 
+
   togglePermissionUploadFiles(status:any): void {
     
     this.authenticationData.session.permissions.can_upload_files = !this.authenticationData.session.permissions.can_upload_files;

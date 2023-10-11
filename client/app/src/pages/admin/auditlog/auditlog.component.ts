@@ -18,7 +18,7 @@ export class AuditlogComponent implements AfterViewInit, OnInit {
   constructor(
     public node: NodeResolver,
     public authenticationService: AuthenticationService,
-    private cdr: ChangeDetectorRef // Inject ChangeDetectorRef
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {}
@@ -51,7 +51,6 @@ export class AuditlogComponent implements AfterViewInit, OnInit {
         ]);
       }
 
-      // Mark the component for a manual change detection run
       this.cdr.detectChanges();
     });
   }
