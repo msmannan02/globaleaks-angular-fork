@@ -20,7 +20,6 @@ export class TippageComponent {
   tip_id = null;
   itemsPerPage = 5;
   currentCommentsPage = 1;
-  currentMessagesPage = 1;
   answers = {};
   uploads:any = {};
   showEditLabelInput = false;
@@ -152,9 +151,6 @@ export class TippageComponent {
 
     return (100 - (progress/totalFiles)*100)
   }
-  newMessage() {
-  };
-
   tip_toggle_star() {
   };
 

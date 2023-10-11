@@ -99,10 +99,6 @@ export class HttpService {
     return this.httpClient.post("api/whistleblower/wbtip/comments", param)
   }
 
-  requestNewMessage(param: string, suburl: string): Observable<any> {
-    return this.httpClient.post("api/whistleblower/wbtip/messages/" + suburl, param)
-  }
-
   requestPreferenceResource(): Observable<any> {
     return this.httpClient.get("/api/admin/preferences")
   }
@@ -270,12 +266,10 @@ export class HttpService {
     return this.httpClient.post(`api/recipient/rtips/${id}/comments`, param)
   }
 
-  retipRequestNewMessage(param: any, id: any): Observable<any> {
-    return this.httpClient.post(`api/recipient/rtips/${id}/messages`, param)
-  }
   requestStatusesResource(): Observable<any> {
     return this.httpClient.get(`api/admin/statuses`)
   }
+  
   addSubmissionStatus(param: any): Observable<any> {
     return this.httpClient.post(`api/admin/statuses`, param)
   }

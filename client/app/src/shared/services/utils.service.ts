@@ -79,6 +79,11 @@ export class UtilsService {
     return ret;
   }
 
+  async load(url: any): Promise<string> {
+    const token = await this.tokenResourceService.getWithProofOfWork();
+    return url + "?token=" + token.id + ":" + token.answer;
+  }
+
   download(url: string): void {
     this.tokenResourceService.getWithProofOfWork().then((token: any) => {
       window.open(`${url}?token=${token.id}:${token.answer}`);

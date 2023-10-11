@@ -26,7 +26,7 @@ export class DeleteConfirmationComponent {
 
   confirm() {
     this.cancel()
-    // this.confirmFunction()
+    this.confirmFunction()
     if (this.args) {
       if (this.args.operation === "delete") {
         return this.http.delete("api/recipient/rtips/" + this.args.tip.id)

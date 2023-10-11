@@ -558,6 +558,14 @@ table tr td {
 	opacity: 0.6;
 }
 
+.audio-player {
+    background: #f5f7fa;
+    border-radius: 50px;
+    width: 80%;
+    margin: 1em;
+    border: 1px solid #1d1f24;
+}
+
 textarea.form-control {
 	resize: vertical;
 }
