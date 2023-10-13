@@ -31,7 +31,6 @@ export class TipCommentsComponent {
 
   }
   ngOnInit() {
-    console.log(this.tipService.tip)
   }
   newComment() {
     this.tipService.newComment(this.newCommentContent, this.key);

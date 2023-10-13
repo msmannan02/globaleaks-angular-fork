@@ -262,6 +262,7 @@ export class TipComponent implements AfterViewInit {
 
   tipDelete() {
     const modalRef = this.modalService.open(DeleteConfirmationComponent);
+    modalRef.componentInstance.confirmFunction = () => { };
     modalRef.componentInstance.args = {
       tip: this.rtipService.tip,
       operation: "delete"

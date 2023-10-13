@@ -23,7 +23,6 @@ export class RtipsResolver implements Resolve<boolean> {
     if (this.authenticationService.session.role === 'receiver') {
       return this.httpService.recieverTipResource().pipe(
         map((response: any) => {
-          console.log(response)
           this.dataModel = response
           return true;
         })
